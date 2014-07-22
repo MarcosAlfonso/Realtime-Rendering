@@ -20,6 +20,8 @@ public:
 
 	glm::mat4 getModelMatrix();
 	void setPosition(glm::vec3 trans);
+	void setRotation(float angle, glm::vec3 axis);
+	void setScale(glm::vec3 scale);
 
 	void Render();
 

@@ -1,22 +1,16 @@
-sGeneral:
-	!!!Add to GitHub!!!
-	Add a skybox or something so you can tell whats up and down
+General:
+	Add a skybox or som ething so you can tell whats up and down
 	Make sure you're deleting everything you need to
 	More robust texture system?
+	More robust debug text system?
 
 Camera:
 	Make a camera class, seperate it from controls.
-	Make it impossible to flip camera upside down
 
-Mesh:
-	~Deconstructor!
+~Deconstructor:
+	Need to check for memory leaks and such, ***a ton of stuff isn't getting freed***
 
 MeshInstance:
-	Add scaling and rotation functions
-
-
-
-
 
 
 
@@ -31,3 +25,5 @@ Future Stuff:
 	Grass: http://http.developer.nvidia.com/GPUGems/gpugems_ch07.html
 	Atmosphere Spread Rendering: http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html
 	
+Random Ideas:
+	Fast moving target shooting, ala Tribes?

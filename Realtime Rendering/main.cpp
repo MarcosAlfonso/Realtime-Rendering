@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
+
 // Include GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -89,11 +90,13 @@ int main(void)
 	MeshInstance * cube2 = new MeshInstance(cube, FullbrightShaderID, CloudTexture);
 	cube1->setPosition(glm::vec3(0.0, 0.0, 0.0));
 	cube2->setPosition(glm::vec3(3.0, 0.0, 0.0));
+	cube2->setRotation(45, glm::vec3(1.0, 0.0, 0.0));
 
 	MeshInstance * suzanne1 = new MeshInstance(suzanne, StandardShaderID, GridTexture);
 	MeshInstance * suzanne2 = new MeshInstance(suzanne, FullbrightShaderID, CloudTexture);
 	suzanne1->setPosition(glm::vec3(0.0, 2.5, 0.0));
 	suzanne2->setPosition(glm::vec3(3.0, 2.5, 0.0));
+	suzanne2->setScale(glm::vec3(1.0, 4.0, 1.0));
 
 	do{
 
@@ -142,6 +145,8 @@ int main(void)
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
+
+	_CrtDumpMemoryLeaks();
 
 	return 0;
 }

@@ -122,5 +122,15 @@ glm::mat4 MeshInstance::getModelMatrix()
 
 void MeshInstance::setPosition(glm::vec3 trans)
 {
-	ModelMatrix = glm::translate(glm::mat4(), trans);
+	ModelMatrix = glm::translate(ModelMatrix, trans);
+}
+
+void MeshInstance::setRotation(float angle, glm::vec3 rot)
+{
+	ModelMatrix = glm::rotate(ModelMatrix, angle, rot);
+}
+
+void MeshInstance::setScale(glm::vec3 scale)
+{
+	ModelMatrix = glm::scale(ModelMatrix, scale);
 }

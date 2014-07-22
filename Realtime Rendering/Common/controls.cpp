@@ -4,6 +4,7 @@ extern GLFWwindow* window; // The "extern" keyword here is to access the variabl
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
 
 // Include GLM
 #include <glm/glm.hpp>
@@ -24,11 +25,11 @@ glm::mat4 getProjectionMatrix(){
 
 
 // Initial position : on +Z
-glm::vec3 position = glm::vec3(-2.24f, 1.14f, 3.3f);
+glm::vec3 position = glm::vec3(2,1,8);
 // Initial horizontal angle : toward -Z
-float horizontalAngle = 77.2f;
+float horizontalAngle = 3.14f;
 // Initial vertical angle : none
-float verticalAngle = 81.38f;
+float verticalAngle = 0.0f;
 // Initial Field of View
 float initialFov = 45.0f;
 
@@ -58,6 +59,9 @@ void computeMatricesFromInputs(){
 	horizontalAngle += mouseSpeed * float(1024 / 2 - xpos);
 	verticalAngle += mouseSpeed * float(768 / 2 - ypos);
 
+	//Prevents camera from getting flipped upside down
+	verticalAngle = clamp(verticalAngle, -1.57f, 1.57f);
+
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
 	glm::vec3 direction(
 		cos(verticalAngle) * sin(horizontalAngle),
@@ -75,10 +79,18 @@ void computeMatricesFromInputs(){
 	// Up vector
 	glm::vec3 up = glm::cross(right, direction);
 
+	//P to print vars
 	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS){
 		fprintf(stderr, "Horizontal Angle: %f\nVertical Angle: %f\n", horizontalAngle, verticalAngle);
 		fprintf(stderr, "Position: {%f, %f, %f}\n", position[0], position[1], position[2]);
 		fprintf(stderr, "Up: {%f, %f, %f}\n", up[0], up[1], up[2]);
+	}
+
+	//R resets camera to "default"
+	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
+		horizontalAngle = 3.14f;
+		verticalAngle = 0.0f;
+		position = glm::vec3(2, 1, 8);
 	}
 
 	// Move forward

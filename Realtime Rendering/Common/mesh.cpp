@@ -22,6 +22,7 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
+
 }
 
 Mesh::Mesh(const char * path)
