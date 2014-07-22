@@ -1,0 +1,17 @@
+﻿Build started 7/22/2014 12:04:54 AM.
+     1>Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         Realtime Rendering.vcxproj -> C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
+         Touching "Debug\Realtime.C1CA4FA4.tlog\Realtime Rendering.lastbuildstate".
+     1>Done Building Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.22
