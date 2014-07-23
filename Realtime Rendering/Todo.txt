@@ -1,7 +1,5 @@
 General:
-	Add a skybox or som ething so you can tell whats up and down
-	Make sure you're deleting everything you need to
-	More robust texture system?
+	Make sure you're deleting everything you need to, hint, you aren't
 	More robust debug text system?
 
 Camera:
@@ -12,7 +10,9 @@ Camera:
 
 MeshInstance:
 
-
+New Stuff:
+	Geometry shaders
+	Terrain!
 
 
 
@@ -22,6 +22,7 @@ MeshInstance:
 
 Future Stuff: 
 
+	Bullet Physics
 	Grass: http://http.developer.nvidia.com/GPUGems/gpugems_ch07.html
 	Atmosphere Spread Rendering: http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html
 	

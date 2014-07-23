@@ -62,7 +62,7 @@ int main(void)
 	glClearColor(0.0f, 0.05f, 0.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	//Initialize Text
 	initText2D("Assets/DroidSansMono.dds");
@@ -74,6 +74,7 @@ int main(void)
 	// Load the texture
 	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
 	GLuint CloudTexture = loadDDS("Assets/CloudTexture.dds");
+	GLuint skySphereTexture = loadDDS("Assets/skySphere.dds");
 
 	// Get a handle for our "LightPosition" uniform
 	GLuint LightID = glGetUniformLocation(StandardShaderID, "LightPosition_worldspace");
@@ -85,6 +86,7 @@ int main(void)
 	Mesh * torus = new Mesh("Assets/torusTri.obj");
 	Mesh * cube = new Mesh("Assets/cube.obj");
 	Mesh * suzanne = new Mesh("Assets/suzanne.obj");
+	Mesh * sphere = new Mesh("Assets/sphere.obj");
 
 	MeshInstance * cube1 = new MeshInstance(cube, StandardShaderID, GridTexture);
 	MeshInstance * cube2 = new MeshInstance(cube, FullbrightShaderID, CloudTexture);
@@ -96,7 +98,9 @@ int main(void)
 	MeshInstance * suzanne2 = new MeshInstance(suzanne, FullbrightShaderID, CloudTexture);
 	suzanne1->setPosition(glm::vec3(0.0, 2.5, 0.0));
 	suzanne2->setPosition(glm::vec3(3.0, 2.5, 0.0));
-	suzanne2->setScale(glm::vec3(1.0, 4.0, 1.0));
+
+	MeshInstance * skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
+	skySphere->setScale(glm::vec3(50,-50,50));
 
 	do{
 
@@ -124,6 +128,8 @@ int main(void)
 
 		suzanne1->Render();
 		suzanne2->Render();
+
+		skySphere->Render();
 		
 		//Draw text
 		printText2D(frameTimeString, 10, 10, 26);
