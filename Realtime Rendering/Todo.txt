@@ -1,3 +1,8 @@
+Current:
+	So you got the first part of the Geometry Shader Tutorial working, you're at "creating a geometry shader"
+	Drawing text messes up drawing of 4 red points, and I think it is because the text doesnt have its own VAO or something like that, and 
+		it's binding its vertices to the geometry VAO, i dunno. Just thinking outloud here.
+
 General:
 	Make sure you're deleting everything you need to, hint, you aren't
 	More robust debug text system?
@@ -13,11 +18,7 @@ MeshInstance:
 New Stuff:
 	Geometry shaders
 	Terrain!
-
-
-
-
-
+	
 
 
 Future Stuff: 
