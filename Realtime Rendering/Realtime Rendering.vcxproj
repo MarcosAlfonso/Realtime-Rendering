@@ -101,15 +101,29 @@
     <ClInclude Include="common\loadShader.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\fullbright.fragment" />
-    <None Include="Shaders\fullbright.vertex" />
-    <None Include="Shaders\standard.fragment" />
-    <None Include="Shaders\standard.vertex" />
-    <None Include="Shaders\text.fragment" />
-    <None Include="Shaders\text.vertex" />
+    <None Include="Assets\cube.model" />
+    <None Include="Assets\cylinder.model" />
+    <None Include="Assets\sphere.model" />
+    <None Include="Assets\suzanne.model" />
+    <None Include="Assets\torus.model" />
+    <None Include="Shaders\geometry.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\CloudTexture.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="Assets\DroidSansMono.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="Assets\GridTexture.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="Assets\skySphere.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -59,17 +59,18 @@ int main(void)
 
 	// Config Stuff
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	glClearColor(0.0f, 0.05f, 0.0f, 0.0f);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	//glEnable(GL_DEPTH_TEST);
+	//glDepthFunc(GL_LESS);
 	//glEnable(GL_CULL_FACE);
 
 	//Initialize Text
 	initText2D("Assets/DroidSansMono.dds");
 		
 	// Create and compile our GLSL program from the shaders
-	GLuint StandardShaderID = LoadShaders("Shaders/standard.vertex", "Shaders/standard.fragment");
-	GLuint FullbrightShaderID = LoadShaders("Shaders/fullbright.vertex", "Shaders/fullbright.fragment");
+	GLuint StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
+	GLuint FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
+	GLuint GeometryShaderID = CreateShaderProgram("Shaders/geometry.vert", "Shaders/geometry.frag", NULL);
 
 	// Load the texture
 	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -83,10 +84,36 @@ int main(void)
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
 
-	Mesh * torus = new Mesh("Assets/torusTri.obj");
-	Mesh * cube = new Mesh("Assets/cube.obj");
-	Mesh * suzanne = new Mesh("Assets/suzanne.obj");
-	Mesh * sphere = new Mesh("Assets/sphere.obj");
+	//Geometry Shader Stuff
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+
+	float points[] = {
+		-0.45f, 0.45f,
+		0.45f, 0.45f,
+		0.45f, -0.45f,
+		-0.45f, -0.45f,
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+
+	// Create VAO
+	GLuint geometryVAO;
+	glGenVertexArrays(1, &geometryVAO);
+	glBindVertexArray(geometryVAO);
+
+	// Specify layout of point data
+	GLint posAttrib = glGetAttribLocation(GeometryShaderID, "pos");
+	glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+
+	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
+	Mesh * torus = new Mesh("Assets/torus.model");
+	Mesh * cube = new Mesh("Assets/cube.model");
+	Mesh * suzanne = new Mesh("Assets/suzanne.model");
+	Mesh * sphere = new Mesh("Assets/sphere.model");
 
 	MeshInstance * cube1 = new MeshInstance(cube, StandardShaderID, GridTexture);
 	MeshInstance * cube2 = new MeshInstance(cube, FullbrightShaderID, CloudTexture);
@@ -101,6 +128,7 @@ int main(void)
 
 	MeshInstance * skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
 	skySphere->setScale(glm::vec3(50,-50,50));
+	
 
 	do{
 
@@ -115,14 +143,12 @@ int main(void)
 		}
 
 		// Clear the screen
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// Use our shader
-		glUseProgram(StandardShaderID);
+		glClear(GL_COLOR_BUFFER_BIT);// | GL_DEPTH_BUFFER_BIT);
 
 		glm::vec3 lightPos = glm::vec3(0, 0, 4);
 		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
+		
 		cube1->Render();
 		cube2->Render();
 
@@ -131,8 +157,13 @@ int main(void)
 
 		skySphere->Render();
 		
+		//Geom stuff
+		glUseProgram(GeometryShaderID);
+		glBindVertexArray(geometryVAO);
+		glDrawArrays(GL_POINTS, 0, 4);
+		
 		//Draw text
-		printText2D(frameTimeString, 10, 10, 26);
+		//printText2D(frameTimeString, 10, 10, 26);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
