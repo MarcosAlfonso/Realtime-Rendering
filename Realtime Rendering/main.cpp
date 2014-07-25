@@ -60,8 +60,8 @@ int main(void)
 	// Config Stuff
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	//glEnable(GL_DEPTH_TEST);
-	//glDepthFunc(GL_LESS);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 	//glEnable(GL_CULL_FACE);
 
 	//Initialize Text
@@ -70,7 +70,7 @@ int main(void)
 	// Create and compile our GLSL program from the shaders
 	GLuint StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
 	GLuint FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
-	GLuint GeometryShaderID = CreateShaderProgram("Shaders/geometry.vert", "Shaders/geometry.frag", NULL);
+	GLuint GeometryShaderID = CreateShaderProgram("Shaders/geometry.vert", "Shaders/geometry.frag", "Shaders/geometry.geom");
 
 	// Load the texture
 	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -89,10 +89,11 @@ int main(void)
 	glGenBuffers(1, &vbo);
 
 	float points[] = {
-		-0.45f, 0.45f,
-		0.45f, 0.45f,
-		0.45f, -0.45f,
-		-0.45f, -0.45f,
+		//  Coordinates  Color             Sides
+		-0.45f, 0.45f, 1.0f, 0.0f, 0.0f, 4.0f,
+		0.45f, 0.45f, 0.0f, 1.0f, 0.0f, 8.0f,
+		0.45f, -0.45f, 0.0f, 0.0f, 1.0f, 16.0f,
+		-0.45f, -0.45f, 1.0f, 1.0f, 0.0f, 32.0f
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -106,7 +107,18 @@ int main(void)
 	// Specify layout of point data
 	GLint posAttrib = glGetAttribLocation(GeometryShaderID, "pos");
 	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE,
+		6 * sizeof(float), 0);
+
+	GLint colAttrib = glGetAttribLocation(GeometryShaderID, "color");
+	glEnableVertexAttribArray(colAttrib);
+	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE,
+		6 * sizeof(float), (void*)(2 * sizeof(float)));
+
+	GLint sidesAttrib = glGetAttribLocation(GeometryShaderID, "sides");
+	glEnableVertexAttribArray(sidesAttrib);
+	glVertexAttribPointer(sidesAttrib, 1, GL_FLOAT, GL_FALSE,
+		6 * sizeof(float), (void*)(5 * sizeof(float)));
 
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
@@ -143,12 +155,13 @@ int main(void)
 		}
 
 		// Clear the screen
-		glClear(GL_COLOR_BUFFER_BIT);// | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glUseProgram(StandardShaderID);
 
 		glm::vec3 lightPos = glm::vec3(0, 0, 4);
 		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
-		
 		cube1->Render();
 		cube2->Render();
 
@@ -156,14 +169,14 @@ int main(void)
 		suzanne2->Render();
 
 		skySphere->Render();
-		
+
 		//Geom stuff
 		glUseProgram(GeometryShaderID);
 		glBindVertexArray(geometryVAO);
 		glDrawArrays(GL_POINTS, 0, 4);
 		
 		//Draw text
-		//printText2D(frameTimeString, 10, 10, 26);
+		printText2D(frameTimeString, 10, 10, 26);
 
 		// Swap buffers
 		glfwSwapBuffers(window);

@@ -12,6 +12,7 @@ using namespace glm;
 
 #include "text2D.hpp"
 
+GLuint VAO_ID;
 unsigned int Text2DTextureID;
 unsigned int Text2DVertexBufferID;
 unsigned int Text2DUVBufferID;
@@ -22,6 +23,10 @@ void initText2D(const char * texturePath){
 
 	// Initialize texture
 	Text2DTextureID = loadDDS(texturePath);
+
+	//Create and bind VAO
+	glGenVertexArrays(1, &VAO_ID);
+	glBindVertexArray(VAO_ID);
 
 	// Initialize VBO
 	glGenBuffers(1, &Text2DVertexBufferID);
@@ -73,6 +78,8 @@ void printText2D(const char * text, int x, int y, int size){
 		UVs.push_back(uv_up_right);
 		UVs.push_back(uv_down_left);
 	}
+
+	glBindVertexArray(VAO_ID);
 	glBindBuffer(GL_ARRAY_BUFFER, Text2DVertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), &vertices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, Text2DUVBufferID);
