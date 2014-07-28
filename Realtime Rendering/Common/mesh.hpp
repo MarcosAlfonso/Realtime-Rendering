@@ -14,8 +14,9 @@ class Mesh
 {
 public:
 	Mesh();
-	Mesh(const char * path);
 	~Mesh();
+	void loadFromFile(const char * path);
+	void generateGrid(int xPoints, int yPoints, float xSpacing, float ySpacing);
 	GLuint getVAO();
 	GLuint getBuffer(short index);
 	std::vector<unsigned short> getIndices();

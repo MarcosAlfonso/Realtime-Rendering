@@ -24,6 +24,7 @@ public:
 	void setScale(glm::vec3 scale);
 
 	void Render();
+	void RenderGrid();
 
 private:
 	Mesh * mesh;

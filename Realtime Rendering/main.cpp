@@ -70,7 +70,7 @@ int main(void)
 	// Create and compile our GLSL program from the shaders
 	GLuint StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
 	GLuint FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
-	GLuint GeometryShaderID = CreateShaderProgram("Shaders/geometry.vert", "Shaders/geometry.frag", "Shaders/geometry.geom");
+	GLuint TerrainShaderID = CreateShaderProgram("Shaders/terrain.vert", "Shaders/terrain.frag", "Shaders/terrain.geom");
 
 	// Load the texture
 	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -84,48 +84,20 @@ int main(void)
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
 
-	//Geometry Shader Stuff
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-
-	float points[] = {
-		//  Coordinates  Color             Sides
-		-0.45f, 0.45f, 1.0f, 0.0f, 0.0f, 4.0f,
-		0.45f, 0.45f, 0.0f, 1.0f, 0.0f, 8.0f,
-		0.45f, -0.45f, 0.0f, 0.0f, 1.0f, 16.0f,
-		-0.45f, -0.45f, 1.0f, 1.0f, 0.0f, 32.0f
-	};
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-	// Create VAO
-	GLuint geometryVAO;
-	glGenVertexArrays(1, &geometryVAO);
-	glBindVertexArray(geometryVAO);
-
-	// Specify layout of point data
-	GLint posAttrib = glGetAttribLocation(GeometryShaderID, "pos");
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE,
-		6 * sizeof(float), 0);
-
-	GLint colAttrib = glGetAttribLocation(GeometryShaderID, "color");
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE,
-		6 * sizeof(float), (void*)(2 * sizeof(float)));
-
-	GLint sidesAttrib = glGetAttribLocation(GeometryShaderID, "sides");
-	glEnableVertexAttribArray(sidesAttrib);
-	glVertexAttribPointer(sidesAttrib, 1, GL_FLOAT, GL_FALSE,
-		6 * sizeof(float), (void*)(5 * sizeof(float)));
-
-
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
-	Mesh * torus = new Mesh("Assets/torus.model");
-	Mesh * cube = new Mesh("Assets/cube.model");
-	Mesh * suzanne = new Mesh("Assets/suzanne.model");
-	Mesh * sphere = new Mesh("Assets/sphere.model");
+	Mesh * torus = new Mesh();
+	torus->loadFromFile("Assets/torus.model");
+	Mesh * cube = new Mesh();
+	cube->loadFromFile("Assets/cube.model");
+	Mesh * suzanne = new Mesh();
+	suzanne->loadFromFile("Assets/suzanne.model");
+	Mesh * sphere = new Mesh();
+	sphere->loadFromFile("Assets/sphere.model");
+
+	Mesh * grid = new Mesh();
+	grid->generateGrid(2, 2, 1, 1);
+
+	MeshInstance * grid1 = new MeshInstance(grid, TerrainShaderID, GridTexture);
 
 	MeshInstance * cube1 = new MeshInstance(cube, StandardShaderID, GridTexture);
 	MeshInstance * cube2 = new MeshInstance(cube, FullbrightShaderID, CloudTexture);
@@ -162,18 +134,15 @@ int main(void)
 		glm::vec3 lightPos = glm::vec3(0, 0, 4);
 		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
-		cube1->Render();
+		grid1->RenderGrid();
+
+		//cube1->Render();
 		cube2->Render();
 
 		suzanne1->Render();
 		suzanne2->Render();
 
 		skySphere->Render();
-
-		//Geom stuff
-		glUseProgram(GeometryShaderID);
-		glBindVertexArray(geometryVAO);
-		glDrawArrays(GL_POINTS, 0, 4);
 		
 		//Draw text
 		printText2D(frameTimeString, 10, 10, 26);

@@ -16,22 +16,55 @@
 #include "mesh.hpp"
 #include "controls.hpp"
 
-Mesh::Mesh()
-{
-}
-
 Mesh::~Mesh()
 {
 
 }
 
-Mesh::Mesh(const char * path)
+Mesh::Mesh()
 {
-
 	//Create VAO for Mesh
 	glGenVertexArrays(1, &VAO_ID);
 	glBindVertexArray(VAO_ID);
+}
 
+///////////////////
+//Generate a grid//
+///////////////////
+void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing)
+{
+	float width = xSpacing * (xPoints - 1);
+	float height = zSpacing * (zPoints - 1);
+	float minX = -width / 2;
+	float minY = -height / 2;
+
+	vertices.reserve(xPoints*zPoints);
+
+	for (int i = 0; i < xPoints; i++)
+	{
+		for (int j = 0; j < zPoints; j++)
+		{
+			float x = minX + i*xSpacing;
+			float y = 0;
+			float z = minY + j*zSpacing;
+
+			vertices.push_back(glm::vec3(x, y, z));			
+			
+		}
+	}
+
+	buffers.resize(1);
+
+	glGenBuffers(1, &buffers[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+}
+
+/////////////////////////////////
+//Load imported model into Mesh//
+/////////////////////////////////
+void Mesh::loadFromFile(const char * path)
+{
 	//Import mesh function through Assimp, fills arrays
 	ImportMeshWithAssimp(path, indices, vertices, uvs, normals);
 
@@ -54,8 +87,12 @@ Mesh::Mesh(const char * path)
 	glGenBuffers(1, &buffers[3]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[3]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
+
 }
 
+//////////////////////////
+//Read model with Assimp//
+//////////////////////////
 bool Mesh::ImportMeshWithAssimp(
 	const char * path,
 	std::vector<unsigned short> & indices,
@@ -106,16 +143,25 @@ bool Mesh::ImportMeshWithAssimp(
 
 }
 
+/////////////////////
+//Returns ID of VAO//
+/////////////////////
 GLuint Mesh::getVAO()
 {
 	return VAO_ID;
 }
 
+///////////////////////////////
+//Returns the buffer at index//
+///////////////////////////////
 GLuint Mesh::getBuffer(short index)
 {
 	return buffers[index];
 }
 
+///////////////////
+//Returns indices//
+///////////////////
 std::vector<unsigned short> Mesh::getIndices()
 {
 	return indices;
