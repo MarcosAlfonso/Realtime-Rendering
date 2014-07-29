@@ -1,6 +1,9 @@
-Current:
-	Got the grid generator function working (I think) trying to debug it by making terrain shader use geometry shaders to render vertices, but kinda stuck
-	nothing is rendering, despite matching open.gl tutorial. 
+Urgent:
+	Just got uniform grid generating and rendering
+	Implement defining grid points with images and implicit functions
+	Clean up grid related code
+	GLuint buffers array in Mesh is potentially going to lead to more confusion than convenience, give each std vector an ID? Or some other solution
+	Do all these other To-Do's before you move on to any thing else large, and clean up/comment things over all
 
 General:
 	Make sure you're deleting everything you need to, hint, you aren't

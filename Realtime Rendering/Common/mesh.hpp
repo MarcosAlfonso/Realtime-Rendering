@@ -20,6 +20,7 @@ public:
 	GLuint getVAO();
 	GLuint getBuffer(short index);
 	std::vector<unsigned short> getIndices();
+	std::vector<glm::vec3> getVertices();
 
 private:
 

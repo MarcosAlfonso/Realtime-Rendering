@@ -62,6 +62,7 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+	glPointSize(7);
 	//glEnable(GL_CULL_FACE);
 
 	//Initialize Text
@@ -70,7 +71,7 @@ int main(void)
 	// Create and compile our GLSL program from the shaders
 	GLuint StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
 	GLuint FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
-	GLuint TerrainShaderID = CreateShaderProgram("Shaders/terrain.vert", "Shaders/terrain.frag", "Shaders/terrain.geom");
+	GLuint TerrainShaderID = CreateShaderProgram("Shaders/terrain.vert", "Shaders/terrain.frag", NULL);
 
 	// Load the texture
 	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -95,7 +96,7 @@ int main(void)
 	sphere->loadFromFile("Assets/sphere.model");
 
 	Mesh * grid = new Mesh();
-	grid->generateGrid(2, 2, 1, 1);
+	grid->generateGrid(10, 10, 1, 1);
 
 	MeshInstance * grid1 = new MeshInstance(grid, TerrainShaderID, GridTexture);
 
@@ -136,11 +137,7 @@ int main(void)
 
 		grid1->RenderGrid();
 
-		//cube1->Render();
-		cube2->Render();
-
 		suzanne1->Render();
-		suzanne2->Render();
 
 		skySphere->Render();
 		
@@ -165,7 +162,7 @@ int main(void)
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
 
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
 
 	return 0;
 }
