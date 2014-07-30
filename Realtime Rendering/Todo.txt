@@ -1,6 +1,6 @@
 Urgent:
-	Just got uniform grid generating and rendering
-	Implement defining grid points with images and implicit functions
+	Implement defining grid points with images
+	Vertex Normals (Reimer's helps)
 	Clean up grid related code
 	GLuint buffers array in Mesh is potentially going to lead to more confusion than convenience, give each std vector an ID? Or some other solution
 	Do all these other To-Do's before you move on to any thing else large, and clean up/comment things over all
@@ -8,6 +8,7 @@ Urgent:
 General:
 	Make sure you're deleting everything you need to, hint, you aren't
 	More robust debug text system?
+	Try out GLDebugger or whatever it was called
 
 Camera:
 	Make a camera class, seperate it from controls.
@@ -17,12 +18,6 @@ Camera:
 
 MeshInstance:
 	Merge RenderGrid into Render
-
-New Stuff:
-	Geometry shaders
-	Terrain!
-	
-
 
 Future Stuff: 
 

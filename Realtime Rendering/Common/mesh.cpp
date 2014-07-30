@@ -46,8 +46,11 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 		for (int j = 0; j < zPoints; j++)
 		{
 			float x = minX + i*xSpacing;
-			float y = 0;
 			float z = minY + j*zSpacing;
+
+			float r = glm::sqrt(x*x + z*z);
+			
+			float y = glm::sin(r*3.14) / (3.14*r) * 5;
 
 			vertices.push_back(glm::vec3(x, y, z));						
 		}
