@@ -38,7 +38,11 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 	float minX = -width / 2;
 	float minY = -height / 2;
 
-	vertices.reserve(xPoints*zPoints);
+	int numPoints = xPoints*zPoints;
+
+	vertices.reserve(numPoints);
+	normals.reserve(numPoints);
+	uvs.reserve(numPoints);
 
 	//Calculates vertex positions and adds them to array
 	for (int i = 0; i < xPoints; i++)
@@ -56,6 +60,7 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 		}
 	}
 
+	//Indice Creation
 	int quadCount = (xPoints - 1)*(zPoints - 1);
 
 	for (int i = 0; i < quadCount; i++)
@@ -77,16 +82,58 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 		indices.push_back(c);
 	}
 
-	buffers.resize(2);
+	//Size normal vector, and initialize
+	for (int i = 0; i < normals.capacity(); i++)
+		normals.push_back(glm::vec3(0, 0, 0));
 
-	//Fill vertex buffer
+	//For all the indices, get a face, calculate its normal, and then use that to add to related vertices
+	for (int i = 0; i < indices.size() / 3; i++)
+	{
+		int index1 = indices[i * 3];
+		int index2 = indices[i * 3 + 1];
+		int index3 = indices[i * 3 + 2];
+
+		//Calculate face normal
+		glm::vec3 side1 = vertices[index1] - vertices[index3];
+		glm::vec3 side2 = vertices[index1] - vertices[index2];
+		glm::vec3 normal = glm::cross(side1, side2);
+
+		normals[index1] += normal;
+		normals[index2] += normal;
+		normals[index3] += normal;
+	}
+
+	//normalize indices
+	for (int i = 0; i < normals.size(); i++)
+		normals[i] = glm::normalize(normals[i]);
+
+	//Top down planar UV's
+	for (int i = 0; i < uvs.capacity(); i++)
+	{
+		int xLoc = i % xPoints;
+		int zLoc = i / zPoints;
+
+		uvs.push_back(glm::vec2(xLoc * (1.0 / xPoints),zLoc * (1.0 / zPoints)));
+ 	}
+	
+	buffers.resize(4);
+
+	//Vertex, UVs, Normals buffers
 	glGenBuffers(1, &buffers[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	//Fill indices buffer
 	glGenBuffers(1, &buffers[1]);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &buffers[2]);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+
+	// Generate a buffer for the indices as well
+	glGenBuffers(1, &buffers[3]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[3]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
 }
 

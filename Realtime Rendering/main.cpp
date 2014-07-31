@@ -62,7 +62,7 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glPointSize(7);
+	glPointSize(5);
 	//glEnable(GL_CULL_FACE);
 
 	//Initialize Text
@@ -96,9 +96,9 @@ int main(void)
 	sphere->loadFromFile("Assets/sphere.model");
 
 	Mesh * grid = new Mesh();
-	grid->generateGrid(10, 10, 1, 1);
+	grid->generateGrid(25, 25, .4f, .4f);
 
-	MeshInstance * grid1 = new MeshInstance(grid, TerrainShaderID, GridTexture);
+	MeshInstance * grid1 = new MeshInstance(grid, FullbrightShaderID, GridTexture);
 
 	MeshInstance * cube1 = new MeshInstance(cube, StandardShaderID, GridTexture);
 	MeshInstance * cube2 = new MeshInstance(cube, FullbrightShaderID, CloudTexture);

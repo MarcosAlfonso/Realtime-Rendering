@@ -140,8 +140,14 @@ void MeshInstance::RenderGrid()
 	glm::mat4 ViewMatrix = getViewMatrix();
 	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
-	//Color handle
-	GLuint colorID = glGetUniformLocation(shader_ID, "inColor");
+	// Get a handle for our "myTextureSampler" uniform
+	GLuint TextureUniformID = glGetUniformLocation(shader_ID, "DiffuseTextureSampler");
+
+	// Bind our diffuse texture in Texture Unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture_ID);
+	// Set our "DiffuseTextureSampler" sampler to user Texture Unit 0
+	glUniform1i(TextureUniformID, 0);
 
 	// Send our transformation to the currently bound shader, 
 	// in the "MVP" uniform
@@ -162,11 +168,32 @@ void MeshInstance::RenderGrid()
 		(void*)0            // array buffer offset
 		);
 
-	// Index buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getBuffer(1));
+	// 2nd attribute buffer : UVs
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->getBuffer(1));
+	glVertexAttribPointer(
+		1,                                // attribute
+		2,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+		);
 
-	//Set color to red
-	glUniform3f(colorID, 1.0f, 0.0f, 0.0f);
+	// 3rd attribute buffer : normals
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->getBuffer(2));
+	glVertexAttribPointer(
+		2,                                // attribute
+		3,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+		);
+
+	// Index buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getBuffer(3));
 
 	// Draw the triangles !
 	glDrawElements(
@@ -176,13 +203,10 @@ void MeshInstance::RenderGrid()
 		(void*)0           // element array buffer offset
 		);
 
-	//Change color to blue
-	glUniform3f(colorID, 0.0f, 0.0f, 1.0f);
-
-	//Draw points
-	glDrawArrays(GL_POINTS, 0, mesh->getVertices().size());
-
 	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+
 }
 
 glm::mat4 MeshInstance::getModelMatrix()
