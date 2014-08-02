@@ -41,11 +41,6 @@ private:
 	std::vector<glm::vec3> normals;
 	
 	std::vector<GLuint> buffers;
-	GLuint vertexbuffer;
-	GLuint uvbuffer;
-	GLuint normalbuffer;
-	GLuint elementbuffer;
-
 };
 
 #endif

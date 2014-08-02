@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -54,9 +55,9 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 
 			float r = glm::sqrt(x*x + z*z);
 			
-			float y = glm::sin(r*3.14) / (3.14*r) * 5;
-			
-
+			float y = (glm::sin(3.141592*r))/(3.141592 * r);
+						
+			//y = 0;
 			vertices.push_back(glm::vec3(x, y, z));						
 		}
 	}

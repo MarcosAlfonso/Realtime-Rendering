@@ -96,7 +96,7 @@ int main(void)
 	sphere->loadFromFile("Assets/sphere.model");
 
 	Mesh * grid = new Mesh();
-	grid->generateGrid(25, 25, .4f, .4f);
+	grid->generateGrid(100, 100, .1f, .1f);
 
 	MeshInstance * grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);
 
