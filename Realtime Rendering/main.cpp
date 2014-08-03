@@ -17,6 +17,7 @@ GLFWwindow* window;
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
+//Include external project files
 #include "Common/loadShader.hpp"
 #include "Common/textureLoad.hpp"
 #include "Common/controls.hpp"
@@ -26,6 +27,8 @@ GLFWwindow* window;
 
 int main(void)
 {
+
+#pragma region Configuration/Setup
 	//Debug Frame Time String
 	char frameTimeString[256] = "";
 
@@ -64,7 +67,10 @@ int main(void)
 	glDepthFunc(GL_LESS);
 	glPointSize(5);
 	//glEnable(GL_CULL_FACE);
+#pragma endregion
 
+
+#pragma region Load Assets
 	//Initialize Text
 	initText2D("Assets/DroidSansMono.dds");
 		
@@ -78,46 +84,43 @@ int main(void)
 	GLuint CloudTexture = loadDDS("Assets/CloudTexture.dds");
 	GLuint skySphereTexture = loadDDS("Assets/skySphere.dds");
 
-	// Get a handle for our "LightPosition" uniform
-	GLuint LightID = glGetUniformLocation(StandardShaderID, "LightPosition_worldspace");
+	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
+	//Torus
+	Mesh * torus = new Mesh();
+	torus->loadFromFile("Assets/torus.model");
+
+	//Cube
+	Mesh * cube = new Mesh();
+	cube->loadFromFile("Assets/cube.model");
+	
+	//Suzanne
+	Mesh * suzanne = new Mesh();
+	suzanne->loadFromFile("Assets/suzanne.model");
+
+	MeshInstance * suzanne1 = new MeshInstance(suzanne, StandardShaderID, GridTexture);
+	suzanne1->setPosition(glm::vec3(0.0, 2.5, 0.0));
+	
+	//Sphere
+	Mesh * sphere = new Mesh();
+	sphere->loadFromFile("Assets/sphere.model");
+
+	MeshInstance * skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
+	skySphere->setScale(glm::vec3(50, -50, 50));
+
+	//Grid Mesh
+	Mesh * grid = new Mesh();
+	grid->generateGrid(100, 100, .1f, .1f);
+
+	MeshInstance * grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);	
+#pragma endregion
 
 	// For speed computation
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
 
-	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
-	Mesh * torus = new Mesh();
-	torus->loadFromFile("Assets/torus.model");
-	Mesh * cube = new Mesh();
-	cube->loadFromFile("Assets/cube.model");
-	Mesh * suzanne = new Mesh();
-	suzanne->loadFromFile("Assets/suzanne.model");
-	Mesh * sphere = new Mesh();
-	sphere->loadFromFile("Assets/sphere.model");
-
-	Mesh * grid = new Mesh();
-	grid->generateGrid(100, 100, .1f, .1f);
-
-	MeshInstance * grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);
-
-	MeshInstance * cube1 = new MeshInstance(cube, StandardShaderID, GridTexture);
-	MeshInstance * cube2 = new MeshInstance(cube, FullbrightShaderID, CloudTexture);
-	cube1->setPosition(glm::vec3(0.0, 0.0, 0.0));
-	cube2->setPosition(glm::vec3(3.0, 0.0, 0.0));
-	cube2->setRotation(45, glm::vec3(1.0, 0.0, 0.0));
-
-	MeshInstance * suzanne1 = new MeshInstance(suzanne, StandardShaderID, GridTexture);
-	MeshInstance * suzanne2 = new MeshInstance(suzanne, FullbrightShaderID, CloudTexture);
-	suzanne1->setPosition(glm::vec3(0.0, 2.5, 0.0));
-	suzanne2->setPosition(glm::vec3(3.0, 2.5, 0.0));
-
-	MeshInstance * skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
-	skySphere->setScale(glm::vec3(50,-50,50));
-	
-
 	do{
 
-		// Measure speed
+		//Updates framtime
 		double currentTime = glfwGetTime();
 		nbFrames++;
 		if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
@@ -130,12 +133,9 @@ int main(void)
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glUseProgram(StandardShaderID);
 
-		glm::vec3 lightPos = glm::vec3(0, 0, -4);
-		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
-		grid1->RenderGrid();
+		grid1->Render();
 
 		suzanne1->Render();
 

@@ -25,8 +25,8 @@ Mesh::~Mesh()
 Mesh::Mesh()
 {
 	//Create VAO for Mesh
-	glGenVertexArrays(1, &VAO_ID);
-	glBindVertexArray(VAO_ID);
+	glGenVertexArrays(1, &vaoID);
+	glBindVertexArray(vaoID);
 }
 
 ///////////////////
@@ -34,18 +34,19 @@ Mesh::Mesh()
 ///////////////////
 void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing)
 {
+	//Initialized vars
 	float width = xSpacing * (xPoints - 1);
 	float height = zSpacing * (zPoints - 1);
 	float minX = -width / 2;
 	float minY = -height / 2;
-
 	int numPoints = xPoints*zPoints;
 
+	//Set aside space in vectors
 	vertices.reserve(numPoints);
 	normals.reserve(numPoints);
 	uvs.reserve(numPoints);
 
-	//Calculates vertex positions and adds them to array
+#pragma region Vertex Creation
 	for (int i = 0; i < xPoints; i++)
 	{
 		for (int j = 0; j < zPoints; j++)
@@ -61,8 +62,9 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 			vertices.push_back(glm::vec3(x, y, z));						
 		}
 	}
+#pragma endregion
 
-	//Indice Creation
+#pragma region Index Creation
 	int quadCount = (xPoints - 1)*(zPoints - 1);
 
 	for (int i = 0; i < quadCount; i++)
@@ -83,7 +85,9 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 		indices.push_back(b);
 		indices.push_back(c);
 	}
+#pragma endregion
 
+#pragma region Normal Vertex Creation
 	//Size normal vector, and initialize
 	for (int i = 0; i < normals.capacity(); i++)
 		normals.push_back(glm::vec3(0, 0, 0));
@@ -108,7 +112,9 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 	//normalize indices
 	for (int i = 0; i < normals.size(); i++)
 		normals[i] = glm::normalize(normals[i]);
+#pragma endregion
 
+#pragma region UV Creation
 	//Top down planar UV's
 	for (int i = 0; i < uvs.capacity(); i++)
 	{
@@ -117,27 +123,28 @@ void Mesh::generateGrid(int xPoints, int zPoints, float xSpacing, float zSpacing
 
 		uvs.push_back(glm::vec2(xLoc * (1.0 / xPoints),zLoc * (1.0 / zPoints)));
  	}
-	
-	buffers.resize(4);
+#pragma endregion
 
+#pragma region Buffer Creation
 	//Vertex, UVs, Normals buffers
-	glGenBuffers(1, &buffers[0]);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	glGenBuffers(1, &verticesID);
+	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	glGenBuffers(1, &buffers[1]);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glGenBuffers(1, &uvsID);
+	glBindBuffer(GL_ARRAY_BUFFER, uvsID);
 	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 
-	glGenBuffers(1, &buffers[2]);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+	glGenBuffers(1, &normalsID);
+	glBindBuffer(GL_ARRAY_BUFFER, normalsID);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 
 	// Generate a buffer for the indices as well
-	glGenBuffers(1, &buffers[3]);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[3]);
+	glGenBuffers(1, &indicesID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
 }
+#pragma endregion
 
 /////////////////////////////////
 //Load imported model into Mesh//
@@ -147,26 +154,23 @@ void Mesh::loadFromFile(const char * path)
 	//Import mesh function through Assimp, fills arrays
 	ImportMeshWithAssimp(path, indices, vertices, uvs, normals);
 
-	buffers.resize(4);
-
-	//Create a bunch of buffers for the stuff
-	glGenBuffers(1, &buffers[0]);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	//Vertex, UVs, Normals buffers
+	glGenBuffers(1, &verticesID);
+	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	glGenBuffers(1, &buffers[1]);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glGenBuffers(1, &uvsID);
+	glBindBuffer(GL_ARRAY_BUFFER, uvsID);
 	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 
-	glGenBuffers(1, &buffers[2]);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+	glGenBuffers(1, &normalsID);
+	glBindBuffer(GL_ARRAY_BUFFER, normalsID);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 
 	// Generate a buffer for the indices as well
-	glGenBuffers(1, &buffers[3]);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[3]);
+	glGenBuffers(1, &indicesID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
-
 }
 
 //////////////////////////
@@ -220,36 +224,4 @@ bool Mesh::ImportMeshWithAssimp(
 		indices.push_back(mesh->mFaces[i].mIndices[2]);
 	}
 
-}
-
-/////////////////////
-//Returns ID of VAO//
-/////////////////////
-GLuint Mesh::getVAO()
-{
-	return VAO_ID;
-}
-
-///////////////////////////////
-//Returns the buffer at index//
-///////////////////////////////
-GLuint Mesh::getBuffer(short index)
-{
-	return buffers[index];
-}
-
-///////////////////
-//Returns indices//
-///////////////////
-std::vector<unsigned short> Mesh::getIndices()
-{
-	return indices;
-}
-
-////////////////////
-//Returns vertices//
-////////////////////
-std::vector<glm::vec3> Mesh::getVertices()
-{
-	return vertices;
 }

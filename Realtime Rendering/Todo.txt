@@ -1,8 +1,7 @@
 Urgent:
 	Implement defining grid points with images
-	Clean up grid related code
-	GLuint buffers array in Mesh is potentially going to lead to more confusion than convenience, give each std vector an ID? Or some other solution
-	Do all these other To-Do's before you move on to any thing else large, and clean up/comment things over all
+	Continue region-ing off sections of code, commenting, cleaning up overall.
+	Do all these other To-Do's before you move on to any thing else large.
 
 General:
 	Make sure you're deleting everything you need to, hint, you aren't
