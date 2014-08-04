@@ -11,7 +11,7 @@ using namespace std;
 
 #include <GL/glew.h>
 
-#include "loadShader.hpp"
+#include "loadShader.h"
 
 //Generic Shader Load Function
 GLuint LoadShader(GLenum type, const char * shader_path)

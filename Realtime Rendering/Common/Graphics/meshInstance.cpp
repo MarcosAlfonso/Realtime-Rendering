@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -13,9 +14,9 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 
-#include "mesh.hpp"
-#include "controls.hpp"
-#include "meshInstance.hpp"
+#include "mesh.h"
+#include "../controls.h"
+#include "meshInstance.h"
 
 MeshInstance::MeshInstance()
 {
@@ -121,11 +122,6 @@ void MeshInstance::Render()
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
-}
-
-glm::mat4 MeshInstance::getModelMatrix()
-{
-	return ModelMatrix;
 }
 
 void MeshInstance::setPosition(glm::vec3 trans)

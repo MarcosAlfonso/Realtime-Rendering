@@ -18,17 +18,23 @@ GLFWwindow* window;
 #include <glm/gtx/string_cast.hpp>
 
 //Include external project files
-#include "Common/loadShader.hpp"
-#include "Common/textureLoad.hpp"
-#include "Common/controls.hpp"
-#include "Common/mesh.hpp"
-#include "Common/meshInstance.hpp"
-#include "Common/text2D.hpp"
+#include "Common/Util/loadShader.h"
+#include "Common/Util/textureLoad.h"
+#include "Common/controls.h"
+#include "Common/Graphics/mesh.h"
+#include "Common/Graphics/GridMesh.h"
+#include "Common/Graphics/meshInstance.h"
+#include "Common/Util/text2D.h"
 
 int main(void)
 {
 
 #pragma region Configuration/Setup
+
+	//frameTime Variables
+	double lastTime = glfwGetTime();
+	int nbFrames = 0;
+
 	//Debug Frame Time String
 	char frameTimeString[256] = "";
 
@@ -108,19 +114,18 @@ int main(void)
 	skySphere->setScale(glm::vec3(50, -50, 50));
 
 	//Grid Mesh
-	Mesh * grid = new Mesh();
-	grid->generateGrid(100, 100, .1f, .1f);
-
+	GridMesh * grid = new GridMesh(20, 20, .4f, .4f);
 	MeshInstance * grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);	
+
 #pragma endregion
 
-	// For speed computation
-	double lastTime = glfwGetTime();
-	int nbFrames = 0;
+
 
 	do{
 
-		//Updates framtime
+#pragma region frameTime Calculation
+
+		//Updates frametime
 		double currentTime = glfwGetTime();
 		nbFrames++;
 		if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
@@ -129,22 +134,23 @@ int main(void)
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
+#pragma endregion
 
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-
+		
+		
+#pragma region Render Here
 		grid1->Render();
 
 		suzanne1->Render();
 
 		skySphere->Render();
-		
-		//Draw text
-		printText2D(frameTimeString, 10, 10, 26);
 
-		// Swap buffers
+		printText2D(frameTimeString, 10, 10, 26);
+#pragma endregion
+		
+		//Swap Buffers and Poll for Input
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
@@ -155,6 +161,7 @@ int main(void)
 	// Cleanup VBO and shader
 	glDeleteProgram(StandardShaderID);
 	glDeleteTextures(1, &GridTexture);
+
 
 	// Delete the text's VBO, the shader and the texture
 	cleanupText2D();

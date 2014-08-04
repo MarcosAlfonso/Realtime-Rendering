@@ -1,21 +1,22 @@
 Urgent:
 	Implement defining grid points with images
-	Continue region-ing off sections of code, commenting, cleaning up overall.
-	Do all these other To-Do's before you move on to any thing else large.
+		Load a height map in main
+		Have GridMesh take said height map as an argument
+		Make that loaded texture the active texture
+		use glGetTexImage to convert image to a 1D array
+		Use value of that array in the PopulateVertices function when defining y value
+
+
+	Free up memory! Do it already so you know how!
 
 General:
-	Make sure you're deleting everything you need to, hint, you aren't
-	More robust debug text system?
 	Try out GLDebugger or whatever it was called
+
+Mesh:
+	Add some sort of general debug rendering, render out normals, verts, whatevers else
 
 Camera:
 	Make a camera class, seperate it from controls.
-
-~Deconstructor:
-	Need to check for memory leaks and such, ***a ton of stuff isn't getting freed***
-
-MeshInstance:
-	Merge RenderGrid into Render
 
 Future Stuff: 
 

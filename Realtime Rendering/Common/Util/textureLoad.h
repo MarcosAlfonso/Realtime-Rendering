@@ -1,7 +1,4 @@
-#ifndef TEXT_HPP
-#define TEXT_HPP
+#pragma once
 
 GLuint loadDDS(const char * imagepath);
 GLuint loadBMP(const char * imagepath);
-
-#endif

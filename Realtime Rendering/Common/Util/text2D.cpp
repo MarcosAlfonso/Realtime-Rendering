@@ -7,10 +7,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 using namespace glm;
 
-#include "loadShader.hpp"
-#include "textureLoad.hpp"
+#include "loadShader.h"
+#include "textureLoad.h"
 
-#include "text2D.hpp"
+#include "text2D.h"
 
 GLuint VAO_ID;
 unsigned int Text2DTextureID;
