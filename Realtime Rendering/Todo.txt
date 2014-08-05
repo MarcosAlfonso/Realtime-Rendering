@@ -1,11 +1,6 @@
 Urgent:
 	Implement defining grid points with images
-		Load a height map in main
-		Have GridMesh take said height map as an argument
-		Make that loaded texture the active texture
-		use glGetTexImage to convert image to a 1D array
-		Use value of that array in the PopulateVertices function when defining y value
-
+		Set vertex height by using sampler in vertex shader? 
 
 	Free up memory! Do it already so you know how!
 

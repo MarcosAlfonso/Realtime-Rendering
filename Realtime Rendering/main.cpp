@@ -89,6 +89,7 @@ int main(void)
 	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
 	GLuint CloudTexture = loadDDS("Assets/CloudTexture.dds");
 	GLuint skySphereTexture = loadDDS("Assets/skySphere.dds");
+	GLuint pixelReadTexture = loadDDS("Assets/pixelReadTest.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Torus

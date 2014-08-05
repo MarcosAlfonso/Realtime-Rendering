@@ -131,6 +131,7 @@
     <Image Include="Assets\GridTexture.dds">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <None Include="Assets\pixelReadTest.dds" />
     <Image Include="Assets\skySphere.dds">
       <DeploymentContent>true</DeploymentContent>
     </Image>
