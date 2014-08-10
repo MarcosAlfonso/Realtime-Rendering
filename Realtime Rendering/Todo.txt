@@ -1,8 +1,10 @@
 Urgent:
-	Implement defining grid points with images
-		Set vertex height by using sampler in vertex shader? 
+
+	Terrain can't go above certain vertex count without getting spiderwebby
+		
 
 	Free up memory! Do it already so you know how!
+	Clean up library linkage and shiz
 
 General:
 	Try out GLDebugger or whatever it was called

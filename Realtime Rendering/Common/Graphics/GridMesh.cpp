@@ -9,6 +9,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+
 // Include AssImp
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
@@ -17,12 +18,19 @@
 #include "GridMesh.h"
 #include "../controls.h"
 
+//Noise lib
+#include <noise/noise.h>
+#include <noise/noiseutils.h>
+//#include <Common/Util/noiseutils.h>
+
 
 ///////////////////
 //Generate a grid//
 ///////////////////
 GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing)
 {
+
+
 	xPoints = _xPoints;
 	zPoints = _zPoints;
 	xSpacing = _xSpacing;
@@ -51,9 +59,31 @@ GridMesh::~GridMesh()
 void GridMesh::PopulateVertices()
 {
 	float width = xSpacing * (xPoints - 1);
-	float height = zSpacing * (zPoints - 1);
+	float length = zSpacing * (zPoints - 1);
 	float minX = -width / 2;
-	float minY = -height / 2;
+	float minY = -length / 2;
+
+	noise::module::Perlin PerlinModule;
+	PerlinModule.SetOctaveCount(1);
+
+	utils::NoiseMap heightMap;
+	utils::NoiseMapBuilderPlane heightMapBuilder;
+	heightMapBuilder.SetSourceModule(PerlinModule);
+	heightMapBuilder.SetDestNoiseMap(heightMap);
+	heightMapBuilder.SetDestSize(xPoints, zPoints);
+	heightMapBuilder.SetBounds(0.0, width/4, 0.0, length/4);
+	heightMapBuilder.Build();
+
+	utils::RendererImage renderer;
+	utils::Image image;
+	renderer.SetSourceNoiseMap(heightMap);
+	renderer.SetDestImage(image);
+	renderer.Render();
+
+	utils::WriterBMP writer;
+	writer.SetSourceImage(image);
+	writer.SetDestFilename("tutorial.bmp");
+	writer.WriteDestFile();
 
 	for (int i = 0; i < xPoints; i++)
 	{
@@ -62,11 +92,8 @@ void GridMesh::PopulateVertices()
 			float x = minX + i*xSpacing;
 			float z = minY + j*zSpacing;
 
-			float r = glm::sqrt(x*x + z*z);
+			float y = heightMap.GetValue(i, j);
 
-			float y = (glm::sin(3.141592*r)) / (3.141592 * r);
-
-			//y = 0;
 			vertices.push_back(glm::vec3(x, y, z));
 		}
 	}

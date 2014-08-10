@@ -26,6 +26,7 @@ GLFWwindow* window;
 #include "Common/Graphics/meshInstance.h"
 #include "Common/Util/text2D.h"
 
+
 int main(void)
 {
 
@@ -75,7 +76,6 @@ int main(void)
 	//glEnable(GL_CULL_FACE);
 #pragma endregion
 
-
 #pragma region Load Assets
 	//Initialize Text
 	initText2D("Assets/DroidSansMono.dds");
@@ -115,7 +115,7 @@ int main(void)
 	skySphere->setScale(glm::vec3(50, -50, 50));
 
 	//Grid Mesh
-	GridMesh * grid = new GridMesh(20, 20, .4f, .4f);
+	GridMesh * grid = new GridMesh(200, 200, .1, .1);
 	MeshInstance * grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);	
 
 #pragma endregion
