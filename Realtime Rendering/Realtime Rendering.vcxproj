@@ -115,8 +115,6 @@
     <None Include="Shaders\fullbright.vert" />
     <None Include="Shaders\standard.frag" />
     <None Include="Shaders\standard.vert" />
-    <None Include="Shaders\terrain.frag" />
-    <None Include="Shaders\terrain.vert" />
     <None Include="Shaders\text.frag" />
     <None Include="Shaders\text.vert" />
   </ItemGroup>

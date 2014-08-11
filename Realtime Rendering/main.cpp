@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
+#include <vld.h>
 
 // Include GLEW
 #define GLEW_STATIC
@@ -27,8 +28,11 @@ GLFWwindow* window;
 #include "Common/Util/text2D.h"
 
 
+
+
 int main(void)
 {
+
 
 #pragma region Configuration/Setup
 
@@ -83,23 +87,13 @@ int main(void)
 	// Create and compile our GLSL program from the shaders
 	GLuint StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
 	GLuint FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
-	GLuint TerrainShaderID = CreateShaderProgram("Shaders/terrain.vert", "Shaders/terrain.frag", NULL);
 
 	// Load the texture
 	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
 	GLuint CloudTexture = loadDDS("Assets/CloudTexture.dds");
 	GLuint skySphereTexture = loadDDS("Assets/skySphere.dds");
-	GLuint pixelReadTexture = loadDDS("Assets/pixelReadTest.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
-	//Torus
-	Mesh * torus = new Mesh();
-	torus->loadFromFile("Assets/torus.model");
-
-	//Cube
-	Mesh * cube = new Mesh();
-	cube->loadFromFile("Assets/cube.model");
-	
 	//Suzanne
 	Mesh * suzanne = new Mesh();
 	suzanne->loadFromFile("Assets/suzanne.model");
@@ -115,13 +109,11 @@ int main(void)
 	skySphere->setScale(glm::vec3(50, -50, 50));
 
 	//Grid Mesh
-	GridMesh * grid = new GridMesh(200, 200, .1, .1);
+	GridMesh * grid = new GridMesh(30, 30, .5, .5);
 	MeshInstance * grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);	
 
 #pragma endregion
-
-
-
+	
 	do{
 
 #pragma region frameTime Calculation
@@ -159,18 +151,32 @@ int main(void)
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 	glfwWindowShouldClose(window) == 0);
 
-	// Cleanup VBO and shader
+	
+	//Cleanup Shaders
 	glDeleteProgram(StandardShaderID);
-	glDeleteTextures(1, &GridTexture);
+	glDeleteProgram(FullbrightShaderID);
 
+	//Delete Textures
+	glDeleteTextures(1, &GridTexture);
+	glDeleteTextures(1, &FullbrightShaderID);
+	glDeleteTextures(1, &CloudTexture);
+
+	//Delete Loaded Meshes
+	delete(suzanne);
+	delete(sphere);
+	delete(grid);
+
+	//Delete MeshInstances
+	delete(suzanne1);
+	delete(skySphere);
+	delete(grid1);
 
 	// Delete the text's VBO, the shader and the texture
 	cleanupText2D();
+	
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
-
-	//_CrtDumpMemoryLeaks();
 
 	return 0;
 }

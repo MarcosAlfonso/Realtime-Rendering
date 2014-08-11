@@ -22,6 +22,11 @@ MeshInstance::MeshInstance()
 {
 }
 
+MeshInstance::~MeshInstance()
+{
+
+}
+
 MeshInstance::MeshInstance(Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
 	ModelMatrix = glm::mat4(1.0f);

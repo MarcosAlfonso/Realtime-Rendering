@@ -17,16 +17,21 @@
 #include "mesh.h"
 #include "../controls.h"
 
-Mesh::~Mesh()
-{
-
-}
-
 Mesh::Mesh()
 {
 	//Create VAO for Mesh
 	glGenVertexArrays(1, &vaoID);
 	glBindVertexArray(vaoID);
+}
+
+Mesh::~Mesh()
+{
+	glDeleteBuffers(1, &verticesID);
+	glDeleteBuffers(1, &uvsID);
+	glDeleteBuffers(1, &normalsID);
+	glDeleteBuffers(1, &indicesID);
+
+	glDeleteVertexArrays(1, &vaoID);
 }
 
 bool Mesh::loadFromFile(const char * path){
@@ -39,6 +44,7 @@ bool Mesh::loadFromFile(const char * path){
 		getchar();
 		return false;
 	}
+
 	const aiMesh* mesh = scene->mMeshes[0]; // In this simple example code we always use the 1st mesh (in OBJ files there is often only one anyway)
 
 	// Fill vertices positions
@@ -72,6 +78,7 @@ bool Mesh::loadFromFile(const char * path){
 	}
 
 	PopulateBuffers();
+
 }
 
 void Mesh::PopulateBuffers()

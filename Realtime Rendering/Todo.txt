@@ -1,19 +1,15 @@
 Urgent:
-
-	Terrain can't go above certain vertex count without getting spiderwebby
-		
-
-	Free up memory! Do it already so you know how!
 	Clean up library linkage and shiz
 
-General:
-	Try out GLDebugger or whatever it was called
+Terrain:
+	Make a terrain class, uses array of GridMeshs to render large terrains from perlin noise
+	Make further chunks be lower res, early LOD
 
 Mesh:
 	Add some sort of general debug rendering, render out normals, verts, whatevers else
 
 Camera:
-	Make a camera class, seperate it from controls.
+	Make a camera class? seperate it from controls.
 
 Future Stuff: 
 

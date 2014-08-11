@@ -7,7 +7,6 @@ class GridMesh :
 public:
 
 	GridMesh(int xPoints, int zPoints, float xSpacing, float zSpacing);
-	~GridMesh();
 
 private:
 
