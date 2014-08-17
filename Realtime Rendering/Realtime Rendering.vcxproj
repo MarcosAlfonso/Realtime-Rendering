@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClCompile Include="common\controls.cpp" />
     <ClCompile Include="Common\Graphics\GridMesh.cpp" />
+    <ClCompile Include="Common\Util\DebugDisplay.cpp" />
     <ClCompile Include="Common\Util\loadShader.cpp" />
     <ClCompile Include="Common\Graphics\mesh.cpp" />
     <ClCompile Include="Common\Graphics\meshInstance.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="Common\Graphics\GridMesh.h" />
     <ClInclude Include="Common\Graphics\mesh.h" />
     <ClInclude Include="Common\Graphics\meshInstance.h" />
+    <ClInclude Include="Common\Util\DebugDisplay.h" />
     <ClInclude Include="Common\Util\noiseutils.h" />
     <ClInclude Include="Common\Util\text2D.h" />
     <ClInclude Include="Common\Util\textureLoad.h" />

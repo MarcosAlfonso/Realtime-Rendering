@@ -1,9 +1,9 @@
 // Include standard headers
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 #include <iostream>
-#include <vld.h>
+
+//Uncomment for leak detection
+//#include <vld.h>
 
 // Include GLEW
 #define GLEW_STATIC
@@ -26,28 +26,86 @@ GLFWwindow* window;
 #include "Common/Graphics/GridMesh.h"
 #include "Common/Graphics/meshInstance.h"
 #include "Common/Util/text2D.h"
+#include "Common/Util/DebugDisplay.h"
 
+#pragma region Declarations
+void SetupConfiguration();
+void LoadAssets();
+void Render();
+void CleanupMemory();
+void CalculateFrameTime();
 
+//Debug String
+char debugBuffer[512] = "";
+char frameTimeBuffer[128] = "";
+int vertexCount;
 
+double lastTime;
+int nbFrames = 0;
+
+// Create and compile our GLSL program from the shaders
+GLuint StandardShaderID;
+GLuint FullbrightShaderID;
+
+// Load the texture
+GLuint GridTexture;
+GLuint CloudTexture;
+GLuint skySphereTexture;
+
+//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
+//Suzanne
+Mesh * suzanne;
+MeshInstance * suzanne1;
+
+//Sphere
+Mesh * sphere;
+MeshInstance * skySphere;
+
+//Grid Mesh
+GridMesh * grid;
+MeshInstance * grid1;
+
+DebugDisplay * debugDisplay;
+DebugDisplay * timedDebugDisplay;
+#pragma endregion 
 
 int main(void)
 {
+	debugDisplay = new DebugDisplay(glm::vec2(10, 565), false);
+	timedDebugDisplay = new DebugDisplay(glm::vec2(550, 565), true);
 
+	SetupConfiguration();
 
-#pragma region Configuration/Setup
+	LoadAssets();
+	
+	do{
 
-	//frameTime Variables
-	double lastTime = glfwGetTime();
-	int nbFrames = 0;
+		CalculateFrameTime();
+		
+		Render();
 
-	//Debug Frame Time String
-	char frameTimeString[256] = "";
+		glfwPollEvents();
+
+	} // Check if the ESC key was pressed or the window was closed
+	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+	glfwWindowShouldClose(window) == 0);
+
+	CleanupMemory();
+
+	glfwTerminate();
+
+	return 0;
+}
+
+void SetupConfiguration()
+{
+	//frameTime Update
+	lastTime = glfwGetTime();
 
 	// Initialize GLFW
 	if (!glfwInit())
 	{
 		fprintf(stderr, "Failed to initialize GLFW\n");
-		return -1;
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 1);
@@ -60,7 +118,6 @@ int main(void)
 	if (window == NULL){
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		glfwTerminate();
-		return -1;
 	}
 	glfwMakeContextCurrent(window);
 
@@ -68,7 +125,6 @@ int main(void)
 	glewExperimental = true; // Needed for core profile
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");
-		return -1;
 	}
 
 	// Config Stuff
@@ -78,80 +134,67 @@ int main(void)
 	glDepthFunc(GL_LESS);
 	glPointSize(5);
 	//glEnable(GL_CULL_FACE);
-#pragma endregion
+}
 
-#pragma region Load Assets
+void LoadAssets()
+{
 	//Initialize Text
 	initText2D("Assets/DroidSansMono.dds");
-		
+
 	// Create and compile our GLSL program from the shaders
-	GLuint StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
-	GLuint FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
+	StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
+	FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
 
 	// Load the texture
-	GLuint GridTexture = loadDDS("Assets/GridTexture.dds");
-	GLuint CloudTexture = loadDDS("Assets/CloudTexture.dds");
-	GLuint skySphereTexture = loadDDS("Assets/skySphere.dds");
+	GridTexture = loadDDS("Assets/GridTexture.dds");
+	CloudTexture = loadDDS("Assets/CloudTexture.dds");
+	skySphereTexture = loadDDS("Assets/skySphere.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Suzanne
-	Mesh * suzanne = new Mesh();
+	suzanne = new Mesh();
 	suzanne->loadFromFile("Assets/suzanne.model");
 
-	MeshInstance * suzanne1 = new MeshInstance(suzanne, StandardShaderID, GridTexture);
+	suzanne1 = new MeshInstance(suzanne, StandardShaderID, GridTexture);
 	suzanne1->setPosition(glm::vec3(0.0, 2.5, 0.0));
-	
+
 	//Sphere
-	Mesh * sphere = new Mesh();
+	sphere = new Mesh();
 	sphere->loadFromFile("Assets/sphere.model");
 
-	MeshInstance * skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
+	skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
 	skySphere->setScale(glm::vec3(50, -50, 50));
 
 	//Grid Mesh
-	GridMesh * grid = new GridMesh(30, 30, .5, .5);
-	MeshInstance * grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);	
+	grid = new GridMesh(100, 100, 1, 1);
+	grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);
+}
 
-#pragma endregion
+void Render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	computeMatricesFromInputs();
+
+	vertexCount = 0;
+
+	grid1->Render();
+
+	suzanne1->Render();
+
+	skySphere->Render();
+
+	sprintf(debugBuffer, "Vertex Count: %d", vertexCount);
+	debugDisplay->addDebug(debugBuffer);
+
+	timedDebugDisplay->Draw();
+	debugDisplay->Draw();
 	
-	do{
+	glfwSwapBuffers(window);
+}
 
-#pragma region frameTime Calculation
-
-		//Updates frametime
-		double currentTime = glfwGetTime();
-		nbFrames++;
-		if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
-			// printf and reset
-			sprintf(frameTimeString, "%.2f ms/frame\n", 1000.0 / double(nbFrames));
-			nbFrames = 0;
-			lastTime += 1.0;
-		}
-#pragma endregion
-
-		// Clear the screen
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		
-#pragma region Render Here
-		grid1->Render();
-
-		suzanne1->Render();
-
-		skySphere->Render();
-
-		printText2D(frameTimeString, 10, 10, 26);
-#pragma endregion
-		
-		//Swap Buffers and Poll for Input
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-
-	} // Check if the ESC key was pressed or the window was closed
-	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-	glfwWindowShouldClose(window) == 0);
-
-	
+void CleanupMemory()
+{
 	//Cleanup Shaders
 	glDeleteProgram(StandardShaderID);
 	glDeleteProgram(FullbrightShaderID);
@@ -173,10 +216,20 @@ int main(void)
 
 	// Delete the text's VBO, the shader and the texture
 	cleanupText2D();
-	
+}
 
-	// Close OpenGL window and terminate GLFW
-	glfwTerminate();
+void CalculateFrameTime()
+{
+	//Updates frametime
+	double currentTime = glfwGetTime();
+	nbFrames++;
+	if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
+		// printf and reset
+		sprintf(frameTimeBuffer, "%.2f ms/frame\n", 1000.0 / double(nbFrames));
+		nbFrames = 0;
+		lastTime += 1.0;
+	}
 
-	return 0;
+	debugDisplay->addDebug(frameTimeBuffer);
+
 }

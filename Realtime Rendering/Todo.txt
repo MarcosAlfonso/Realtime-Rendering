@@ -1,15 +1,25 @@
 Urgent:
-	Clean up library linkage and shiz
+	Terrain normals appear to not be working, since directional lights work on suzanne, and not terrain
 
 Terrain:
 	Make a terrain class, uses array of GridMeshs to render large terrains from perlin noise
 	Make further chunks be lower res, early LOD
 
+Controls:
+	Object picking! Just link bullet I guess and use that
+
+Debug:
+	Memory cleanup for debug utils
+
 Mesh:
 	Add some sort of general debug rendering, render out normals, verts, whatevers else
 
 Camera:
-	Make a camera class? seperate it from controls.
+	Make a camera class to seperate it from controls.
+
+Maintenance:
+	Clean up library linkage and shiz
+	Clean up includes
 
 Future Stuff: 
 

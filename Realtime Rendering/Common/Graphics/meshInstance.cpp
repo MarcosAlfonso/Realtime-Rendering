@@ -18,6 +18,8 @@
 #include "../controls.h"
 #include "meshInstance.h"
 
+extern int vertexCount;
+
 MeshInstance::MeshInstance()
 {
 }
@@ -46,9 +48,9 @@ void MeshInstance::Render()
 	glUseProgram(shader_ID);
 
 	//Light positioning TODO should be abstracted
-	GLuint LightID = glGetUniformLocation(shader_ID, "LightPosition_worldspace");
-	glm::vec3 lightPos = glm::vec3(0, 3, 4);
-	glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
+	GLuint LightID = glGetUniformLocation(shader_ID, "LightDirection_worldspace");
+	glm::vec3 lightDir = glm::vec3(1, 1, 0);
+	glUniform3f(LightID, lightDir.x, lightDir.y, lightDir.z);
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(shader_ID, "MVP");
@@ -56,7 +58,6 @@ void MeshInstance::Render()
 	GLuint ModelMatrixID = glGetUniformLocation(shader_ID, "M");
 
 	// Compute the MVP matrix
-	computeMatricesFromInputs();
 	glm::mat4 ProjectionMatrix = getProjectionMatrix();
 	glm::mat4 ViewMatrix = getViewMatrix();
 	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
@@ -115,6 +116,8 @@ void MeshInstance::Render()
 
 	// Index buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indicesID);
+
+	vertexCount += mesh->vertices.size();
 
 	// Draw the triangles !
 	glDrawElements(

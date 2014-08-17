@@ -30,7 +30,6 @@
 GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing)
 {
 
-
 	xPoints = _xPoints;
 	zPoints = _zPoints;
 	xSpacing = _xSpacing;
@@ -58,8 +57,6 @@ void GridMesh::PopulateVertices()
 	float length = zSpacing * (zPoints - 1);
 	float minX = -width / 2;
 	float minY = -length / 2;
-
-	std::cout << vertices.max_size();
 
 	noise::module::Perlin PerlinModule;
 	PerlinModule.SetOctaveCount(1);
