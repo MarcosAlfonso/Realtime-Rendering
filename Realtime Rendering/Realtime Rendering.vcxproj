@@ -109,6 +109,7 @@
   <ItemGroup>
     <None Include="Assets\cube.model" />
     <None Include="Assets\cylinder.model" />
+    <None Include="Assets\dummyTerrain.model" />
     <None Include="Assets\sphere.model" />
     <None Include="Assets\suzanne.model" />
     <None Include="Assets\torus.model" />

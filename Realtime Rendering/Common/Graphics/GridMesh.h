@@ -18,5 +18,7 @@ private:
 	void PopulateNormals();
 	void PopulatesUVs();
 
+	int posToCount(int x, int y);
+	float getHeight(int i, int j);
 };
 

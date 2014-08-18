@@ -65,6 +65,10 @@ MeshInstance * skySphere;
 GridMesh * grid;
 MeshInstance * grid1;
 
+//Dummy Terrain Mesh
+Mesh * dummyTerrain;
+MeshInstance * dummyTerrain1;
+
 DebugDisplay * debugDisplay;
 DebugDisplay * timedDebugDisplay;
 #pragma endregion 
@@ -163,11 +167,17 @@ void LoadAssets()
 	sphere->loadFromFile("Assets/sphere.model");
 
 	skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
-	skySphere->setScale(glm::vec3(50, -50, 50));
+	skySphere->setScale(glm::vec3(100, -100, 100));
 
 	//Grid Mesh
-	grid = new GridMesh(100, 100, 1, 1);
+	grid = new GridMesh(100, 100, .2, .21);
 	grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);
+
+	//Dummy Terrain
+	dummyTerrain = new Mesh();
+	dummyTerrain->loadFromFile("Assets/dummyTerrain.model");
+
+	dummyTerrain1 = new MeshInstance(dummyTerrain, StandardShaderID, GridTexture);
 }
 
 void Render()
@@ -183,6 +193,8 @@ void Render()
 	suzanne1->Render();
 
 	skySphere->Render();
+
+	//dummyTerrain1->Render();
 
 	sprintf(debugBuffer, "Vertex Count: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);

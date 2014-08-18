@@ -113,30 +113,30 @@ void GridMesh::PopulateIndices()
 
 void GridMesh::PopulateNormals()
 {
-	//Size normal vector, and initialize
-	for (int i = 0; i < normals.capacity(); i++)
-		normals.push_back(glm::vec3(0, 0, 0));
 
-	//For all the indices, get a face, calculate its normal, and then use that to add to related vertices
-	for (int i = 0; i < indices.size() / 3; i++)
+
+	//For all vertices, compare heights of surrounding and get normal
+	for (int i = 0; i < xPoints; i++)
 	{
-		int index1 = indices[i * 3];
-		int index2 = indices[i * 3 + 1];
-		int index3 = indices[i * 3 + 2];
+		for (int j = 0; j < zPoints; j++)
+		{
+			
+			//Gets heights of surrounding points
+			float hLeft = getHeight(i - 1, j);
+			float hRight = getHeight(i + 1, j);
+			float hDown = getHeight(i, j - 1);
+			float hUp = getHeight(i, j + j);
 
-		//Calculate face normal
-		glm::vec3 side1 = vertices[index1] - vertices[index3];
-		glm::vec3 side2 = vertices[index1] - vertices[index2];
-		glm::vec3 normal = glm::cross(side1, side2);
+			//Calculates normal from those heights
+			glm::vec3 normal;
+			normal.z = hRight - hLeft;
+			normal.y =2;
+			normal.x = hUp - hDown;
+			normal = glm::normalize(normal);
 
-		normals[index1] += normal;
-		normals[index2] += normal;
-		normals[index3] += normal;
+			normals.push_back(normal);
+		}		
 	}
-
-	//normalize indices
-	for (int i = 0; i < normals.size(); i++)
-		normals[i] = glm::normalize(normals[i]);
 }
 
 void GridMesh::PopulatesUVs()
@@ -148,5 +148,24 @@ void GridMesh::PopulatesUVs()
 		int zLoc = i / zPoints;
 
 		uvs.push_back(glm::vec2(xLoc * (1.0 / xPoints), zLoc * (1.0 / zPoints)));
+	}
+}
+
+//Takes a vector pair i,j and returns the linear count location
+int GridMesh::posToCount(int i, int j)
+{
+	return j + (i * zPoints);
+}
+
+float GridMesh::getHeight(int i, int j)
+{
+	//If valid point in mesh, not outside bounds
+	if (i >= 0 && j >= 0 && i < xPoints && j < zPoints)
+	{
+		return vertices[posToCount(i, j)].y;
+	}
+	else
+	{
+		return 0; 
 	}
 }

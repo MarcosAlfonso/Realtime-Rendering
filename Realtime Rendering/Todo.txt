@@ -1,5 +1,5 @@
 Urgent:
-	Terrain normals appear to not be working, since directional lights work on suzanne, and not terrain
+	Terrain normals still fucked up, figure out how to calculate them correctly
 
 Terrain:
 	Make a terrain class, uses array of GridMeshs to render large terrains from perlin noise

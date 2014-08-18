@@ -38,7 +38,7 @@ bool Mesh::loadFromFile(const char * path){
 
 	Assimp::Importer importer;
 
-	const aiScene* scene = importer.ReadFile(path, aiProcess_JoinIdenticalVertices | aiProcess_SortByPType);
+	const aiScene* scene = importer.ReadFile(path, aiProcessPreset_TargetRealtime_Quality);
 	if (!scene) {
 		fprintf(stderr, importer.GetErrorString());
 		getchar();

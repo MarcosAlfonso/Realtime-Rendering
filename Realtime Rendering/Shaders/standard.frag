@@ -35,11 +35,13 @@ void main(){
 	//  - light is behind the triangle -> 0
 	float cosTheta = clamp(dot( n,l ), 0,1 );
 	
-	color = 
+	//float cosTheta = (dot( n,l )+1)/2;
+	
+	color = n;
 		// Ambient : simulates indirect lighting
-		MaterialAmbientColor +
+		//MaterialAmbientColor +
 		// Diffuse : "color" of the object
-		(MaterialDiffuseColor * LightColor * LightPower * cosTheta);
+		//(MaterialDiffuseColor * LightColor * LightPower * cosTheta);
 
 
 }
