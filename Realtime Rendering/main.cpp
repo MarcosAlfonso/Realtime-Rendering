@@ -3,7 +3,7 @@
 #include <iostream>
 
 //Uncomment for leak detection
-//#include <vld.h>
+#include <vld.h>
 
 // Include GLEW
 #define GLEW_STATIC
@@ -51,6 +51,7 @@ GLuint FullbrightShaderID;
 GLuint GridTexture;
 GLuint CloudTexture;
 GLuint skySphereTexture;
+GLuint grassTexture;
 
 //Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 //Suzanne
@@ -64,10 +65,6 @@ MeshInstance * skySphere;
 //Grid Mesh
 GridMesh * grid;
 MeshInstance * grid1;
-
-//Dummy Terrain Mesh
-Mesh * dummyTerrain;
-MeshInstance * dummyTerrain1;
 
 DebugDisplay * debugDisplay;
 DebugDisplay * timedDebugDisplay;
@@ -153,6 +150,7 @@ void LoadAssets()
 	GridTexture = loadDDS("Assets/GridTexture.dds");
 	CloudTexture = loadDDS("Assets/CloudTexture.dds");
 	skySphereTexture = loadDDS("Assets/skySphere.dds");
+	grassTexture = loadDDS("Assets/grass.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Suzanne
@@ -170,14 +168,8 @@ void LoadAssets()
 	skySphere->setScale(glm::vec3(100, -100, 100));
 
 	//Grid Mesh
-	grid = new GridMesh(100, 100, .2, .21);
-	grid1 = new MeshInstance(grid, StandardShaderID, GridTexture);
-
-	//Dummy Terrain
-	dummyTerrain = new Mesh();
-	dummyTerrain->loadFromFile("Assets/dummyTerrain.model");
-
-	dummyTerrain1 = new MeshInstance(dummyTerrain, StandardShaderID, GridTexture);
+	grid = new GridMesh(100, 100, 2, 2);
+	grid1 = new MeshInstance(grid, StandardShaderID, grassTexture);
 }
 
 void Render()
@@ -190,11 +182,9 @@ void Render()
 
 	grid1->Render();
 
-	suzanne1->Render();
+	//suzanne1->Render();
 
 	skySphere->Render();
-
-	//dummyTerrain1->Render();
 
 	sprintf(debugBuffer, "Vertex Count: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);
@@ -228,6 +218,10 @@ void CleanupMemory()
 
 	// Delete the text's VBO, the shader and the texture
 	cleanupText2D();
+	
+	//Delete debuggers
+	delete(debugDisplay);
+	delete(timedDebugDisplay);
 }
 
 void CalculateFrameTime()

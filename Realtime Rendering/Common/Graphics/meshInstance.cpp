@@ -19,6 +19,8 @@
 #include "meshInstance.h"
 
 extern int vertexCount;
+float lightRot = 0;
+glm::vec3 lightDir;
 
 MeshInstance::MeshInstance()
 {
@@ -49,7 +51,7 @@ void MeshInstance::Render()
 
 	//Light positioning TODO should be abstracted
 	GLuint LightID = glGetUniformLocation(shader_ID, "LightDirection_worldspace");
-	glm::vec3 lightDir = glm::vec3(1, 1, 0);
+	calculateLight();
 	glUniform3f(LightID, lightDir.x, lightDir.y, lightDir.z);
 
 	// Get a handle for our "MVP" uniform
@@ -70,6 +72,9 @@ void MeshInstance::Render()
 	glBindTexture(GL_TEXTURE_2D, texture_ID);
 	// Set our "DiffuseTextureSampler" sampler to user Texture Unit 0
 	glUniform1i(TextureUniformID, 0);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	// Send our transformation to the currently bound shader, 
 	// in the "MVP" uniform
@@ -145,4 +150,9 @@ void MeshInstance::setRotation(float angle, glm::vec3 rot)
 void MeshInstance::setScale(glm::vec3 scale)
 {
 	ModelMatrix = glm::scale(ModelMatrix, scale);
+}
+
+void MeshInstance::calculateLight()
+{
+	lightDir = glm::vec3(glm::sin(lightRot), .5, glm::cos(lightRot));
 }

@@ -16,6 +16,9 @@ using namespace glm;
 extern DebugDisplay * timedDebugDisplay;
 extern DebugDisplay * debugDisplay;
 
+#include "Graphics/meshInstance.h";
+extern float lightRot;
+
 #include "controls.h"
 
 glm::mat4 ViewMatrix;
@@ -116,7 +119,10 @@ void computeMatricesFromInputs(){
 		if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS){
 			position += glm::vec3(0, -1, 0) * deltaTime * moveSpeed;
 		}
-
+		// Left arrow rotates light dir
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+			lightRot += .03f;
+		}
 
 
 		float FoV = initialFov;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.

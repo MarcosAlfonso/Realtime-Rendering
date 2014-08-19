@@ -1,4 +1,5 @@
 #pragma once
+#include "mesh.h"
 
 class MeshInstance
 {
@@ -14,6 +15,7 @@ public:
 
 	void Render();
 	void RenderGrid();
+	void calculateLight();
 
 private:
 	Mesh * mesh;

@@ -22,7 +22,7 @@ void main(){
 	
 	// Material properties
 	vec3 MaterialDiffuseColor = texture2D( myTextureSampler, UV ).rgb;
-	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
+	vec3 MaterialAmbientColor = vec3(0.3,0.3,0.45) * MaterialDiffuseColor;
 
 	//Normalize face normal
 	vec3 n = normalize( Normal_worldspace );
@@ -35,13 +35,11 @@ void main(){
 	//  - light is behind the triangle -> 0
 	float cosTheta = clamp(dot( n,l ), 0,1 );
 	
-	//float cosTheta = (dot( n,l )+1)/2;
-	
-	color = n;
+	color = 
 		// Ambient : simulates indirect lighting
-		//MaterialAmbientColor +
+		MaterialAmbientColor +
 		// Diffuse : "color" of the object
-		//(MaterialDiffuseColor * LightColor * LightPower * cosTheta);
+		(MaterialDiffuseColor * LightColor * LightPower * cosTheta);
 
 
 }

@@ -59,14 +59,14 @@ void GridMesh::PopulateVertices()
 	float minY = -length / 2;
 
 	noise::module::Perlin PerlinModule;
-	PerlinModule.SetOctaveCount(1);
+	PerlinModule.SetOctaveCount(3);
 
 	utils::NoiseMap heightMap;
 	utils::NoiseMapBuilderPlane heightMapBuilder;
 	heightMapBuilder.SetSourceModule(PerlinModule);
 	heightMapBuilder.SetDestNoiseMap(heightMap);
 	heightMapBuilder.SetDestSize(xPoints, zPoints);
-	heightMapBuilder.SetBounds(0.0, width/6, 0.0, length/6);
+	heightMapBuilder.SetBounds(0.0, width/60, 0.0, length/60);
 	heightMapBuilder.Build();
 
 
@@ -78,7 +78,7 @@ void GridMesh::PopulateVertices()
 			float z = minY + j*zSpacing;
 			
 			
-			float y = heightMap.GetValue(i, j);
+			float y = (heightMap.GetValue(i, j)-.5)*10;
 
 			vertices.push_back(glm::vec3(x, y, z));
 		}
@@ -113,30 +113,31 @@ void GridMesh::PopulateIndices()
 
 void GridMesh::PopulateNormals()
 {
+	//Size normal vector, and initialize
+	for (int i = 0; i < normals.capacity(); i++)
+		normals.push_back(glm::vec3(0, 0, 0));
 
-
-	//For all vertices, compare heights of surrounding and get normal
-	for (int i = 0; i < xPoints; i++)
+	//For all the indices, get a face, calculate its normal, and then use that to add to related vertices
+	for (int i = 0; i < indices.size() / 3; i++)
 	{
-		for (int j = 0; j < zPoints; j++)
-		{
-			
-			//Gets heights of surrounding points
-			float hLeft = getHeight(i - 1, j);
-			float hRight = getHeight(i + 1, j);
-			float hDown = getHeight(i, j - 1);
-			float hUp = getHeight(i, j + j);
-
-			//Calculates normal from those heights
-			glm::vec3 normal;
-			normal.z = hRight - hLeft;
-			normal.y =2;
-			normal.x = hUp - hDown;
-			normal = glm::normalize(normal);
-
-			normals.push_back(normal);
-		}		
+		int index1 = indices[i * 3];
+		int index2 = indices[i * 3 + 1];
+		int index3 = indices[i * 3 + 2];
+		//Calculate face normal
+		glm::vec3 side1 = vertices[index1] - vertices[index3];
+		glm::vec3 side2 = vertices[index1] - vertices[index2];
+		glm::vec3 normal = glm::normalize(glm::cross(glm::normalize(side1), glm::normalize(side2)));
+		normals[index1] += normal;
+		normals[index2] += normal;
+		normals[index3] += normal;
 	}
+
+	//normalize indices and invert
+	for (int i = 0; i < normals.size(); i++)
+	{
+		normals[i] = glm::normalize(normals[i]);
+		normals[i] = normals[i] * glm::vec3(-1);
+	}	
 }
 
 void GridMesh::PopulatesUVs()
@@ -147,25 +148,22 @@ void GridMesh::PopulatesUVs()
 		int xLoc = i % xPoints;
 		int zLoc = i / zPoints;
 
-		uvs.push_back(glm::vec2(xLoc * (1.0 / xPoints), zLoc * (1.0 / zPoints)));
+		float textureRepeat = 32;
+
+		uvs.push_back(glm::vec2(xLoc * (textureRepeat / xPoints), zLoc * (textureRepeat / zPoints)));
 	}
 }
 
 //Takes a vector pair i,j and returns the linear count location
-int GridMesh::posToCount(int i, int j)
+glm::vec3 GridMesh::getVertex(int i, int j)
 {
-	return j + (i * zPoints);
-}
-
-float GridMesh::getHeight(int i, int j)
-{
-	//If valid point in mesh, not outside bounds
 	if (i >= 0 && j >= 0 && i < xPoints && j < zPoints)
 	{
-		return vertices[posToCount(i, j)].y;
+		return vertices[j + (i * zPoints)];
 	}
 	else
 	{
-		return 0; 
+		return glm::vec3(0, 0, 0);
 	}
+
 }

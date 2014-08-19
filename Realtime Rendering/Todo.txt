@@ -1,18 +1,19 @@
 Urgent:
-	Terrain normals still fucked up, figure out how to calculate them correctly
+	Big memory leak involved with debug utils, you've started workin on it
+
+Physics:
+	Get Bullet Linked
+	Terrain Physics
+	Object picking
 
 Terrain:
 	Make a terrain class, uses array of GridMeshs to render large terrains from perlin noise
 	Make further chunks be lower res, early LOD
 
-Controls:
-	Object picking! Just link bullet I guess and use that
-
-Debug:
-	Memory cleanup for debug utils
-
-Mesh:
-	Add some sort of general debug rendering, render out normals, verts, whatevers else
+Shaders:
+	Shader Based Sky, scattering and shiz
+	Atmospheric fog
+	Add some sort of general debug shader, render out normals, verts, whatevers else
 
 Camera:
 	Make a camera class to seperate it from controls.

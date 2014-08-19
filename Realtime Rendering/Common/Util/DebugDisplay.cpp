@@ -8,6 +8,15 @@ DebugDisplay::DebugDisplay(glm::vec2 _pos, bool _isTimed)
 	strings.reserve(100);
 }
 
+DebugDisplay::~DebugDisplay()
+{
+	for (int i = 0; i < count; i++)
+	{
+		delete(&strings[i]);
+	}
+	
+}
+
 void DebugDisplay::addDebug(std::string str, float age)
 {
 	DebugEntry * debug = new DebugEntry(str, glfwGetTime(), age);
@@ -37,7 +46,7 @@ void DebugDisplay::Draw()
 
 	if (!isTimed)
 	{
-		strings.clear();
+		//strings.clear();
 		count = 0;
 	}
 }
