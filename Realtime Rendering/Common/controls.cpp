@@ -93,6 +93,7 @@ void computeMatricesFromInputs(){
 
 		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
 			moveSpeed = 10;
+			timedDebugDisplay->addDebug("rotate light", 1.5);
 		}
 
 		// Move forward

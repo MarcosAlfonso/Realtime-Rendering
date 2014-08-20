@@ -1,6 +1,3 @@
-Urgent:
-	Big memory leak involved with debug utils, you've started workin on it
-
 Physics:
 	Get Bullet Linked
 	Terrain Physics

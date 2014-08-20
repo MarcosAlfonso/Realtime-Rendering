@@ -3,7 +3,7 @@
 #include <iostream>
 
 //Uncomment for leak detection
-#include <vld.h>
+//#include <vld.h>
 
 // Include GLEW
 #define GLEW_STATIC
@@ -51,7 +51,7 @@ GLuint FullbrightShaderID;
 GLuint GridTexture;
 GLuint CloudTexture;
 GLuint skySphereTexture;
-GLuint grassTexture;
+GLuint GrassTexture;
 
 //Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 //Suzanne
@@ -72,9 +72,6 @@ DebugDisplay * timedDebugDisplay;
 
 int main(void)
 {
-	debugDisplay = new DebugDisplay(glm::vec2(10, 565), false);
-	timedDebugDisplay = new DebugDisplay(glm::vec2(550, 565), true);
-
 	SetupConfiguration();
 
 	LoadAssets();
@@ -102,6 +99,10 @@ void SetupConfiguration()
 {
 	//frameTime Update
 	lastTime = glfwGetTime();
+
+	//Text Debuggers
+	debugDisplay = new DebugDisplay(glm::vec2(10, 565), false);
+	timedDebugDisplay = new DebugDisplay(glm::vec2(525, 565), true);
 
 	// Initialize GLFW
 	if (!glfwInit())
@@ -150,7 +151,7 @@ void LoadAssets()
 	GridTexture = loadDDS("Assets/GridTexture.dds");
 	CloudTexture = loadDDS("Assets/CloudTexture.dds");
 	skySphereTexture = loadDDS("Assets/skySphere.dds");
-	grassTexture = loadDDS("Assets/grass.dds");
+	GrassTexture = loadDDS("Assets/grass.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Suzanne
@@ -169,7 +170,7 @@ void LoadAssets()
 
 	//Grid Mesh
 	grid = new GridMesh(100, 100, 2, 2);
-	grid1 = new MeshInstance(grid, StandardShaderID, grassTexture);
+	grid1 = new MeshInstance(grid, StandardShaderID, GrassTexture);
 }
 
 void Render()
@@ -205,6 +206,7 @@ void CleanupMemory()
 	glDeleteTextures(1, &GridTexture);
 	glDeleteTextures(1, &FullbrightShaderID);
 	glDeleteTextures(1, &CloudTexture);
+	glDeleteTextures(1, &GrassTexture);
 
 	//Delete Loaded Meshes
 	delete(suzanne);

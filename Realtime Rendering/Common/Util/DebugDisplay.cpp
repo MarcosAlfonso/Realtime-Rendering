@@ -10,24 +10,21 @@ DebugDisplay::DebugDisplay(glm::vec2 _pos, bool _isTimed)
 
 DebugDisplay::~DebugDisplay()
 {
-	for (int i = 0; i < count; i++)
-	{
-		delete(&strings[i]);
-	}
-	
 }
 
-void DebugDisplay::addDebug(std::string str, float age)
+void DebugDisplay::addDebug(std::string str, float lifespan)
 {
-	DebugEntry * debug = new DebugEntry(str, glfwGetTime(), age);
-	strings.push_back(*debug);
+	strings.push_back(str);
+	lifespans.push_back(lifespan);
+	birthtimes.push_back(glfwGetTime());
 	count++;
 }
 
 void DebugDisplay::addDebug(std::string str)
 {
-	DebugEntry * debug = new DebugEntry(str, -1, -1);
-	strings.push_back(*debug);
+	strings.push_back(str);
+	lifespans.push_back(-1);
+	birthtimes.push_back(-1);
 	count++;
 }
 
@@ -35,18 +32,22 @@ void DebugDisplay::Draw()
 {
 	for (int i = 0; i < count; i++)
 	{
-		printText2D(strings[i].str.c_str(), pos.x, pos.y-(i*26), 26);
+		printText2D(strings[i].c_str(), pos.x, pos.y-(i*26), 26);
 
-		if (isTimed && glfwGetTime() - strings[i].birthTime > strings[i].age)
+		if (isTimed && glfwGetTime() - birthtimes[i] > lifespans[i])
 		{
 			strings.erase(strings.begin() + i);
+			lifespans.erase(lifespans.begin() + i);
+			birthtimes.erase(birthtimes.begin() + i);
 			count--;
 		}
 	}
 
 	if (!isTimed)
 	{
-		//strings.clear();
+		strings.clear();
+		lifespans.clear();
+		birthtimes.clear();
 		count = 0;
 	}
 }
