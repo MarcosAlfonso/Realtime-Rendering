@@ -2,6 +2,9 @@
 #include <vector>
 #include <iostream>
 
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
+
 //Uncomment for leak detection
 //#include <vld.h>
 
@@ -34,6 +37,8 @@ void LoadAssets();
 void Render();
 void CleanupMemory();
 void CalculateFrameTime();
+void InitializeBullet();
+void BulletStep();
 
 //Debug String
 char debugBuffer[512] = "";
@@ -68,11 +73,17 @@ MeshInstance * grid1;
 
 DebugDisplay * debugDisplay;
 DebugDisplay * timedDebugDisplay;
+
+//Physics
+btDiscreteDynamicsWorld* dynamicsWorld;
+btRigidBody* fallRigidBody;
 #pragma endregion 
 
 int main(void)
 {
 	SetupConfiguration();
+
+	InitializeBullet();
 
 	LoadAssets();
 	
@@ -81,6 +92,8 @@ int main(void)
 		CalculateFrameTime();
 		
 		Render();
+
+		BulletStep();
 
 		glfwPollEvents();
 
@@ -171,6 +184,8 @@ void LoadAssets()
 	//Grid Mesh
 	grid = new GridMesh(100, 100, 2, 2);
 	grid1 = new MeshInstance(grid, StandardShaderID, GrassTexture);
+
+	//Physics stuff
 }
 
 void Render()
@@ -240,4 +255,60 @@ void CalculateFrameTime()
 
 	debugDisplay->addDebug(frameTimeBuffer);
 
+}
+
+void BulletStep()
+{
+	dynamicsWorld->stepSimulation(1 / 60.f, 10);
+
+	btTransform trans;
+	fallRigidBody->getMotionState()->getWorldTransform(trans);
+
+	std::cout << "sphere height: " << trans.getOrigin().getY() << std::endl;
+}
+
+
+void InitializeBullet()
+{
+
+	
+	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
+	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+
+	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
+	btCollisionDispatcher* dispatcher = new	btCollisionDispatcher(collisionConfiguration);
+
+	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
+	btBroadphaseInterface* overlappingPairCache = new btDbvtBroadphase();
+
+	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
+	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+
+	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+
+	dynamicsWorld->setGravity(btVector3(0, -10, 0));
+
+	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+
+	btCollisionShape* fallShape = new btSphereShape(1);
+
+	btDefaultMotionState* groundMotionState =
+		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+
+	btRigidBody::btRigidBodyConstructionInfo
+		groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+
+	dynamicsWorld->addRigidBody(groundRigidBody);
+
+	btDefaultMotionState* fallMotionState =
+		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
+
+	btScalar mass = 1;
+	btVector3 fallInertia(0, 0, 0);
+	fallShape->calculateLocalInertia(mass, fallInertia);
+
+	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
+	fallRigidBody = new btRigidBody(fallRigidBodyCI);
+	dynamicsWorld->addRigidBody(fallRigidBody);
 }

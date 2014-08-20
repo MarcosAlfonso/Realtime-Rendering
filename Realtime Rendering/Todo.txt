@@ -1,11 +1,15 @@
 Physics:
-	Get Bullet Linked
+	Bullet now linked and running correctly!
+	Object spawning
 	Terrain Physics
 	Object picking
 
 Terrain:
 	Make a terrain class, uses array of GridMeshs to render large terrains from perlin noise
 	Make further chunks be lower res, early LOD
+
+Cleanup:
+	Cleanup includes
 
 Shaders:
 	Shader Based Sky, scattering and shiz
@@ -15,13 +19,8 @@ Shaders:
 Camera:
 	Make a camera class to seperate it from controls.
 
-Maintenance:
-	Clean up library linkage and shiz
-	Clean up includes
-
 Future Stuff: 
 
-	Bullet Physics
 	Grass: http://http.developer.nvidia.com/GPUGems/gpugems_ch07.html
 	Atmosphere Spread Rendering: http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html
 	
