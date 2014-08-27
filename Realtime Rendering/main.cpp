@@ -17,7 +17,7 @@
 GLFWwindow* window;
 
 // Include GLM
-
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -67,6 +67,7 @@ MeshInstance * suzanne1;
 //Sphere
 Mesh * sphere;
 MeshInstance * skySphere;
+MeshInstance * sphere1;
 
 //Grid Mesh
 GridMesh * grid;
@@ -78,6 +79,7 @@ DebugDisplay * timedDebugDisplay;
 //Physics
 btDiscreteDynamicsWorld* dynamicsWorld;
 btRigidBody* fallRigidBody;
+
 #pragma endregion 
 
 int main(void)
@@ -179,6 +181,8 @@ void LoadAssets()
 	sphere = new Mesh();
 	sphere->loadFromFile("Assets/sphere.model");
 
+	sphere1 = new MeshInstance(sphere, StandardShaderID, GridTexture);
+
 	skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
 	skySphere->setScale(glm::vec3(100, -100, 100));
 
@@ -199,12 +203,25 @@ void Render()
 
 	grid1->Render();
 
-	suzanne1->setPosition(glm::vec3(0, .1f, 0));
 	suzanne1->Render();
 
+	sphere1->Render();
 	skySphere->Render();
 
 	sprintf(debugBuffer, "Vertex Count: %d", vertexCount);
+	debugDisplay->addDebug(debugBuffer);
+
+	std::string trans = glm::to_string(suzanne1->transVec);
+	std::string rot = glm::to_string(suzanne1->rotVec);
+	std::string scale = glm::to_string(suzanne1->scaleVec);
+
+	sprintf(debugBuffer, "Pos: %s", trans.c_str());
+	debugDisplay->addDebug(debugBuffer);
+
+	sprintf(debugBuffer, "Rot: %s", rot.c_str());
+	debugDisplay->addDebug(debugBuffer);
+
+	sprintf(debugBuffer, "Scl: %s", scale.c_str());
 	debugDisplay->addDebug(debugBuffer);
 
 	timedDebugDisplay->Draw();
@@ -266,7 +283,8 @@ void BulletStep()
 	btTransform trans;
 	fallRigidBody->getMotionState()->getWorldTransform(trans);
 
-	std::cout << "sphere height: " << trans.getOrigin().getY() << std::endl;
+	sphere1->setPosition(glm::vec3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+
 }
 
 void InitializeBullet()
@@ -296,7 +314,10 @@ void InitializeBullet()
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 
 	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+
+	groundRigidBodyCI.m_restitution = 1.0f;
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+
 
 	dynamicsWorld->addRigidBody(groundRigidBody);
 
@@ -307,6 +328,8 @@ void InitializeBullet()
 	fallShape->calculateLocalInertia(mass, fallInertia);
 
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
+	fallRigidBodyCI.m_restitution = .4f;
+	fallRigidBodyCI.m_friction = 1.5f;
 	fallRigidBody = new btRigidBody(fallRigidBodyCI);
 	dynamicsWorld->addRigidBody(fallRigidBody);
 }

@@ -1,13 +1,13 @@
 #pragma once
-#include "mesh.h"
+#include "../../Graphics/mesh.h"
 
-class MeshInstance
+class RenderComponent
 {
 
 public:
-	MeshInstance();
-	MeshInstance(Mesh * _mesh, GLuint _shader, GLuint _texture);
-	~MeshInstance();
+	RenderComponent();
+	RenderComponent(Mesh * _mesh, GLuint _shader, GLuint _texture);
+	~RenderComponent();
 
 	void setPosition(glm::vec3 trans);
 
@@ -18,10 +18,6 @@ public:
 	void Render();
 	void calculateLight();
 	void calculateModelMatrix();
-
-	glm::vec3 transVec = glm::vec3(0);
-	glm::vec3 rotVec = glm::vec3(0);
-	glm::vec3 scaleVec = glm::vec3(0);
 
 private:
 	Mesh * mesh;

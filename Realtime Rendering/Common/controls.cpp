@@ -18,6 +18,8 @@ extern DebugDisplay * debugDisplay;
 
 #include "Graphics/meshInstance.h";
 extern float lightRot;
+extern MeshInstance* suzanne1;
+
 
 #include "controls.h"
 
@@ -118,12 +120,23 @@ void computeMatricesFromInputs(){
 		// Space move upward
 		if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS){
 			position += glm::vec3(0, -1, 0) * deltaTime * moveSpeed;
-		}
-		// Left arrow rotates light dir
-		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
-			lightRot += .03f;
+
 		}
 
+		// Space move upward
+		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
+			suzanne1->setPosition(glm::vec3(0));
+			suzanne1->setRotation(glm::vec3(0));
+			suzanne1->setScale(glm::vec3(1));
+
+		}
+
+		// Space move upward
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+			suzanne1->setPosition(glm::vec3(10));
+			suzanne1->setRotation(glm::vec3(3.14f,0,0));
+			suzanne1->setScale(glm::vec3(1,2,1));
+		}
 
 		float FoV = initialFov;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
