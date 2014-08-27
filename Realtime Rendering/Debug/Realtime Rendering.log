@@ -1,76 +1,482 @@
-﻿Build started 8/20/2014 3:52:46 AM.
+﻿Build started 8/27/2014 12:12:34 AM.
      1>Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt common\controls.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Common\Graphics\GridMesh.cpp Common\Graphics\mesh.cpp Common\Graphics\meshInstance.cpp Common\Util\DebugDisplay.cpp Common\Util\text2D.cpp common\controls.cpp main.cpp
+         main.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C2146: syntax error : missing ';' before identifier 'quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C2146: syntax error : missing ';' before identifier 'lowp_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C2146: syntax error : missing ';' before identifier 'mediump_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2146: syntax error : missing ';' before identifier 'fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2378: 'glm::quat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69) : see declaration of 'glm::quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C2146: syntax error : missing ';' before identifier 'dquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2417): error C2378: 'glm::fquat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90) : see declaration of 'glm::fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C2146: syntax error : missing ';' before identifier 'f32quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C2146: syntax error : missing ';' before identifier 'f64quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
          controls.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C2146: syntax error : missing ';' before identifier 'quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C2146: syntax error : missing ';' before identifier 'lowp_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C2146: syntax error : missing ';' before identifier 'mediump_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2146: syntax error : missing ';' before identifier 'fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2378: 'glm::quat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69) : see declaration of 'glm::quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C2146: syntax error : missing ';' before identifier 'dquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2417): error C2378: 'glm::fquat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90) : see declaration of 'glm::fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C2146: syntax error : missing ';' before identifier 'f32quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C2146: syntax error : missing ';' before identifier 'f64quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
      1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\controls.cpp(19): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-         GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" libnoise.lib assimp.lib opengl32.lib glfw3.lib glu32.lib glew32s.lib SOIL.lib BulletDynamics.lib BulletCollision.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\assimp\lib\assimpd.dll" /MACHINE:X86 Debug\controls.obj
-         Debug\GridMesh.obj
-         Debug\DebugDisplay.obj
-         Debug\loadShader.obj
-         Debug\mesh.obj
-         Debug\meshInstance.obj
-         Debug\noiseutils.obj
-         Debug\text2D.obj
-         Debug\textureLoad.obj
-         Debug\main.obj
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewAttachShader imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewCompileShader imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewCreateProgram imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewCreateShader imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewDeleteShader imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetProgramInfoLog imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetProgramiv imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetShaderInfoLog imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetShaderiv imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewLinkProgram imported
-     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewShaderSource imported
-     1>mesh.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-     1>mesh.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
-     1>mesh.obj : warning LNK4049: locally defined symbol ___glewDeleteBuffers imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewDeleteBuffers imported
-     1>mesh.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
-     1>mesh.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-     1>mesh.obj : warning LNK4049: locally defined symbol ___glewDeleteVertexArrays imported
-     1>mesh.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewDisableVertexAttribArray imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewDisableVertexAttribArray imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewUniform3f imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewUniformMatrix4fv imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
-     1>meshInstance.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
-     1>text2D.obj : warning LNK4049: locally defined symbol ___glewDeleteProgram imported
-     1>textureLoad.obj : warning LNK4049: locally defined symbol ___glewCompressedTexImage2D imported
-     1>glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\vc100.pdb'; linking object as if no debug info
-         Realtime Rendering.vcxproj -> C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe
-       FinalizeBuildStatus:
-         Deleting file "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
-         Touching "Debug\Realtime.C1CA4FA4.tlog\Realtime Rendering.lastbuildstate".
-     1>Done Building Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" (Build target(s)).
+         text2D.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C2146: syntax error : missing ';' before identifier 'quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C2146: syntax error : missing ';' before identifier 'lowp_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C2146: syntax error : missing ';' before identifier 'mediump_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2146: syntax error : missing ';' before identifier 'fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2378: 'glm::quat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69) : see declaration of 'glm::quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C2146: syntax error : missing ';' before identifier 'dquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2417): error C2378: 'glm::fquat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90) : see declaration of 'glm::fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C2146: syntax error : missing ';' before identifier 'f32quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C2146: syntax error : missing ';' before identifier 'f64quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+         DebugDisplay.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C2146: syntax error : missing ';' before identifier 'quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C2146: syntax error : missing ';' before identifier 'lowp_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C2146: syntax error : missing ';' before identifier 'mediump_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2146: syntax error : missing ';' before identifier 'fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2378: 'glm::quat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69) : see declaration of 'glm::quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C2146: syntax error : missing ';' before identifier 'dquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2417): error C2378: 'glm::fquat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90) : see declaration of 'glm::fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C2146: syntax error : missing ';' before identifier 'f32quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C2146: syntax error : missing ';' before identifier 'f64quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\util\debugdisplay.cpp(35): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         meshInstance.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C2146: syntax error : missing ';' before identifier 'quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C2146: syntax error : missing ';' before identifier 'lowp_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C2146: syntax error : missing ';' before identifier 'mediump_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2146: syntax error : missing ';' before identifier 'fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2378: 'glm::quat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69) : see declaration of 'glm::quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C2146: syntax error : missing ';' before identifier 'dquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2417): error C2378: 'glm::fquat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90) : see declaration of 'glm::fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C2146: syntax error : missing ';' before identifier 'f32quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C2146: syntax error : missing ';' before identifier 'f64quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+         mesh.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C2146: syntax error : missing ';' before identifier 'quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C2146: syntax error : missing ';' before identifier 'lowp_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C2146: syntax error : missing ';' before identifier 'mediump_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2146: syntax error : missing ';' before identifier 'fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2378: 'glm::quat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69) : see declaration of 'glm::quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C2146: syntax error : missing ';' before identifier 'dquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2417): error C2378: 'glm::fquat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90) : see declaration of 'glm::fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C2146: syntax error : missing ';' before identifier 'f32quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C2146: syntax error : missing ';' before identifier 'f64quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+         GridMesh.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(54): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(59): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C2146: syntax error : missing ';' before identifier 'quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C2146: syntax error : missing ';' before identifier 'lowp_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C2146: syntax error : missing ';' before identifier 'mediump_fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2146: syntax error : missing ';' before identifier 'fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90): error C2378: 'glm::quat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(69) : see declaration of 'glm::quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(96): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(101): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(106): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C2146: syntax error : missing ';' before identifier 'dquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(118): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2255): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2259): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2263): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2267): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2271): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2039: 'tquat' : is not a member of 'glm::detail'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): warning C4091: 'typedef ' : ignored on left of 'int' when no variable is declared
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2143: syntax error : missing ';' before '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2275): error C2059: syntax error : '<'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2417): error C2378: 'glm::fquat' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(90) : see declaration of 'glm::fquat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C2146: syntax error : missing ';' before identifier 'f32quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2487): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C2146: syntax error : missing ';' before identifier 'f64quat'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glm\fwd.hpp(2594): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\noise\noiseutils.h(1217): warning C4244: 'initializing' : conversion from 'const double' to 'float', possible loss of data
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\graphics\gridmesh.cpp(79): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\graphics\gridmesh.cpp(115): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\graphics\gridmesh.cpp(119): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\graphics\gridmesh.cpp(134): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\graphics\gridmesh.cpp(144): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+     1>Done Building Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.43
+Time Elapsed 00:00:04.18

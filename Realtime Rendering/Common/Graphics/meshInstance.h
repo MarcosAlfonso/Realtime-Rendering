@@ -10,8 +10,13 @@ public:
 	~MeshInstance();
 
 	void setPosition(glm::vec3 trans);
-	void setRotation(float angle, glm::vec3 axis);
+	void addPosition(glm::vec3 trans);
+
+	void setRotation(glm::vec3 eulers);
+	void addRotation(glm::vec3 eulers);
+
 	void setScale(glm::vec3 scale);
+	void addScale(glm::vec3 scale);
 
 	void Render();
 	void RenderGrid();
@@ -21,6 +26,11 @@ private:
 	Mesh * mesh;
 	GLuint shader_ID;
 	GLuint texture_ID;
+	
+	//Transformation 
 	glm::mat4 ModelMatrix;
+	glm::vec3 transVec = glm::vec3(0);
+	glm::vec3 rotVec = glm::vec3(0);
+	glm::vec3 scaleVec = glm::vec3(0);
 };
 

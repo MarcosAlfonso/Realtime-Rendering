@@ -17,6 +17,7 @@
 GLFWwindow* window;
 
 // Include GLM
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -198,7 +199,8 @@ void Render()
 
 	grid1->Render();
 
-	//suzanne1->Render();
+	suzanne1->setPosition(glm::vec3(0, .1f, 0));
+	suzanne1->Render();
 
 	skySphere->Render();
 
@@ -267,10 +269,8 @@ void BulletStep()
 	std::cout << "sphere height: " << trans.getOrigin().getY() << std::endl;
 }
 
-
 void InitializeBullet()
 {
-
 	
 	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
 	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -284,25 +284,23 @@ void InitializeBullet()
 	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
 	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
 
+	//Creates Bullet world with the stuff referenced 
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
+	
 	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 
 	btCollisionShape* fallShape = new btSphereShape(1);
 
-	btDefaultMotionState* groundMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 
-	btRigidBody::btRigidBodyConstructionInfo
-		groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 
 	dynamicsWorld->addRigidBody(groundRigidBody);
 
-	btDefaultMotionState* fallMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
+	btDefaultMotionState* fallMotionState =	new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
 
 	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);

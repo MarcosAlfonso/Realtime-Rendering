@@ -5,6 +5,7 @@ Physics:
 	Object picking
 
 Terrain:
+	Use GLM procedural noise instead of libnoise?
 	Make a terrain class, uses array of GridMeshs to render large terrains from perlin noise
 	Make further chunks be lower res, early LOD
 
@@ -26,3 +27,4 @@ Future Stuff:
 	
 Random Ideas:
 	Fast moving target shooting, ala Tribes?
+	First person parkour puzzle game?

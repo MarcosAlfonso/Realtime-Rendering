@@ -3,8 +3,11 @@
 #include <string>
 #include <cstring>
 
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -139,18 +142,29 @@ void MeshInstance::Render()
 
 void MeshInstance::setPosition(glm::vec3 trans)
 {
+	ModelMatrix = glm::translate(ModelMatrix, -transVec);
+	transVec = trans;
 	ModelMatrix = glm::translate(ModelMatrix, trans);
 }
 
-void MeshInstance::setRotation(float angle, glm::vec3 rot)
+void MeshInstance::addPosition(glm::vec3 trans)
 {
-	ModelMatrix = glm::rotate(ModelMatrix, angle, rot);
+	transVec += trans;
+	ModelMatrix = glm::translate(ModelMatrix, trans);
 }
 
 void MeshInstance::setScale(glm::vec3 scale)
 {
+	scaleVec = scale;
 	ModelMatrix = glm::scale(ModelMatrix, scale);
 }
+
+void MeshInstance::addScale(glm::vec3 scale)
+{
+	scaleVec += scale;
+	ModelMatrix = glm::scale(ModelMatrix, scale);
+}
+
 
 void MeshInstance::calculateLight()
 {
