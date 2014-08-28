@@ -1,16 +1,21 @@
+Engine Work:
+	Components implemented yay!
+	Create Phys Component
+	Remove MeshInstance completely
+	Component-ify existing entities
+	Change GameObject to GameEntity I like that more
+	
+Cleanup:
+	Cleanup includes!!! Quit avoiding this
+
 Physics:
-	Test new transformation tools for MeshInstance. addRotation is broken. Print vecs
 	Object spawning
 	Terrain Physics
 	Object picking
 
 Terrain:
-	Use GLM procedural noise instead of libnoise?
-	Make a terrain class, uses array of GridMeshs to render large terrains from perlin noise
-	Make further chunks be lower res, early LOD
-
-Cleanup:
-	Cleanup includes
+	Use GLM procedural noise instead of libnoise!!!
+	Terrain Physics
 
 Shaders:
 	Shader Based Sky, scattering and shiz

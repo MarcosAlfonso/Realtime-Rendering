@@ -86,6 +86,8 @@
   <ItemGroup>
     <ClCompile Include="common\controls.cpp" />
     <ClCompile Include="Common\EngineObjects\Components\RenderComponent.cpp" />
+    <ClCompile Include="Common\EngineObjects\Components\TransformComponent.cpp" />
+    <ClCompile Include="Common\EngineObjects\GameObject.cpp" />
     <ClCompile Include="Common\Graphics\GridMesh.cpp" />
     <ClCompile Include="Common\Util\DebugDisplay.cpp" />
     <ClCompile Include="Common\Util\loadShader.cpp" />
@@ -99,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="common\controls.h" />
     <ClInclude Include="Common\EngineObjects\Components\BaseComponent.h" />
+    <ClInclude Include="Common\EngineObjects\Components\TransformComponent.h" />
     <ClInclude Include="Common\EngineObjects\Components\RenderComponent.h" />
     <ClInclude Include="Common\EngineObjects\GameObject.h" />
     <ClInclude Include="Common\Graphics\GridMesh.h" />

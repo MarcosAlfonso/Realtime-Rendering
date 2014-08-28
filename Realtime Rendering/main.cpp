@@ -31,6 +31,8 @@ GLFWwindow* window;
 #include "Common/Graphics/meshInstance.h"
 #include "Common/Util/text2D.h"
 #include "Common/Util/DebugDisplay.h"
+#include "Common/EngineObjects/GameObject.h"
+#include "Common/EngineObjects/Components/RenderComponent.h"
 
 #pragma region Declarations
 void SetupConfiguration();
@@ -75,6 +77,9 @@ MeshInstance * grid1;
 
 DebugDisplay * debugDisplay;
 DebugDisplay * timedDebugDisplay;
+
+//Component object testing
+GameObject* testSphereGameObject;
 
 //Physics
 btDiscreteDynamicsWorld* dynamicsWorld;
@@ -152,6 +157,7 @@ void SetupConfiguration()
 	glDepthFunc(GL_LESS);
 	glPointSize(5);
 	//glEnable(GL_CULL_FACE);
+
 }
 
 void LoadAssets()
@@ -190,7 +196,12 @@ void LoadAssets()
 	grid = new GridMesh(100, 100, 2, 2);
 	grid1 = new MeshInstance(grid, StandardShaderID, GrassTexture);
 
-	//Physics stuff
+	testSphereGameObject = new GameObject();
+
+	testSphereGameObject->addComponent(new RenderComponent(sphere, FullbrightShaderID, skySphereTexture));
+	testSphereGameObject->Transform->setScale(glm::vec3(1, 2, 1));
+	testSphereGameObject->Init();
+
 }
 
 void Render()
@@ -207,6 +218,8 @@ void Render()
 
 	sphere1->Render();
 	skySphere->Render();
+
+	testSphereGameObject->Update();
 
 	sprintf(debugBuffer, "Vertex Count: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);

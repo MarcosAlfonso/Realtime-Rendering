@@ -33,6 +33,5 @@ private:
 	glm::mat4 transMatrix;
 	glm::mat4 rotMatrix;
 	glm::mat4 scaleMatrix;
-
 };
 

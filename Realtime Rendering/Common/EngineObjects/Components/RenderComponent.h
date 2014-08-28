@@ -1,34 +1,24 @@
 #pragma once
 #include "../../Graphics/mesh.h"
+#include "BaseComponent.h"
+#include "../GameObject.h"
 
-class RenderComponent
+class RenderComponent: public BaseComponent
 {
 
 public:
-	RenderComponent();
 	RenderComponent(Mesh * _mesh, GLuint _shader, GLuint _texture);
 	~RenderComponent();
 
-	void setPosition(glm::vec3 trans);
+	void Update();
 
-	void setRotation(glm::vec3 eulers);
-
-	void setScale(glm::vec3 scale);
-
-	void Render();
 	void calculateLight();
-	void calculateModelMatrix();
 
 private:
 	Mesh * mesh;
 	GLuint shader_ID;
 	GLuint texture_ID;
-
-	//Transformation 
-	glm::mat4 ModelMatrix;
-	glm::mat4 transMatrix;
-	glm::mat4 rotMatrix;
-	glm::mat4 scaleMatrix;
-
+	float lightRotation = 0;
+	glm::vec3 lightDirection;
 };
 

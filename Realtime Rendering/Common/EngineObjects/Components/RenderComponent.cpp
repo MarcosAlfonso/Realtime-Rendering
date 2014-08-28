@@ -3,51 +3,37 @@
 #include <string>
 #include <cstring>
 
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-
-
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-// Include AssImp
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
-
-#include "mesh.h"
-#include "../controls.h"
-#include "meshInstance.h"
+#include "../../Graphics/mesh.h"
+#include "../../controls.h"
+#include "RenderComponent.h"
+#include "TransformComponent.h"
 
 extern int vertexCount;
-float lightRot = 0;
-glm::vec3 lightDir;
 
-MeshInstance::MeshInstance()
+
+RenderComponent::RenderComponent(Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
-}
-
-MeshInstance::~MeshInstance()
-{
-
-}
-
-MeshInstance::MeshInstance(Mesh * _mesh, GLuint _shader, GLuint _texture)
-{
-	ModelMatrix = glm::mat4(1.0f);
 	mesh = _mesh;
 	shader_ID = _shader;
 	texture_ID = _texture;
 }
 
+RenderComponent::~RenderComponent()
+{
+
+}
+
 ////////////////////////
 //Render this instance//
 ////////////////////////
-void MeshInstance::Render()
+void RenderComponent::Update()
 {
 	//Binds this Mesh's VAO
 	glBindVertexArray(mesh->vaoID);
@@ -57,7 +43,7 @@ void MeshInstance::Render()
 	//Light positioning TODO should be abstracted
 	GLuint LightID = glGetUniformLocation(shader_ID, "LightDirection_worldspace");
 	calculateLight();
-	glUniform3f(LightID, lightDir.x, lightDir.y, lightDir.z);
+	glUniform3f(LightID, lightDirection.x, lightDirection.y, lightDirection.z);
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(shader_ID, "MVP");
@@ -67,7 +53,7 @@ void MeshInstance::Render()
 	// Compute the MVP matrix
 	glm::mat4 ProjectionMatrix = getProjectionMatrix();
 	glm::mat4 ViewMatrix = getViewMatrix();
-	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * parentObject->Transform->ModelMatrix;
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureUniformID = glGetUniformLocation(shader_ID, "DiffuseTextureSampler");
@@ -84,7 +70,7 @@ void MeshInstance::Render()
 	// Send our transformation to the currently bound shader, 
 	// in the "MVP" uniform
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-	glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
+	glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &parentObject->Transform->ModelMatrix[0][0]);
 	glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
 
 	//Fill the buffers
@@ -142,46 +128,7 @@ void MeshInstance::Render()
 	glDisableVertexAttribArray(2);
 }
 
-void MeshInstance::setPosition(glm::vec3 trans)
+void RenderComponent::calculateLight()
 {
-	transVec = trans;
-	transMatrix = glm::mat4();
-	transMatrix = glm::translate(transMatrix, trans);
-	calculateModelMatrix();
-}
-
-
-
-void MeshInstance::setRotation(glm::vec3 eulers)
-{
-	rotVec = eulers;
-
-	glm::quat tempQuat = glm::quat(eulers);
-	float angle = glm::angle(tempQuat);
-	glm::vec3 axis = glm::axis(tempQuat);
-
-	rotMatrix = glm::mat4();
-	rotMatrix = glm::rotate(transMatrix, angle, axis);
-	calculateModelMatrix();
-
-}
-
-
-void MeshInstance::setScale(glm::vec3 scale)
-{
-	scaleVec = scale;
-	scaleMatrix = glm::mat4();
-	scaleMatrix = glm::scale(transMatrix, scale);
-	calculateModelMatrix();
-}
-
-
-void MeshInstance::calculateModelMatrix()
-{
-	ModelMatrix = transMatrix * rotMatrix * scaleMatrix;
-}
-
-void MeshInstance::calculateLight()
-{
-	lightDir = glm::vec3(glm::sin(lightRot), .5, glm::cos(lightRot));
+	lightDirection = glm::vec3(glm::sin(lightRotation), .5, glm::cos(lightRotation));
 }

@@ -1,11 +1,18 @@
+#pragma once
+
+class GameObject;
 class BaseComponent
 {
 public:
-	virtual ~BaseComponent() {};
 
-	virtual void Init();
-	virtual void Update();
-	virtual void Destroy();
+	GameObject* parentObject;
+
+	void Init(GameObject* parent)
+	{
+		parentObject = parent;
+	};
+
+	virtual void Update() = 0;
 
 private:
 
