@@ -4,11 +4,11 @@
 #include "Components/TransformComponent.h"
 
 
-class GameObject
+class GameEntity
 {
 public:
-	GameObject();;
-	~GameObject();
+	GameEntity();;
+	~GameEntity();
 	
 	void Update();
 	

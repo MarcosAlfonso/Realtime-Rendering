@@ -1,18 +1,14 @@
 #pragma once
 
-class GameObject;
+class GameEntity;
 class BaseComponent
 {
 public:
 
-	GameObject* parentObject;
-
-	void Init(GameObject* parent)
-	{
-		parentObject = parent;
-	};
+	GameEntity* parentEntity;
 
 	virtual void Update() = 0;
+	virtual void toString() = 0;
 
 private:
 

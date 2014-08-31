@@ -16,10 +16,7 @@ using namespace glm;
 extern DebugDisplay * timedDebugDisplay;
 extern DebugDisplay * debugDisplay;
 
-#include "Graphics/meshInstance.h";
 extern float lightRot;
-extern MeshInstance* suzanne1;
-
 
 #include "controls.h"
 

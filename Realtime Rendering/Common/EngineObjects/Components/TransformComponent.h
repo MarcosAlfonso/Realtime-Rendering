@@ -5,10 +5,12 @@
 class TransformComponent : public BaseComponent
 {
 public:
-	TransformComponent();
+	TransformComponent(GameEntity* parent);
 	~TransformComponent();
 
 	void Update();
+	void toString();
+
 
 	glm::vec3 transVec = glm::vec3(0);
 	glm::vec3 rotVec = glm::vec3(0);
@@ -16,9 +18,12 @@ public:
 
 	void setPosition(glm::vec3 trans);
 	void setRotation(glm::vec3 eulers);
+	void setRotation(glm::quat quat);
 	void setScale(glm::vec3 scale);
 
 	void calculateModelMatrix();
+
+
 	glm::mat4 ModelMatrix;
 
 

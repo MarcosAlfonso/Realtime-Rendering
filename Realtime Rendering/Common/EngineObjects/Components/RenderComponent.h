@@ -1,18 +1,20 @@
 #pragma once
 #include "../../Graphics/mesh.h"
 #include "BaseComponent.h"
-#include "../GameObject.h"
+#include "../GameEntity.h"
 
 class RenderComponent: public BaseComponent
 {
 
 public:
-	RenderComponent(Mesh * _mesh, GLuint _shader, GLuint _texture);
+	RenderComponent(GameEntity* paren, Mesh * _mesh, GLuint _shader, GLuint _texture);
 	~RenderComponent();
 
 	void Update();
+	void toString();
 
 	void calculateLight();
+
 
 private:
 	Mesh * mesh;

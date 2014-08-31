@@ -87,31 +87,31 @@
     <ClCompile Include="common\controls.cpp" />
     <ClCompile Include="Common\EngineObjects\Components\RenderComponent.cpp" />
     <ClCompile Include="Common\EngineObjects\Components\TransformComponent.cpp" />
-    <ClCompile Include="Common\EngineObjects\GameObject.cpp" />
+    <ClCompile Include="Common\EngineObjects\GameEntity.cpp" />
     <ClCompile Include="Common\Graphics\GridMesh.cpp" />
     <ClCompile Include="Common\Util\DebugDisplay.cpp" />
     <ClCompile Include="Common\Util\loadShader.cpp" />
     <ClCompile Include="Common\Graphics\mesh.cpp" />
-    <ClCompile Include="Common\Graphics\meshInstance.cpp" />
     <ClCompile Include="Common\Util\noiseutils.cpp" />
     <ClCompile Include="Common\Util\text2D.cpp" />
     <ClCompile Include="Common\Util\textureLoad.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Common\EngineObjects\Components\PhysicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\controls.h" />
     <ClInclude Include="Common\EngineObjects\Components\BaseComponent.h" />
     <ClInclude Include="Common\EngineObjects\Components\TransformComponent.h" />
     <ClInclude Include="Common\EngineObjects\Components\RenderComponent.h" />
-    <ClInclude Include="Common\EngineObjects\GameObject.h" />
+    <ClInclude Include="Common\EngineObjects\GameEntity.h" />
     <ClInclude Include="Common\Graphics\GridMesh.h" />
     <ClInclude Include="Common\Graphics\mesh.h" />
-    <ClInclude Include="Common\Graphics\meshInstance.h" />
     <ClInclude Include="Common\Util\DebugDisplay.h" />
     <ClInclude Include="Common\Util\noiseutils.h" />
     <ClInclude Include="Common\Util\text2D.h" />
     <ClInclude Include="Common\Util\textureLoad.h" />
     <ClInclude Include="Common\Util\loadShader.h" />
+    <ClInclude Include="Common\EngineObjects\Components\PhysicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cube.model" />

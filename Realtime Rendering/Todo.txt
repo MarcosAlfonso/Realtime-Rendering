@@ -1,12 +1,10 @@
 Engine Work:
-	Components implemented yay!
-	Create Phys Component
-	Remove MeshInstance completely
-	Component-ify existing entities
-	Change GameObject to GameEntity I like that more
+	Get rotation workings from physics to render
+		How can we make it smarter? Should we switch a bunch of glm stuff to the bullet provided stuff?
+	Memory Management
 	
 Cleanup:
-	Cleanup includes!!! Quit avoiding this
+	Cleanup includes!!! Quit avoiding this... lol
 
 Physics:
 	Object spawning

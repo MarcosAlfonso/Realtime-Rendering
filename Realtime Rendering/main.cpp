@@ -28,11 +28,11 @@ GLFWwindow* window;
 #include "Common/controls.h"
 #include "Common/Graphics/mesh.h"
 #include "Common/Graphics/GridMesh.h"
-#include "Common/Graphics/meshInstance.h"
 #include "Common/Util/text2D.h"
 #include "Common/Util/DebugDisplay.h"
-#include "Common/EngineObjects/GameObject.h"
+#include "Common/EngineObjects/GameEntity.h"
 #include "Common/EngineObjects/Components/RenderComponent.h"
+#include "Common/EngineObjects/Components/PhysicsComponent.h"
 
 #pragma region Declarations
 void SetupConfiguration();
@@ -64,26 +64,25 @@ GLuint GrassTexture;
 //Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 //Suzanne
 Mesh * suzanne;
-MeshInstance * suzanne1;
-
-//Sphere
 Mesh * sphere;
-MeshInstance * skySphere;
-MeshInstance * sphere1;
 
 //Grid Mesh
 GridMesh * grid;
-MeshInstance * grid1;
 
+//Debug
 DebugDisplay * debugDisplay;
 DebugDisplay * timedDebugDisplay;
 
-//Component object testing
-GameObject* testSphereGameObject;
+//GameEntities
+std::vector<GameEntity*> GameEntities;
+GameEntity* physicsSphere;
+GameEntity* physicsSphere2;
+GameEntity* physicsSphere3;
+GameEntity* skySphere;
+GameEntity* terrain;
 
 //Physics
 btDiscreteDynamicsWorld* dynamicsWorld;
-btRigidBody* fallRigidBody;
 
 #pragma endregion 
 
@@ -179,28 +178,39 @@ void LoadAssets()
 	//Suzanne
 	suzanne = new Mesh();
 	suzanne->loadFromFile("Assets/suzanne.model");
-
-	suzanne1 = new MeshInstance(suzanne, StandardShaderID, GridTexture);
-	suzanne1->setPosition(glm::vec3(0.0, 2.5, 0.0));
-
 	//Sphere
 	sphere = new Mesh();
 	sphere->loadFromFile("Assets/sphere.model");
-
-	sphere1 = new MeshInstance(sphere, StandardShaderID, GridTexture);
-
-	skySphere = new MeshInstance(sphere, FullbrightShaderID, skySphereTexture);
-	skySphere->setScale(glm::vec3(100, -100, 100));
-
-	//Grid Mesh
+	//Terrain
 	grid = new GridMesh(100, 100, 2, 2);
-	grid1 = new MeshInstance(grid, StandardShaderID, GrassTexture);
 
-	testSphereGameObject = new GameObject();
 
-	testSphereGameObject->addComponent(new RenderComponent(sphere, FullbrightShaderID, skySphereTexture));
-	testSphereGameObject->Transform->setScale(glm::vec3(1, 2, 1));
-	testSphereGameObject->Init();
+	skySphere = new GameEntity();
+	skySphere->addComponent(new RenderComponent(skySphere, sphere, FullbrightShaderID, skySphereTexture));
+	skySphere->Transform->setScale(glm::vec3(100, -100, 100));
+	GameEntities.push_back(skySphere);
+
+	terrain = new GameEntity();
+	terrain->addComponent(new RenderComponent(terrain, grid, StandardShaderID, GrassTexture));
+	GameEntities.push_back(terrain);
+
+	physicsSphere = new GameEntity();
+	physicsSphere->Transform->setPosition(glm::vec3(0, 40, 0));
+	physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
+	physicsSphere->addComponent(new PhysicsComponent(physicsSphere));
+	GameEntities.push_back(physicsSphere);
+
+	physicsSphere2 = new GameEntity();
+	physicsSphere2->Transform->setPosition(glm::vec3(1, 60, 0));
+	physicsSphere2->addComponent(new RenderComponent(physicsSphere2, sphere, StandardShaderID, GrassTexture));
+	physicsSphere2->addComponent(new PhysicsComponent(physicsSphere2));
+	GameEntities.push_back(physicsSphere2);
+
+	physicsSphere3 = new GameEntity();
+	physicsSphere3->Transform->setPosition(glm::vec3(1, 65, 1));
+	physicsSphere3->addComponent(new RenderComponent(physicsSphere3, sphere, StandardShaderID, GrassTexture));
+	physicsSphere3->addComponent(new PhysicsComponent(physicsSphere3));
+	GameEntities.push_back(physicsSphere3);
 
 }
 
@@ -212,29 +222,12 @@ void Render()
 
 	vertexCount = 0;
 
-	grid1->Render();
+	for (int i = 0; i < GameEntities.size(); i++)
+	{
+		GameEntities[i]->Update();
+	}
 
-	suzanne1->Render();
-
-	sphere1->Render();
-	skySphere->Render();
-
-	testSphereGameObject->Update();
-
-	sprintf(debugBuffer, "Vertex Count: %d", vertexCount);
-	debugDisplay->addDebug(debugBuffer);
-
-	std::string trans = glm::to_string(suzanne1->transVec);
-	std::string rot = glm::to_string(suzanne1->rotVec);
-	std::string scale = glm::to_string(suzanne1->scaleVec);
-
-	sprintf(debugBuffer, "Pos: %s", trans.c_str());
-	debugDisplay->addDebug(debugBuffer);
-
-	sprintf(debugBuffer, "Rot: %s", rot.c_str());
-	debugDisplay->addDebug(debugBuffer);
-
-	sprintf(debugBuffer, "Scl: %s", scale.c_str());
+	sprintf(debugBuffer, "Vertex Count\n: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);
 
 	timedDebugDisplay->Draw();
@@ -259,11 +252,6 @@ void CleanupMemory()
 	delete(suzanne);
 	delete(sphere);
 	delete(grid);
-
-	//Delete MeshInstances
-	delete(suzanne1);
-	delete(skySphere);
-	delete(grid1);
 
 	// Delete the text's VBO, the shader and the texture
 	cleanupText2D();
@@ -293,10 +281,9 @@ void BulletStep()
 {
 	dynamicsWorld->stepSimulation(1 / 60.f, 10);
 
-	btTransform trans;
-	fallRigidBody->getMotionState()->getWorldTransform(trans);
+	//fallRigidBody->getMotionState()->getWorldTransform(trans);
 
-	sphere1->setPosition(glm::vec3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+	//physicsSphere->Transform->setPosition(glm::vec3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
 
 }
 
@@ -322,27 +309,11 @@ void InitializeBullet()
 	
 	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 
-	btCollisionShape* fallShape = new btSphereShape(1);
-
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 
 	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
 
 	groundRigidBodyCI.m_restitution = 1.0f;
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-
-
 	dynamicsWorld->addRigidBody(groundRigidBody);
-
-	btDefaultMotionState* fallMotionState =	new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
-
-	btScalar mass = 1;
-	btVector3 fallInertia(0, 0, 0);
-	fallShape->calculateLocalInertia(mass, fallInertia);
-
-	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
-	fallRigidBodyCI.m_restitution = .4f;
-	fallRigidBodyCI.m_friction = 1.5f;
-	fallRigidBody = new btRigidBody(fallRigidBodyCI);
-	dynamicsWorld->addRigidBody(fallRigidBody);
 }

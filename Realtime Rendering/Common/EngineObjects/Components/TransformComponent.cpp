@@ -2,8 +2,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-TransformComponent::TransformComponent()
+TransformComponent::TransformComponent(GameEntity* parent)
 {
+	parentEntity = parent;
 	calculateModelMatrix();
 }
 
@@ -47,11 +48,25 @@ void TransformComponent::setRotation(glm::vec3 eulers)
 	updateModelMatrix = true;
 }
 
+void TransformComponent::setRotation(glm::quat quat)
+{
+	float angle = glm::angle(quat);
+	glm::vec3 axis = glm::axis(quat);
+
+	rotMatrix = glm::mat4();
+	rotMatrix = glm::rotate(transMatrix, angle, axis);
+	updateModelMatrix = true;
+}
 void TransformComponent::setPosition(glm::vec3 trans)
 {
 	transVec = trans;
 	transMatrix = glm::mat4();
 	transMatrix = glm::translate(transMatrix, trans);
 	updateModelMatrix = true;
+}
+
+void TransformComponent::toString()
+{
+	
 }
 

@@ -18,8 +18,9 @@
 extern int vertexCount;
 
 
-RenderComponent::RenderComponent(Mesh * _mesh, GLuint _shader, GLuint _texture)
+RenderComponent::RenderComponent(GameEntity* parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
+	parentEntity = parent;
 	mesh = _mesh;
 	shader_ID = _shader;
 	texture_ID = _texture;
@@ -53,7 +54,7 @@ void RenderComponent::Update()
 	// Compute the MVP matrix
 	glm::mat4 ProjectionMatrix = getProjectionMatrix();
 	glm::mat4 ViewMatrix = getViewMatrix();
-	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * parentObject->Transform->ModelMatrix;
+	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * parentEntity->Transform->ModelMatrix;
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureUniformID = glGetUniformLocation(shader_ID, "DiffuseTextureSampler");
@@ -70,7 +71,7 @@ void RenderComponent::Update()
 	// Send our transformation to the currently bound shader, 
 	// in the "MVP" uniform
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-	glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &parentObject->Transform->ModelMatrix[0][0]);
+	glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &parentEntity->Transform->ModelMatrix[0][0]);
 	glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
 
 	//Fill the buffers
@@ -131,4 +132,9 @@ void RenderComponent::Update()
 void RenderComponent::calculateLight()
 {
 	lightDirection = glm::vec3(glm::sin(lightRotation), .5, glm::cos(lightRotation));
+}
+
+void RenderComponent::toString()
+{
+	
 }
