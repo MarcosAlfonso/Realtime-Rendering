@@ -13,8 +13,10 @@ TransformComponent::~TransformComponent()
 
 }
 
+
 void TransformComponent::Update()
 {
+	//If anything has changed, update Matrix to reflect changes
 	if (updateModelMatrix)
 	{
 		calculateModelMatrix();
@@ -35,6 +37,7 @@ void TransformComponent::setScale(glm::vec3 scale)
 	updateModelMatrix = true;
 }
 
+//Set Rotation from Eulers
 void TransformComponent::setRotation(glm::vec3 eulers)
 {
 	rotVec = eulers;
@@ -48,6 +51,7 @@ void TransformComponent::setRotation(glm::vec3 eulers)
 	updateModelMatrix = true;
 }
 
+//Set rotation from Quaternion
 void TransformComponent::setRotation(glm::quat quat)
 {
 	float angle = glm::angle(quat);

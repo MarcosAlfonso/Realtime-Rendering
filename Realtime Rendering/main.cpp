@@ -157,12 +157,13 @@ void SetupConfiguration()
 	glPointSize(5);
 	//glEnable(GL_CULL_FACE);
 
+	ControlInit();
 }
 
 void LoadAssets()
 {
 	//Initialize Text
-	initText2D("Assets/DroidSansMono.dds");
+	initText2D("Assets/DroidSansMonoSmall.dds");
 
 	// Create and compile our GLSL program from the shaders
 	StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
@@ -195,22 +196,10 @@ void LoadAssets()
 	GameEntities.push_back(terrain);
 
 	physicsSphere = new GameEntity();
-	physicsSphere->Transform->setPosition(glm::vec3(0, 40, 0));
+	physicsSphere->Transform->setPosition(glm::vec3(0, 40, 1));
 	physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-	physicsSphere->addComponent(new PhysicsComponent(physicsSphere));
+	physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1)));
 	GameEntities.push_back(physicsSphere);
-
-	physicsSphere2 = new GameEntity();
-	physicsSphere2->Transform->setPosition(glm::vec3(1, 60, 0));
-	physicsSphere2->addComponent(new RenderComponent(physicsSphere2, sphere, StandardShaderID, GrassTexture));
-	physicsSphere2->addComponent(new PhysicsComponent(physicsSphere2));
-	GameEntities.push_back(physicsSphere2);
-
-	physicsSphere3 = new GameEntity();
-	physicsSphere3->Transform->setPosition(glm::vec3(1, 65, 1));
-	physicsSphere3->addComponent(new RenderComponent(physicsSphere3, sphere, StandardShaderID, GrassTexture));
-	physicsSphere3->addComponent(new PhysicsComponent(physicsSphere3));
-	GameEntities.push_back(physicsSphere3);
 
 }
 

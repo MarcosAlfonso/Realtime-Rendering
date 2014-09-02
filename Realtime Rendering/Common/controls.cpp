@@ -1,5 +1,6 @@
 // Include GLFW
 #include <GLFW/glfw3.h>
+
 extern GLFWwindow* window; // The "extern" keyword here is to access the variable "window" declared in tutorialXXX.cpp. This is a hack to keep the tutorials simple. Please avoid this.
 
 
@@ -12,6 +13,7 @@ extern GLFWwindow* window; // The "extern" keyword here is to access the variabl
 #include <glm/gtc/matrix_transform.hpp>
 using namespace glm;
 
+extern char debugBuffer[];
 #include "Util/DebugDisplay.h"
 extern DebugDisplay * timedDebugDisplay;
 extern DebugDisplay * debugDisplay;
@@ -19,6 +21,15 @@ extern DebugDisplay * debugDisplay;
 extern float lightRot;
 
 #include "controls.h"
+#include "EngineObjects/GameEntity.h"
+#include "EngineObjects/Components/RenderComponent.h"
+#include "EngineObjects/Components/PhysicsComponent.h"
+
+extern std::vector<GameEntity*> GameEntities;
+extern Mesh * sphere;
+extern GLuint GridTexture;
+extern GLuint StandardShaderID;
+
 
 glm::mat4 ViewMatrix;
 glm::mat4 ProjectionMatrix;
@@ -43,7 +54,24 @@ float initialFov = 45.0f;
 float moveSpeed; // 3 units / second
 float mouseSpeed = 0.005f;
 
+void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+	{
+		timedDebugDisplay->addDebug("Spawned: Physics Sphere", 1);
+		GameEntity* physicsSphere = new GameEntity();
+		physicsSphere->Transform->setScale(glm::vec3(1, 2, 1));
+		physicsSphere->Transform->setPosition(glm::vec3(0, 40, 1.5));
+		physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
+		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1, 2, 1)));
+		GameEntities.push_back(physicsSphere);
+	}
+}
 
+void ControlInit()
+{
+	glfwSetKeyCallback(window, KeyboardCallback);
+}
 
 void computeMatricesFromInputs(){
 
@@ -120,7 +148,7 @@ void computeMatricesFromInputs(){
 
 		}
 
-		float FoV = initialFov;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
+		float FoV = initialFov;
 
 		// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 		ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 1000.0f);
@@ -136,3 +164,4 @@ void computeMatricesFromInputs(){
 
 	}
 }
+

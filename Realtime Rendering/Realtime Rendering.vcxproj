@@ -138,6 +138,7 @@
     <Image Include="Assets\DroidSansMono.dds">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="Assets\DroidSansMonoSmall.dds" />
     <Image Include="Assets\grass.dds" />
     <Image Include="Assets\GridTexture.dds">
       <DeploymentContent>true</DeploymentContent>

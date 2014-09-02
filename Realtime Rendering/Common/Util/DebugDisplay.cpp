@@ -32,7 +32,7 @@ void DebugDisplay::Draw()
 {
 	for (int i = 0; i < count; i++)
 	{
-		printText2D(strings[i].c_str(), pos.x, pos.y-(i*26), 26);
+		printText2D(strings[i].c_str(), pos.x, pos.y-(i*26), 25);
 
 		if (isTimed && glfwGetTime() - birthtimes[i] > lifespans[i])
 		{

@@ -1,33 +1,3 @@
-Engine Work:
-	Get rotation workings from physics to render
-		How can we make it smarter? Should we switch a bunch of glm stuff to the bullet provided stuff?
-	Memory Management
-	
-Cleanup:
-	Cleanup includes!!! Quit avoiding this... lol
+Todo is now handled by GitHub Issues
 
-Physics:
-	Object spawning
-	Terrain Physics
-	Object picking
-
-Terrain:
-	Use GLM procedural noise instead of libnoise!!!
-	Terrain Physics
-
-Shaders:
-	Shader Based Sky, scattering and shiz
-	Atmospheric fog
-	Add some sort of general debug shader, render out normals, verts, whatevers else
-
-Camera:
-	Make a camera class to seperate it from controls.
-
-Future Stuff: 
-
-	Grass: http://http.developer.nvidia.com/GPUGems/gpugems_ch07.html
-	Atmosphere Spread Rendering: http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html
-	
-Random Ideas:
-	Fast moving target shooting, ala Tribes?
-	First person parkour puzzle game?
+Please keep it up to date.
