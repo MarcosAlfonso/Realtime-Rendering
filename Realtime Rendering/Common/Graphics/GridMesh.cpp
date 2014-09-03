@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
+#include <glm/gtc/noise.hpp>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -16,10 +17,6 @@
 
 #include "GridMesh.h"
 #include "../controls.h"
-
-//Noise lib
-#include <noise/noise.h>
-#include <noise/noiseutils.h>
 
 
 ///////////////////
@@ -56,18 +53,6 @@ void GridMesh::PopulateVertices()
 	float minX = -width / 2;
 	float minY = -length / 2;
 
-	noise::module::Perlin PerlinModule;
-	PerlinModule.SetOctaveCount(3);
-
-	utils::NoiseMap heightMap;
-	utils::NoiseMapBuilderPlane heightMapBuilder;
-	heightMapBuilder.SetSourceModule(PerlinModule);
-	heightMapBuilder.SetDestNoiseMap(heightMap);
-	heightMapBuilder.SetDestSize(xPoints, zPoints);
-	heightMapBuilder.SetBounds(0.0, width/60, 0.0, length/60);
-	heightMapBuilder.Build();
-
-
 	for (int i = 0; i < xPoints; i++)
 	{
 		for (int j = 0; j < zPoints; j++)
@@ -75,8 +60,9 @@ void GridMesh::PopulateVertices()
 			float x = minX + i*xSpacing;
 			float z = minY + j*zSpacing;
 			
-			
-			float y = (heightMap.GetValue(i, j)-.5)*10;
+			float height = glm::perlin(glm::vec2(i/16.0, j/16.0));
+						
+			float y = height * 16;
 
 			vertices.push_back(glm::vec3(x, y, z));
 		}

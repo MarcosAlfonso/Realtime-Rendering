@@ -31,6 +31,11 @@ RenderComponent::~RenderComponent()
 
 }
 
+void RenderComponent::Cleanup()
+{
+	delete(this);
+}
+
 ////////////////////////
 //Render this instance//
 ////////////////////////

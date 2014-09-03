@@ -10,6 +10,7 @@ public:
 
 	void Update();
 	void toString();
+	void Cleanup();
 
 
 	glm::vec3 transVec = glm::vec3(0);

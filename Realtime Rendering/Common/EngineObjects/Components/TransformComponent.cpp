@@ -13,6 +13,11 @@ TransformComponent::~TransformComponent()
 
 }
 
+void TransformComponent::Cleanup()
+{
+	delete(this);
+}
+
 
 void TransformComponent::Update()
 {

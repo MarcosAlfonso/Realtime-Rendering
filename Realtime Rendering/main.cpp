@@ -42,6 +42,7 @@ void CleanupMemory();
 void CalculateFrameTime();
 void InitializeBullet();
 void BulletStep();
+void CleanupBullet();
 
 //Debug String
 char debugBuffer[512] = "";
@@ -83,6 +84,14 @@ GameEntity* terrain;
 
 //Physics
 btDiscreteDynamicsWorld* dynamicsWorld;
+btDefaultCollisionConfiguration* collisionConfiguration;
+btCollisionDispatcher* dispatcher;
+btBroadphaseInterface* overlappingPairCache;
+btSequentialImpulseConstraintSolver* solver;
+btCollisionShape* groundShape;
+btDefaultMotionState* groundMotionState;
+btRigidBody* groundRigidBody;
+
 
 #pragma endregion 
 
@@ -242,9 +251,18 @@ void CleanupMemory()
 	delete(sphere);
 	delete(grid);
 
+	//Delete Entities
+	for (int i = 0; i < GameEntities.size(); i++)
+	{
+		delete(GameEntities[i]);
+	}
+
 	// Delete the text's VBO, the shader and the texture
 	cleanupText2D();
-	
+
+	//Physics
+	CleanupBullet();
+
 	//Delete debuggers
 	delete(debugDisplay);
 	delete(timedDebugDisplay);
@@ -269,40 +287,49 @@ void CalculateFrameTime()
 void BulletStep()
 {
 	dynamicsWorld->stepSimulation(1 / 60.f, 10);
-
-	//fallRigidBody->getMotionState()->getWorldTransform(trans);
-
-	//physicsSphere->Transform->setPosition(glm::vec3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-
 }
 
 void InitializeBullet()
 {
 	
 	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+	collisionConfiguration = new btDefaultCollisionConfiguration();
 
 	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-	btCollisionDispatcher* dispatcher = new	btCollisionDispatcher(collisionConfiguration);
+	dispatcher = new	btCollisionDispatcher(collisionConfiguration);
 
 	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
-	btBroadphaseInterface* overlappingPairCache = new btDbvtBroadphase();
+	overlappingPairCache = new btDbvtBroadphase();
 
 	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+	solver = new btSequentialImpulseConstraintSolver;
 
 	//Creates Bullet world with the stuff referenced 
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
 	
-	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+	groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 
-	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 
 	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
 
 	groundRigidBodyCI.m_restitution = 1.0f;
-	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+	groundRigidBody = new btRigidBody(groundRigidBodyCI);
 	dynamicsWorld->addRigidBody(groundRigidBody);
+}
+
+void CleanupBullet()
+{
+	dynamicsWorld->removeRigidBody(groundRigidBody);
+
+	 delete(collisionConfiguration);
+	 delete(dispatcher);
+	 delete(overlappingPairCache);
+	 delete(solver);
+	 delete(groundShape);
+	 delete(groundMotionState);
+	 delete(groundRigidBody);
+	 delete(dynamicsWorld);
 }

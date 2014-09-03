@@ -12,6 +12,7 @@ public:
 
 	void Update();
 	void toString();
+	void Cleanup();
 
 	void calculateLight();
 

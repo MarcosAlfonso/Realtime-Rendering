@@ -8,8 +8,6 @@
 //dynamicsWorld from main
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
-
-
 PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, const btVector3 &dims)
 {
 	//Set parent container
@@ -45,10 +43,23 @@ PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, 
 	rigidBody = new btRigidBody(rigidBodyCI);
 	rigidBody->setMassProps(mass, fallInertia);
 
+	dynamicsWorld->addRigidBody(rigidBody);
+
 }
 
 PhysicsComponent::~PhysicsComponent()
 {
+
+}
+
+void PhysicsComponent::Cleanup()
+{
+	delete(collisionShape);
+	delete(motionState);
+
+	dynamicsWorld->removeRigidBody(rigidBody);
+	delete(rigidBody);
+	delete(this);
 }
 
 void PhysicsComponent::Update()
