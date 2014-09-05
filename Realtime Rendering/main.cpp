@@ -28,6 +28,7 @@ GLFWwindow* window;
 #include "Common/controls.h"
 #include "Common/Graphics/mesh.h"
 #include "Common/Graphics/GridMesh.h"
+#include "Common/Graphics/bulletDebugDraw.h"
 #include "Common/Util/text2D.h"
 #include "Common/Util/DebugDisplay.h"
 #include "Common/EngineObjects/GameEntity.h"
@@ -55,6 +56,7 @@ int nbFrames = 0;
 // Create and compile our GLSL program from the shaders
 GLuint StandardShaderID;
 GLuint FullbrightShaderID;
+GLuint debugLineShaderID;
 
 // Load the texture
 GLuint GridTexture;
@@ -66,6 +68,7 @@ GLuint GrassTexture;
 //Suzanne
 Mesh * suzanne;
 Mesh * sphere;
+Mesh * testLine;
 
 //Grid Mesh
 GridMesh * grid;
@@ -88,9 +91,6 @@ btDefaultCollisionConfiguration* collisionConfiguration;
 btCollisionDispatcher* dispatcher;
 btBroadphaseInterface* overlappingPairCache;
 btSequentialImpulseConstraintSolver* solver;
-btCollisionShape* groundShape;
-btDefaultMotionState* groundMotionState;
-btRigidBody* groundRigidBody;
 
 
 #pragma endregion 
@@ -109,7 +109,7 @@ int main(void)
 		
 		Render();
 
-		BulletStep();
+		dynamicsWorld->stepSimulation(1 / 60.f, 10);
 
 		glfwPollEvents();
 
@@ -177,6 +177,7 @@ void LoadAssets()
 	// Create and compile our GLSL program from the shaders
 	StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
 	FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
+	debugLineShaderID = CreateShaderProgram("Shaders/debugLine.vert", "Shaders/debugLine.frag", NULL);
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -202,12 +203,21 @@ void LoadAssets()
 
 	terrain = new GameEntity();
 	terrain->addComponent(new RenderComponent(terrain, grid, StandardShaderID, GrassTexture));
+
+	btScalar heightFieldArray[100];
+
+	for (int i = 0; i < 100; i++)
+	{
+		heightFieldArray[i] = 0;
+	}
+
+	//terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, btVector3(1, 1, 1), heightFieldArray));
 	GameEntities.push_back(terrain);
 
 	physicsSphere = new GameEntity();
 	physicsSphere->Transform->setPosition(glm::vec3(0, 40, 1));
 	physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-	physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1)));
+	physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1), NULL));
 	GameEntities.push_back(physicsSphere);
 
 }
@@ -224,6 +234,8 @@ void Render()
 	{
 		GameEntities[i]->Update();
 	}
+
+	bulletDebugDraw::drawLineTest(btVector3(0, 0, 0), btVector3(0, 50, 0), btVector3(1.0,1.0,1.0));
 
 	sprintf(debugBuffer, "Vertex Count\n: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);
@@ -284,11 +296,6 @@ void CalculateFrameTime()
 
 }
 
-void BulletStep()
-{
-	dynamicsWorld->stepSimulation(1 / 60.f, 10);
-}
-
 void InitializeBullet()
 {
 	
@@ -308,28 +315,14 @@ void InitializeBullet()
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
-	
-	groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-
-	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-
-	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
-
-	groundRigidBodyCI.m_restitution = 1.0f;
-	groundRigidBody = new btRigidBody(groundRigidBodyCI);
-	dynamicsWorld->addRigidBody(groundRigidBody);
 }
 
 void CleanupBullet()
 {
-	dynamicsWorld->removeRigidBody(groundRigidBody);
 
 	 delete(collisionConfiguration);
 	 delete(dispatcher);
 	 delete(overlappingPairCache);
 	 delete(solver);
-	 delete(groundShape);
-	 delete(groundMotionState);
-	 delete(groundRigidBody);
 	 delete(dynamicsWorld);
 }

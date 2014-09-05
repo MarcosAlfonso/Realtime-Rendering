@@ -4,22 +4,27 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include "../GameEntity.h"
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include <exception>
 
 //dynamicsWorld from main
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
-PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, const btVector3 &dims)
+PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, const btVector3 &dims, btScalar * terrainHeights )
 {
 	//Set parent container
 	parentEntity = parent;
 
+	btScalar mass;
+
 	if (type == BOX)
 	{
+		mass = 1;
 		collisionShape = new btBoxShape(dims);
 	}
 	else if (type == SPHERE)
 	{
-		//change to btMultiSphereShape to allow for non uniform scaling
+		mass = 1;
 		btVector3 positions[1] = { btVector3(0, 0, 0)};
 		btScalar radi[1] = { .5 };
 		collisionShape = new btMultiSphereShape(positions, radi, 1);
@@ -27,14 +32,14 @@ PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, 
 	}
 	else if (type == TERRAIN)
 	{
-		//use btHeightfieldTerrainShape and figure that shit out, BUT get rid of lib noise and use glm
+		mass = 0;
+		collisionShape = new btHeightfieldTerrainShape(100, 100, terrainHeights, 1, 0, 400, 1, PHY_FLOAT, false);
 	}
 
 	//Motion state sets up initial position and rotation of physics, which is set to Transform
 	motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(parentEntity->Transform->transVec.x, parentEntity->Transform->transVec.y, parentEntity->Transform->transVec.z)));
 
 	//Mass calculations
-	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);
 	collisionShape->calculateLocalInertia(mass, fallInertia);
 	

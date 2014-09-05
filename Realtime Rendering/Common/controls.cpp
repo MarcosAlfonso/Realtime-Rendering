@@ -63,7 +63,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		physicsSphere->Transform->setScale(glm::vec3(1, 1, 1));
 		physicsSphere->Transform->setPosition(glm::vec3(0, 20, 0));
 		physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1)));
+		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1), NULL));
 		GameEntities.push_back(physicsSphere);
 	}
 }
