@@ -39,7 +39,7 @@ void TransformComponent::setScale(glm::vec3 scale)
 {
 	scaleVec = scale;
 	scaleMatrix = glm::mat4();
-	scaleMatrix = glm::scale(transMatrix, scale);
+	scaleMatrix = glm::scale(scaleMatrix, scale);
 	updateModelMatrix = true;
 }
 
@@ -64,7 +64,7 @@ void TransformComponent::setRotation(glm::quat quat)
 	glm::vec3 axis = glm::axis(quat);
 
 	rotMatrix = glm::mat4();
-	rotMatrix = glm::rotate(transMatrix, angle, axis);
+	rotMatrix = glm::rotate(rotMatrix, angle, axis);
 	updateModelMatrix = true;
 }
 void TransformComponent::setPosition(glm::vec3 trans)

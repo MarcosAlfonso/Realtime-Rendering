@@ -206,13 +206,11 @@ void LoadAssets()
 	skySphere->Transform->setScale(glm::vec3(100, -100, 100));
 	GameEntities.push_back(skySphere);
 
+
 	groundCube = new GameEntity();
 	groundCube->addComponent(new RenderComponent(groundCube, sphere, StandardShaderID, GridTexture));
 	PhysicsComponent* phys = new PhysicsComponent(groundCube, SPHERE, btVector3(1, 1, 1), 0, NULL);
 	groundCube->addComponent(phys);
-
-	groundCube->Transform->setScale(glm::vec3(1,1,1));
-	phys->SetPosition(glm::vec3(0, 5, 0));
 
 	GameEntities.push_back(groundCube);
 
