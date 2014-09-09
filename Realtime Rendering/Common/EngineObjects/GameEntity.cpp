@@ -4,7 +4,6 @@ void GameEntity::addComponent(BaseComponent* comp)
 {
 	components.push_back(comp);
 }
-
 void GameEntity::Update()
 {
 	Transform->Update();
@@ -14,16 +13,13 @@ void GameEntity::Update()
 		components[i]->Update();
 	}
 }
-
 GameEntity::GameEntity()
 {
 	Transform = new TransformComponent(this);
 }
-
 GameEntity::~GameEntity()
 {
 	Transform->Cleanup();
-
 	for (int i = 0; i < components.size(); i++)
 	{
 		components[i]->Cleanup();

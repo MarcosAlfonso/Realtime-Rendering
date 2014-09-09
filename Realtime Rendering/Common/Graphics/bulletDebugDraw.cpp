@@ -2,17 +2,25 @@
 #include <GLFW/glfw3.h>
 #include "bulletDebugDraw.h"
 #include "../controls.h"
+#include <stdexcept>
 
 
 extern GLuint debugLineShaderID;
 
-void bulletDebugDraw::drawLineTest(const btVector3& from, const btVector3& to, const btVector3& color)
+void bulletDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
+
+	GLfloat x1 = from.getX();
+	GLfloat y1 = from.getY();
+	GLfloat z1 = from.getZ();
+	GLfloat x2 = to.getX();
+	GLfloat y2 = to.getY();
+	GLfloat z2 = to.getZ();
+
 	GLfloat vertices[] = {
 
-		0,0,0,
-		0,100,0,
-		100, 100, 100
+		x1,y1,z1,
+		x2,y2,z2
 
 	};
 
@@ -48,13 +56,45 @@ void bulletDebugDraw::drawLineTest(const btVector3& from, const btVector3& to, c
 	// Compute the MVP matrix
 	glm::mat4 ProjectionMatrix = getProjectionMatrix();
 	glm::mat4 ViewMatrix = getViewMatrix();
-	//glm::mat4 VP = ProjectionMatrix;;// *ViewMatrix;
+	glm::mat4 VP = ProjectionMatrix*ViewMatrix;
 
-	//glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &VP[0][0]);
+	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &VP[0][0]);
 
-	glDrawArrays(GL_LINE_LOOP, 0, 3);
+	glDrawArrays(GL_LINES, 0, 3);
 
 	glDisableVertexAttribArray(0);
 
 
 }
+
+bulletDebugDraw::bulletDebugDraw()
+{
+
+}
+
+bulletDebugDraw::~bulletDebugDraw()
+{
+
+}
+
+void bulletDebugDraw::drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color)
+{
+}
+
+void bulletDebugDraw::reportErrorWarning(const char* warningString)
+{
+}
+
+void bulletDebugDraw::draw3dText(const btVector3& location, const char* textString)
+{
+}
+
+void bulletDebugDraw::setDebugMode(int debugMode)
+{
+}
+
+int bulletDebugDraw::getDebugMode() const
+{
+	return 1;
+}
+

@@ -53,6 +53,9 @@ int vertexCount;
 double lastTime;
 int nbFrames = 0;
 
+//Window
+bool shouldClose;
+
 // Create and compile our GLSL program from the shaders
 GLuint StandardShaderID;
 GLuint FullbrightShaderID;
@@ -68,7 +71,7 @@ GLuint GrassTexture;
 //Suzanne
 Mesh * suzanne;
 Mesh * sphere;
-Mesh * testLine;
+Mesh * cube;
 
 //Grid Mesh
 GridMesh * grid;
@@ -83,7 +86,7 @@ GameEntity* physicsSphere;
 GameEntity* physicsSphere2;
 GameEntity* physicsSphere3;
 GameEntity* skySphere;
-GameEntity* terrain;
+GameEntity* groundCube;
 
 //Physics
 btDiscreteDynamicsWorld* dynamicsWorld;
@@ -114,8 +117,7 @@ int main(void)
 		glfwPollEvents();
 
 	} // Check if the ESC key was pressed or the window was closed
-	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-	glfwWindowShouldClose(window) == 0);
+	while (!shouldClose && glfwWindowShouldClose(window) == 0);
 
 	CleanupMemory();
 
@@ -192,6 +194,9 @@ void LoadAssets()
 	//Sphere
 	sphere = new Mesh();
 	sphere->loadFromFile("Assets/sphere.model");
+	//Sphere
+	cube = new Mesh();
+	cube->loadFromFile("Assets/cube.model");
 	//Terrain
 	grid = new GridMesh(100, 100, 2, 2);
 
@@ -201,24 +206,15 @@ void LoadAssets()
 	skySphere->Transform->setScale(glm::vec3(100, -100, 100));
 	GameEntities.push_back(skySphere);
 
-	terrain = new GameEntity();
-	terrain->addComponent(new RenderComponent(terrain, grid, StandardShaderID, GrassTexture));
+	groundCube = new GameEntity();
+	groundCube->addComponent(new RenderComponent(groundCube, sphere, StandardShaderID, GridTexture));
+	PhysicsComponent* phys = new PhysicsComponent(groundCube, SPHERE, btVector3(1, 1, 1), 0, NULL);
+	groundCube->addComponent(phys);
 
-	btScalar heightFieldArray[100];
+	groundCube->Transform->setScale(glm::vec3(1,1,1));
+	phys->SetPosition(glm::vec3(0, 5, 0));
 
-	for (int i = 0; i < 100; i++)
-	{
-		heightFieldArray[i] = 0;
-	}
-
-	//terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, btVector3(1, 1, 1), heightFieldArray));
-	GameEntities.push_back(terrain);
-
-	physicsSphere = new GameEntity();
-	physicsSphere->Transform->setPosition(glm::vec3(0, 40, 1));
-	physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-	physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1), NULL));
-	GameEntities.push_back(physicsSphere);
+	GameEntities.push_back(groundCube);
 
 }
 
@@ -235,10 +231,9 @@ void Render()
 		GameEntities[i]->Update();
 	}
 
-	bulletDebugDraw::drawLineTest(btVector3(0, 0, 0), btVector3(0, 50, 0), btVector3(1.0,1.0,1.0));
-
 	sprintf(debugBuffer, "Vertex Count\n: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);
+	dynamicsWorld->debugDrawWorld();
 
 	timedDebugDisplay->Draw();
 	debugDisplay->Draw();
@@ -315,6 +310,11 @@ void InitializeBullet()
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
+
+	bulletDebugDraw* drawer = new bulletDebugDraw();
+
+	dynamicsWorld->setDebugDrawer(drawer); 
+	dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 }
 
 void CleanupBullet()

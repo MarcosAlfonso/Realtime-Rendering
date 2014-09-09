@@ -27,7 +27,6 @@ public:
 
 	glm::mat4 ModelMatrix;
 
-
 private:
 	bool updateModelMatrix;
 

@@ -30,6 +30,8 @@ extern Mesh * sphere;
 extern GLuint GridTexture;
 extern GLuint StandardShaderID;
 
+extern bool shouldClose;
+
 
 glm::mat4 ViewMatrix;
 glm::mat4 ProjectionMatrix;
@@ -62,9 +64,15 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		GameEntity* physicsSphere = new GameEntity();
 		physicsSphere->Transform->setScale(glm::vec3(1, 1, 1));
 		physicsSphere->Transform->setPosition(glm::vec3(0, 20, 0));
+
 		physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1), NULL));
+		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1), 1, NULL));
 		GameEntities.push_back(physicsSphere);
+	}
+
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		shouldClose = true;
 	}
 }
 
@@ -149,6 +157,9 @@ void computeMatricesFromInputs(){
 		}
 
 		float FoV = initialFov;
+
+		sprintf(debugBuffer, "Cam Pos: %4.1f,%4.1f,%4.1f", position.x, position.y, position.z );
+		debugDisplay->addDebug(debugBuffer);
 
 		// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 		ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 1000.0f);

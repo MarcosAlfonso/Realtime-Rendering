@@ -1,5 +1,5 @@
+#pragma once
 #include <iostream>
-
 #include "PhysicsComponent.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -10,7 +10,7 @@
 //dynamicsWorld from main
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
-PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, const btVector3 &dims, btScalar * terrainHeights )
+PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, const btVector3 &dims, int _mass, btScalar * terrainHeights )
 {
 	//Set parent container
 	parentEntity = parent;
@@ -19,14 +19,14 @@ PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, 
 
 	if (type == BOX)
 	{
-		mass = 1;
+		mass = _mass;
 		collisionShape = new btBoxShape(dims);
 	}
 	else if (type == SPHERE)
 	{
-		mass = 1;
+		mass = _mass;
 		btVector3 positions[1] = { btVector3(0, 0, 0)};
-		btScalar radi[1] = { .5 };
+		btScalar radi[1] = { 1 };
 		collisionShape = new btMultiSphereShape(positions, radi, 1);
 		collisionShape->setLocalScaling(dims);
 	}
@@ -70,12 +70,19 @@ void PhysicsComponent::Cleanup()
 void PhysicsComponent::Update()
 {
 	//Gets rigid body Transform containing position and rotation 
-	btTransform rigidBodyTrans;
-	rigidBody->getMotionState()->getWorldTransform(rigidBodyTrans);
+	btTransform transform = rigidBody->getCenterOfMassTransform();
+
 	
 	//Sets Entity Transform to rigid body position and rotation
-	parentEntity->Transform->setPosition(glm::vec3(rigidBodyTrans.getOrigin().getX(), rigidBodyTrans.getOrigin().getY(), rigidBodyTrans.getOrigin().getZ()));
-	parentEntity->Transform->setRotation(glm::quat(rigidBodyTrans.getRotation().getW(), rigidBodyTrans.getRotation().getX(), rigidBodyTrans.getRotation().getY(), rigidBodyTrans.getRotation().getZ()));
+	parentEntity->Transform->setPosition(glm::vec3(transform.getOrigin().getX(), transform.getOrigin().getY(), transform.getOrigin().getZ()));
+	parentEntity->Transform->setRotation(glm::quat(transform.getRotation().getW(), transform.getRotation().getX(), transform.getRotation().getY(), transform.getRotation().getZ()));
+}
+
+void PhysicsComponent::SetPosition(glm::vec3 trans)
+{
+	btTransform transform = rigidBody->getCenterOfMassTransform();
+	transform.setOrigin(btVector3(trans.x, trans.y, trans.z));
+	rigidBody->setCenterOfMassTransform(transform);
 }
 
 void PhysicsComponent::toString()
