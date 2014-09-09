@@ -2,6 +2,7 @@
 #include <btBulletDynamicsCommon.h>
 #include <GL\gl.h>
 #include <glm/glm.hpp>
+#include <vector>
 
 
 class bulletDebugDraw : public btIDebugDraw
@@ -10,6 +11,9 @@ public:
 	
 	bulletDebugDraw();
 	~bulletDebugDraw();
+
+	std::vector<GLfloat> verticesVector;
+	int count = 0;
 
 	void drawLine(const btVector3& from, const btVector3& to, const btVector3& color);
 
@@ -23,6 +27,7 @@ public:
 
 	virtual int getDebugMode() const;
 
+	void DrawLineArray();
 private:
 
 };

@@ -1,12 +1,12 @@
-﻿Build started 9/9/2014 2:02:39 AM.
+﻿Build started 9/9/2014 11:12:32 AM.
      1>Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Common\EngineObjects\Components\TransformComponent.cpp
-         TransformComponent.cpp
-         GLM: angle function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-         GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Common\EngineObjects\Components\PhysicsComponent.cpp
+         PhysicsComponent.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\engineobjects\components\physicscomponent.cpp(23): warning C4244: '=' : conversion from 'int' to 'btScalar', possible loss of data
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\engineobjects\components\physicscomponent.cpp(28): warning C4244: '=' : conversion from 'int' to 'btScalar', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" libnoise.lib assimp.lib opengl32.lib glfw3.lib glu32.lib glew32s.lib SOIL.lib BulletDynamics.lib BulletCollision.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\assimp\lib\assimpd.dll" /MACHINE:X86 Debug\controls.obj
          Debug\RenderComponent.obj
@@ -15,6 +15,7 @@
          Debug\bulletDebugDraw.obj
          Debug\GridMesh.obj
          Debug\DebugDisplay.obj
+         Debug\helpers.obj
          Debug\loadShader.obj
          Debug\mesh.obj
          Debug\noiseutils.obj
@@ -30,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.68
+Time Elapsed 00:00:01.26

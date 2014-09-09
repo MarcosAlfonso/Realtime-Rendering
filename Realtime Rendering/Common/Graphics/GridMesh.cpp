@@ -64,6 +64,9 @@ void GridMesh::PopulateVertices()
 						
 			float y = height * 16;
 
+			heightFieldArray[j + (i*zPoints)] = y;
+			heightFieldArrayPointers[j + (i*zPoints)] = &heightFieldArray[j + (i*zPoints)];
+
 			vertices.push_back(glm::vec3(x, y, z));
 		}
 	}

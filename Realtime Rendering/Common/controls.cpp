@@ -66,7 +66,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		physicsSphere->Transform->setPosition(glm::vec3(0, 20, 0));
 
 		physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, btVector3(1,1,1), 1, NULL));
+		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, NULL));
 		GameEntities.push_back(physicsSphere);
 	}
 
@@ -124,10 +124,10 @@ void computeMatricesFromInputs(){
 		// Up vector
 		glm::vec3 up = glm::cross(right, direction);
 
-		moveSpeed = 3.5;
+		moveSpeed = 5;
 
 		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-			moveSpeed = 10;
+			moveSpeed = 20;
 		}
 
 		// Move forward

@@ -8,6 +8,8 @@ class GridMesh :
 
 public:
 	GridMesh(int xPoints, int zPoints, float xSpacing, float zSpacing);
+	float heightFieldArray[100];
+	float *heightFieldArrayPointers[100];
 
 private:
 	int xPoints, zPoints, numPoints;

@@ -91,6 +91,7 @@
     <ClCompile Include="Common\Graphics\bulletDebugDraw.cpp" />
     <ClCompile Include="Common\Graphics\GridMesh.cpp" />
     <ClCompile Include="Common\Util\DebugDisplay.cpp" />
+    <ClCompile Include="Common\Util\helpers.cpp" />
     <ClCompile Include="Common\Util\loadShader.cpp" />
     <ClCompile Include="Common\Graphics\mesh.cpp" />
     <ClCompile Include="Common\Util\noiseutils.cpp" />

@@ -87,6 +87,7 @@ GameEntity* physicsSphere2;
 GameEntity* physicsSphere3;
 GameEntity* skySphere;
 GameEntity* groundCube;
+GameEntity* terrain;
 
 //Physics
 btDiscreteDynamicsWorld* dynamicsWorld;
@@ -94,6 +95,10 @@ btDefaultCollisionConfiguration* collisionConfiguration;
 btCollisionDispatcher* dispatcher;
 btBroadphaseInterface* overlappingPairCache;
 btSequentialImpulseConstraintSolver* solver;
+bulletDebugDraw* drawer;
+
+float heightFieldArray[100];
+float *heightFieldArrayPointers[100];
 
 
 #pragma endregion 
@@ -198,7 +203,7 @@ void LoadAssets()
 	cube = new Mesh();
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
-	grid = new GridMesh(100, 100, 2, 2);
+	grid = new GridMesh(10, 10, 2, 2);
 
 
 	skySphere = new GameEntity();
@@ -207,12 +212,25 @@ void LoadAssets()
 	GameEntities.push_back(skySphere);
 
 
-	groundCube = new GameEntity();
-	groundCube->addComponent(new RenderComponent(groundCube, sphere, StandardShaderID, GridTexture));
-	PhysicsComponent* phys = new PhysicsComponent(groundCube, SPHERE, btVector3(1, 1, 1), 0, NULL);
-	groundCube->addComponent(phys);
+	terrain = new GameEntity();
+	terrain->addComponent(new RenderComponent(terrain, grid, StandardShaderID, GrassTexture));
 
-	GameEntities.push_back(groundCube);
+	for (int i = 0; i < 100; i++)
+	{
+		heightFieldArray[i] = 90;
+		heightFieldArrayPointers[i] = &heightFieldArray[i];
+	}
+
+	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArrayPointers));
+	GameEntities.push_back(terrain);
+
+	groundCube = new GameEntity();
+	groundCube->addComponent(new RenderComponent(groundCube, cube, StandardShaderID, GridTexture));
+	groundCube->Transform->setScale(glm::vec3(20, 1, 20));
+	//PhysicsComponent* phys = new PhysicsComponent(groundCube, BOX, 0, NULL);
+	//groundCube->addComponent(phys);
+
+	//GameEntities.push_back(groundCube);
 
 }
 
@@ -231,7 +249,9 @@ void Render()
 
 	sprintf(debugBuffer, "Vertex Count\n: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);
+	
 	dynamicsWorld->debugDrawWorld();
+//	drawer->DrawLineArray();
 
 	timedDebugDisplay->Draw();
 	debugDisplay->Draw();
@@ -307,9 +327,8 @@ void InitializeBullet()
 	//Creates Bullet world with the stuff referenced 
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
-
-
-	bulletDebugDraw* drawer = new bulletDebugDraw();
+	
+	drawer = new bulletDebugDraw();
 
 	dynamicsWorld->setDebugDrawer(drawer); 
 	dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
