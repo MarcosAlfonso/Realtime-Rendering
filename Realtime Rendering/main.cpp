@@ -19,6 +19,7 @@ GLFWwindow* window;
 // Include GLM
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
@@ -34,6 +35,7 @@ GLFWwindow* window;
 #include "Common/EngineObjects/GameEntity.h"
 #include "Common/EngineObjects/Components/RenderComponent.h"
 #include "Common/EngineObjects/Components/PhysicsComponent.h"
+ 
 
 #pragma region Declarations
 void SetupConfiguration();
@@ -97,9 +99,6 @@ btBroadphaseInterface* overlappingPairCache;
 btSequentialImpulseConstraintSolver* solver;
 bulletDebugDraw* drawer;
 
-float heightFieldArray[100];
-float *heightFieldArrayPointers[100];
-
 
 #pragma endregion 
 
@@ -114,10 +113,10 @@ int main(void)
 	do{
 
 		CalculateFrameTime();
-		
+
 		Render();
 
-		dynamicsWorld->stepSimulation(1 / 60.f, 10);
+		dynamicsWorld->stepSimulation(1 / 60.f, 10);	
 
 		glfwPollEvents();
 
@@ -149,7 +148,9 @@ void SetupConfiguration()
 	glfwWindowHint(GLFW_SAMPLES, 1);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+
 
 	// Open a window and create its OpenGL context
 	window = glfwCreateWindow(1024, 768, "Modern OpenGL", NULL, NULL);
@@ -203,35 +204,33 @@ void LoadAssets()
 	cube = new Mesh();
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
-	grid = new GridMesh(10, 10, 2, 2);
+	grid = new GridMesh(30, 30, 2, 2);
 
 
 	skySphere = new GameEntity();
 	skySphere->addComponent(new RenderComponent(skySphere, sphere, FullbrightShaderID, skySphereTexture));
-	skySphere->Transform->setScale(glm::vec3(100, -100, 100));
+	skySphere->Transform->setScale(100, -100, 100);
 	GameEntities.push_back(skySphere);
 
 
 	terrain = new GameEntity();
 	terrain->addComponent(new RenderComponent(terrain, grid, StandardShaderID, GrassTexture));
+	terrain->Transform->setScale(-1, 1, 1);
+	terrain->Transform->setRotation(0, glm::half_pi<float>(), 0);
 
-	for (int i = 0; i < 100; i++)
-	{
-		heightFieldArray[i] = 90;
-		heightFieldArrayPointers[i] = &heightFieldArray[i];
-	}
-
-	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArrayPointers));
+	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArray));
 	GameEntities.push_back(terrain);
 
+
+	/*
 	groundCube = new GameEntity();
 	groundCube->addComponent(new RenderComponent(groundCube, cube, StandardShaderID, GridTexture));
-	groundCube->Transform->setScale(glm::vec3(20, 1, 20));
-	//PhysicsComponent* phys = new PhysicsComponent(groundCube, BOX, 0, NULL);
-	//groundCube->addComponent(phys);
+	groundCube->Transform->setScale(20, 1, 20);
+	PhysicsComponent* phys = new PhysicsComponent(groundCube, BOX, 0, std::vector<float>());
+	groundCube->addComponent(phys);
 
-	//GameEntities.push_back(groundCube);
-
+	GameEntities.push_back(groundCube);
+	*/
 }
 
 void Render()
@@ -251,7 +250,6 @@ void Render()
 	debugDisplay->addDebug(debugBuffer);
 	
 	dynamicsWorld->debugDrawWorld();
-//	drawer->DrawLineArray();
 
 	timedDebugDisplay->Draw();
 	debugDisplay->Draw();

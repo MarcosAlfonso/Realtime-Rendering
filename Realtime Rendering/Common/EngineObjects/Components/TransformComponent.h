@@ -13,14 +13,14 @@ public:
 	void Cleanup();
 
 
-	glm::vec3 transVec = glm::vec3(0);
-	glm::vec3 rotVec = glm::vec3(0);
-	glm::vec3 scaleVec = glm::vec3(0);
+	glm::vec3 transVec;
+	glm::vec3 rotVec;
+	glm::vec3 scaleVec;
 
-	void setPosition(glm::vec3 trans);
-	void setRotation(glm::vec3 eulers);
+	void setPosition(float x, float y, float z);
+	void setRotation(float x, float y, float z);
 	void setRotation(glm::quat quat);
-	void setScale(glm::vec3 scale);
+	void setScale(float x, float y, float z);
 
 	void calculateModelMatrix();
 
@@ -28,7 +28,7 @@ public:
 	glm::mat4 ModelMatrix;
 
 private:
-	bool updateModelMatrix;
+	bool updateModelMatrix = true;
 
 	//Transformation 
 	glm::mat4 transMatrix;

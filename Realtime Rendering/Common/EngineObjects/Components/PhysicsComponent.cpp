@@ -11,12 +11,10 @@
 //dynamicsWorld from main
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
-PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, int _mass, float * terrainHeights[] )
+PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, int _mass, std::vector<float> heights )
 {
 	//Set parent container
 	parentEntity = parent;
-
-	btScalar mass;
 
 	if (type == BOX)
 	{
@@ -34,8 +32,11 @@ PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, 
 	else if (type == TERRAIN)
 	{
 		mass = 0;
-		collisionShape = new btHeightfieldTerrainShape(10, 10, terrainHeights, 1, 0, -90, 1, PHY_FLOAT, false);
-		collisionShape->setLocalScaling(btVector3(2,2,2));
+		
+		heightFieldArray = heights;
+		
+		collisionShape = new btHeightfieldTerrainShape(30, 30, &heightFieldArray[0], 1, -100, 100, 1, PHY_FLOAT, false);
+		collisionShape->setLocalScaling(btVector3(2,1,2));
 
 	}
 
@@ -77,10 +78,13 @@ void PhysicsComponent::Update()
 	//Gets rigid body Transform containing position and rotation 
 	btTransform transform = rigidBody->getCenterOfMassTransform();
 
-	
+
 	//Sets Entity Transform to rigid body position and rotation
-	parentEntity->Transform->setPosition(Helper::toGLM(transform.getOrigin()));
-	parentEntity->Transform->setRotation(glm::quat(transform.getRotation().getW(), transform.getRotation().getX(), transform.getRotation().getY(), transform.getRotation().getZ()));
+	if (mass > 0)
+	{
+		parentEntity->Transform->setPosition(transform.getOrigin().getX(), transform.getOrigin().getY(), transform.getOrigin().getZ());
+		parentEntity->Transform->setRotation(glm::quat(transform.getRotation().getW(), transform.getRotation().getX(), transform.getRotation().getY(), transform.getRotation().getZ()));
+	}
 }
 
 void PhysicsComponent::SetPosition(glm::vec3 trans)

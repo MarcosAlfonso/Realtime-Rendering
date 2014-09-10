@@ -1,6 +1,6 @@
-
 #pragma once
 #include "Mesh.h"
+#include <btBulletCollisionCommon.h>
 
 class GridMesh :
 	public Mesh
@@ -8,8 +8,7 @@ class GridMesh :
 
 public:
 	GridMesh(int xPoints, int zPoints, float xSpacing, float zSpacing);
-	float heightFieldArray[100];
-	float *heightFieldArrayPointers[100];
+	std::vector<float> heightFieldArray;
 
 private:
 	int xPoints, zPoints, numPoints;

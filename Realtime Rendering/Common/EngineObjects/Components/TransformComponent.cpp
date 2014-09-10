@@ -6,6 +6,11 @@
 TransformComponent::TransformComponent(GameEntity* parent)
 {
 	parentEntity = parent;
+
+	transVec = glm::vec3(0);
+	rotVec = glm::vec3(0);
+	scaleVec = glm::vec3(1, 1, 1);
+
 	calculateModelMatrix();
 }
 
@@ -35,20 +40,20 @@ void TransformComponent::calculateModelMatrix()
 	updateModelMatrix = false;
 }
 
-void TransformComponent::setScale(glm::vec3 scale)
+void TransformComponent::setScale(float x, float y, float z)
 {
-	scaleVec = scale;
+	scaleVec = glm::vec3(x, y, z);
 	scaleMatrix = glm::mat4();
-	scaleMatrix = glm::scale(scaleMatrix, scale);
+	scaleMatrix = glm::scale(scaleMatrix, scaleVec);
 	updateModelMatrix = true;
 }
 
 //Set Rotation from Eulers
-void TransformComponent::setRotation(glm::vec3 eulers)
+void TransformComponent::setRotation(float x, float y, float z)
 {
-	rotVec = eulers;
+	rotVec = glm::vec3(x, y, z);
 
-	glm::quat tempQuat = glm::quat(eulers);
+	glm::quat tempQuat = glm::quat(rotVec);
 	float angle = glm::angle(tempQuat);
 	glm::vec3 axis = glm::axis(tempQuat);
 
@@ -67,11 +72,11 @@ void TransformComponent::setRotation(glm::quat quat)
 	rotMatrix = glm::rotate(rotMatrix, angle, axis);
 	updateModelMatrix = true;
 }
-void TransformComponent::setPosition(glm::vec3 trans)
+void TransformComponent::setPosition(float x, float y, float z)
 {
-	transVec = trans;
+	transVec = glm::vec3(x,y,z);
 	transMatrix = glm::mat4();
-	transMatrix = glm::translate(transMatrix, trans);
+	transMatrix = glm::translate(transMatrix, transVec);
 	updateModelMatrix = true;
 }
 
