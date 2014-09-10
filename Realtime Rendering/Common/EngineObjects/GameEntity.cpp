@@ -13,8 +13,9 @@ void GameEntity::Update()
 		components[i]->Update();
 	}
 }
-GameEntity::GameEntity()
+GameEntity::GameEntity(std::string name)
 {
+	Name = name;
 	Transform = new TransformComponent(this);
 }
 GameEntity::~GameEntity()

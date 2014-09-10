@@ -85,8 +85,6 @@ DebugDisplay * timedDebugDisplay;
 //GameEntities
 std::vector<GameEntity*> GameEntities;
 GameEntity* physicsSphere;
-GameEntity* physicsSphere2;
-GameEntity* physicsSphere3;
 GameEntity* skySphere;
 GameEntity* groundCube;
 GameEntity* terrain;
@@ -148,8 +146,8 @@ void SetupConfiguration()
 	glfwWindowHint(GLFW_SAMPLES, 1);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
 
 	// Open a window and create its OpenGL context
@@ -172,7 +170,7 @@ void SetupConfiguration()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glPointSize(5);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 	ControlInit();
 }
@@ -207,14 +205,16 @@ void LoadAssets()
 	grid = new GridMesh(30, 30, 2, 2);
 
 
-	skySphere = new GameEntity();
+	skySphere = new GameEntity("Sky Sphere");
 	skySphere->addComponent(new RenderComponent(skySphere, sphere, FullbrightShaderID, skySphereTexture));
 	skySphere->Transform->setScale(100, -100, 100);
 	GameEntities.push_back(skySphere);
 
 
-	terrain = new GameEntity();
-	terrain->addComponent(new RenderComponent(terrain, grid, StandardShaderID, GrassTexture));
+	terrain = new GameEntity("Terrain");
+	RenderComponent * terrainRender = new RenderComponent(terrain, grid, StandardShaderID, GrassTexture);
+	terrainRender->flipCullFace = true;
+	terrain->addComponent(terrainRender);
 	terrain->Transform->setScale(-1, 1, 1);
 	terrain->Transform->setRotation(0, glm::half_pi<float>(), 0);
 
@@ -248,8 +248,6 @@ void Render()
 
 	sprintf(debugBuffer, "Vertex Count\n: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);
-	
-	dynamicsWorld->debugDrawWorld();
 
 	timedDebugDisplay->Draw();
 	debugDisplay->Draw();

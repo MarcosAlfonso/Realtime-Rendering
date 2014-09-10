@@ -10,6 +10,8 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <GL/gl.h>
+
 
 #include "../../Graphics/mesh.h"
 #include "../../controls.h"
@@ -43,9 +45,20 @@ void RenderComponent::Cleanup()
 void RenderComponent::Update()
 {
 	//Binds this Mesh's VAO
+
 	glBindVertexArray(mesh->vaoID);
+	
 
 	glUseProgram(shader_ID);
+
+	if (flipCullFace)
+	{
+		glCullFace(GL_FRONT);
+	}
+	else
+	{
+		glCullFace(GL_BACK);
+	}
 
 	//Light positioning TODO should be abstracted
 	GLuint LightID = glGetUniformLocation(shader_ID, "LightDirection_worldspace");

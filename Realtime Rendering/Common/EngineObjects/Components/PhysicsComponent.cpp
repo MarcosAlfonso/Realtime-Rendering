@@ -54,6 +54,8 @@ PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, 
 	rigidBody = new btRigidBody(rigidBodyCI);
 	rigidBody->setMassProps(mass, fallInertia);
 
+	rigidBody->setUserPointer((void*)this);
+
 	dynamicsWorld->addRigidBody(rigidBody);
 
 }

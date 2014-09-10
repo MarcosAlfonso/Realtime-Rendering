@@ -5,13 +5,16 @@
 class GameEntity
 {
 public:
-	GameEntity();;
+	GameEntity(std::string name);
 	~GameEntity();
 	void Update();
 	void addComponent(BaseComponent* comp);
 	void Init();
 	TransformComponent* Transform;
-	int ID;
+
+	std::string Name;
+
+
 private:
 	std::vector<BaseComponent*> components;
 };

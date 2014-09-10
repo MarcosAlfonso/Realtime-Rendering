@@ -17,12 +17,12 @@ void main(){
 
 	// Light emission properties
 	// You probably want to put them as uniforms
-	vec3 LightColor = vec3(1,1,1);
-	float LightPower = 1.0f;
+	vec3 LightColor = vec3(.97,.97, 1);
+	float LightPower = 0.8f;
 	
 	// Material properties
 	vec3 MaterialDiffuseColor = texture2D( myTextureSampler, UV ).rgb;
-	vec3 MaterialAmbientColor = vec3(0.3,0.3,0.45) * MaterialDiffuseColor;
+	vec3 MaterialAmbientColor = vec3(0.3,0.3,0.4) * MaterialDiffuseColor;
 
 	//Normalize face normal
 	vec3 n = normalize( Normal_worldspace );

@@ -16,6 +16,8 @@ public:
 
 	void calculateLight();
 
+	bool flipCullFace = false;
+
 
 private:
 	Mesh * mesh;
