@@ -1,11 +1,11 @@
 #pragma once
 
-class GameEntity;
+class BaseEntity;
 class BaseComponent
 {
 public:
 
-	GameEntity* parentEntity;
+	BaseEntity* parentEntity;
 
 	virtual void Cleanup() = 0; 
 	virtual void Update() = 0;

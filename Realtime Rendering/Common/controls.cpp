@@ -21,11 +21,11 @@ extern DebugDisplay * debugDisplay;
 extern float lightRot;
 
 #include "controls.h"
-#include "EngineObjects/GameEntity.h"
+#include "EngineObjects/Entities/BaseEntity.h"
 #include "EngineObjects/Components/RenderComponent.h"
 #include "EngineObjects/Components/PhysicsComponent.h"
 
-extern std::vector<GameEntity*> GameEntities;
+extern std::vector<BaseEntity*> GameEntities;
 extern Mesh * sphere;
 extern GLuint GridTexture;
 extern GLuint StandardShaderID;
@@ -53,7 +53,7 @@ glm::vec3 position = glm::vec3(2,1,8);
 float horizontalAngle = 3.14f;
 // Initial vertical angle : none
 float verticalAngle = 0.0f;
-// Initial Field of View
+// Initial Field of View 
 float initialFov = 45.0f;
 
 float moveSpeed; // 3 units / second
@@ -64,7 +64,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 	if (key == GLFW_KEY_Q && action == GLFW_PRESS)
 	{
 		timedDebugDisplay->addDebug("Spawned: Physics Sphere", 1);
-		GameEntity* physicsSphere = new GameEntity("Physics Test Sphere");
+		BaseEntity* physicsSphere = new BaseEntity("Physics Test Sphere");
 		physicsSphere->Transform->setPosition(0, 5, 0);
 
 		physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
@@ -91,8 +91,6 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 		double * mouseY = new double;
 
 		glfwGetCursorPos(window, mouseX, mouseY);
-
-
 
 		glm::vec3 out_origin;
 		glm::vec3 out_direction;

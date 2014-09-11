@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
 #include <glm/glm.hpp>
-#include "Components/TransformComponent.h"
-class GameEntity
+#include "../Components/TransformComponent.h"
+class BaseEntity
 {
 public:
-	GameEntity(std::string name);
-	~GameEntity();
+	BaseEntity(std::string name);
+	~BaseEntity();
 	void Update();
 	void addComponent(BaseComponent* comp);
 	void Init();

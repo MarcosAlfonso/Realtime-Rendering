@@ -3,7 +3,7 @@
 #include "PhysicsComponent.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include "../GameEntity.h"
+#include "../Entities/BaseEntity.h"
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include <exception>
 #include "../../Util/helpers.cpp"
@@ -11,7 +11,7 @@
 //dynamicsWorld from main
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
-PhysicsComponent::PhysicsComponent(GameEntity* parent, CollisionShapeEnum type, int _mass, std::vector<float> heights )
+PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, int _mass, std::vector<float> heights )
 {
 	//Set parent container
 	parentEntity = parent;

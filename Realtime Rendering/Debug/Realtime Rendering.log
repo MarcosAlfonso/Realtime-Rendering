@@ -1,18 +1,24 @@
-﻿Build started 9/10/2014 2:40:54 AM.
+﻿Build started 9/11/2014 1:46:41 AM.
      1>Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt common\controls.cpp
-         controls.cpp
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\common\controls.cpp(215): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Common\EngineObjects\Components\RenderComponent.cpp main.cpp
+         main.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(249): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(254): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
-         GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(281): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(304): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
+         RenderComponent.cpp
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" libnoise.lib assimp.lib opengl32.lib glfw3.lib glu32.lib glew32s.lib SOIL.lib BulletDynamics.lib BulletCollision.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\assimp\lib\assimpd.dll" /MACHINE:X86 Debug\controls.obj
+         Debug\CameraComponent.obj
          Debug\RenderComponent.obj
          Debug\TransformComponent.obj
-         Debug\GameEntity.obj
+         Debug\BaseEntity.obj
          Debug\bulletDebugDraw.obj
          Debug\GridMesh.obj
          Debug\DebugDisplay.obj
@@ -24,6 +30,54 @@
          Debug\textureLoad.obj
          Debug\main.obj
          Debug\PhysicsComponent.obj
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
+     1>mesh.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewDisableVertexAttribArray imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewDisableVertexAttribArray imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewUniform3f imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewUniformMatrix4fv imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
+     1>bulletDebugDraw.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
+     1>RenderComponent.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
+     1>mesh.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewAttachShader imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewCompileShader imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewCreateProgram imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewCreateShader imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewDeleteShader imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetProgramInfoLog imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetProgramiv imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetShaderInfoLog imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewGetShaderiv imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewLinkProgram imported
+     1>loadShader.obj : warning LNK4049: locally defined symbol ___glewShaderSource imported
+     1>mesh.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
+     1>mesh.obj : warning LNK4049: locally defined symbol ___glewDeleteBuffers imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewDeleteBuffers imported
+     1>mesh.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
+     1>mesh.obj : warning LNK4049: locally defined symbol ___glewDeleteVertexArrays imported
+     1>mesh.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
+     1>text2D.obj : warning LNK4049: locally defined symbol ___glewDeleteProgram imported
+     1>textureLoad.obj : warning LNK4049: locally defined symbol ___glewCompressedTexImage2D imported
+     1>glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\vc100.pdb'; linking object as if no debug info
          Realtime Rendering.vcxproj -> C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe
        FinalizeBuildStatus:
          Deleting file "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
@@ -32,4 +86,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.75
+Time Elapsed 00:00:03.06

@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-TransformComponent::TransformComponent(GameEntity* parent)
+TransformComponent::TransformComponent(BaseEntity* parent)
 {
 	parentEntity = parent;
 

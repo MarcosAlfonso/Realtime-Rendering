@@ -1,10 +1,11 @@
-#include "GameEntity.h"
+#include "BaseEntity.h"
 
-void GameEntity::addComponent(BaseComponent* comp)
+void BaseEntity::addComponent(BaseComponent* comp)
 {
 	components.push_back(comp);
 }
-void GameEntity::Update()
+
+void BaseEntity::Update()
 {
 	Transform->Update();
 
@@ -13,12 +14,14 @@ void GameEntity::Update()
 		components[i]->Update();
 	}
 }
-GameEntity::GameEntity(std::string name)
+
+BaseEntity::BaseEntity(std::string name)
 {
 	Name = name;
 	Transform = new TransformComponent(this);
 }
-GameEntity::~GameEntity()
+
+BaseEntity::~BaseEntity()
 {
 	Transform->Cleanup();
 	for (int i = 0; i < components.size(); i++)

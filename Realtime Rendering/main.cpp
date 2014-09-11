@@ -32,9 +32,11 @@ GLFWwindow* window;
 #include "Common/Graphics/bulletDebugDraw.h"
 #include "Common/Util/text2D.h"
 #include "Common/Util/DebugDisplay.h"
-#include "Common/EngineObjects/GameEntity.h"
+#include "Common/EngineObjects/Entities/BaseEntity.h"
 #include "Common/EngineObjects/Components/RenderComponent.h"
 #include "Common/EngineObjects/Components/PhysicsComponent.h"
+#include "Common/EngineObjects/Components/CameraComponent.h"
+#include "Common/EngineObjects/Entities/FreeCamera.h"
  
 
 #pragma region Declarations
@@ -83,11 +85,12 @@ DebugDisplay * debugDisplay;
 DebugDisplay * timedDebugDisplay;
 
 //GameEntities
-std::vector<GameEntity*> GameEntities;
-GameEntity* physicsSphere;
-GameEntity* skySphere;
-GameEntity* groundCube;
-GameEntity* terrain;
+std::vector<BaseEntity*> GameEntities;
+BaseEntity* physicsSphere;
+BaseEntity* skySphere;
+BaseEntity* groundCube;
+BaseEntity* terrain;
+FreeCamera * mainCamera;
 
 //Physics
 btDiscreteDynamicsWorld* dynamicsWorld;
@@ -205,13 +208,13 @@ void LoadAssets()
 	grid = new GridMesh(30, 30, 2, 2);
 
 
-	skySphere = new GameEntity("Sky Sphere");
+	skySphere = new BaseEntity("Sky Sphere");
 	skySphere->addComponent(new RenderComponent(skySphere, sphere, FullbrightShaderID, skySphereTexture));
 	skySphere->Transform->setScale(100, -100, 100);
 	GameEntities.push_back(skySphere);
 
 
-	terrain = new GameEntity("Terrain");
+	terrain = new BaseEntity("Terrain");
 	RenderComponent * terrainRender = new RenderComponent(terrain, grid, StandardShaderID, GrassTexture);
 	terrainRender->flipCullFace = true;
 	terrain->addComponent(terrainRender);
@@ -220,6 +223,10 @@ void LoadAssets()
 
 	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArray));
 	GameEntities.push_back(terrain);
+
+	mainCamera = new FreeCamera("Main Camera");
+	mainCamera->Transform->setPosition(2, 1, 8);
+	mainCamera->Camera->horizontalAngle = 3.14f;
 
 
 	/*
@@ -236,8 +243,6 @@ void LoadAssets()
 void Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	computeMatricesFromInputs();
 
 	vertexCount = 0;
 

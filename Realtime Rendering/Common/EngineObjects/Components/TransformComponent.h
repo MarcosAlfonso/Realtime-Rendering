@@ -5,7 +5,7 @@
 class TransformComponent : public BaseComponent
 {
 public:
-	TransformComponent(GameEntity* parent);
+	TransformComponent(BaseEntity* parent);
 	~TransformComponent();
 
 	void Update();

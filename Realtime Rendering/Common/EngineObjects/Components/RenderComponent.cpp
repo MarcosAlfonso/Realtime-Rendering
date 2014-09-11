@@ -17,11 +17,12 @@
 #include "../../controls.h"
 #include "RenderComponent.h"
 #include "TransformComponent.h"
+#include "../Entities/FreeCamera.h"
 
 extern int vertexCount;
+extern FreeCamera * mainCamera;
 
-
-RenderComponent::RenderComponent(GameEntity* parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
+RenderComponent::RenderComponent(BaseEntity* parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
 	parentEntity = parent;
 	mesh = _mesh;
@@ -71,8 +72,8 @@ void RenderComponent::Update()
 	GLuint ModelMatrixID = glGetUniformLocation(shader_ID, "M");
 
 	// Compute the MVP matrix
-	glm::mat4 ProjectionMatrix = getProjectionMatrix();
-	glm::mat4 ViewMatrix = getViewMatrix();
+	glm::mat4 ProjectionMatrix = mainCamera->Camera->ProjectionMatrix;
+	glm::mat4 ViewMatrix = mainCamera->Camera->ViewMatrix;
 	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * parentEntity->Transform->ModelMatrix;
 
 	// Get a handle for our "myTextureSampler" uniform
