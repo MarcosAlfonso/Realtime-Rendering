@@ -115,6 +115,8 @@ int main(void)
 
 		CalculateFrameTime();
 
+		ControlsUpdate();
+
 		Render();
 
 		dynamicsWorld->stepSimulation(1 / 60.f, 10);	
@@ -173,7 +175,6 @@ void SetupConfiguration()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glPointSize(5);
-	glEnable(GL_CULL_FACE);
 
 	ControlInit();
 }
@@ -227,6 +228,7 @@ void LoadAssets()
 	mainCamera = new FreeCamera("Main Camera");
 	mainCamera->Transform->setPosition(2, 1, 8);
 	mainCamera->Camera->horizontalAngle = 3.14f;
+	GameEntities.push_back(mainCamera);
 
 
 	/*

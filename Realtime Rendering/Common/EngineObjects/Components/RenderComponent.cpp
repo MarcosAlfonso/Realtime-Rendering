@@ -52,15 +52,6 @@ void RenderComponent::Update()
 
 	glUseProgram(shader_ID);
 
-	if (flipCullFace)
-	{
-		glCullFace(GL_FRONT);
-	}
-	else
-	{
-		glCullFace(GL_BACK);
-	}
-
 	//Light positioning TODO should be abstracted
 	GLuint LightID = glGetUniformLocation(shader_ID, "LightDirection_worldspace");
 	calculateLight();

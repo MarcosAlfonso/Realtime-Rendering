@@ -1,6 +1,6 @@
 #pragma once
 
-void computeMatricesFromInputs();
+void ControlsUpdate();
 glm::mat4 getViewMatrix();
 glm::mat4 getProjectionMatrix();
 void ControlInit();
