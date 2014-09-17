@@ -172,8 +172,6 @@ void SetupConfiguration()
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");
 	}
-	
-	InitializeCEGUI();
 
 	// Config Stuff
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
@@ -181,6 +179,8 @@ void SetupConfiguration()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glPointSize(5);
+
+	InitializeCEGUI();
 
 	ControlInit();
 }
@@ -235,17 +235,6 @@ void LoadAssets()
 	mainCamera->Transform->setPosition(2, 1, 8);
 	mainCamera->Camera->horizontalAngle = 3.14f;
 	GameEntities.push_back(mainCamera);
-
-
-	/*
-	groundCube = new GameEntity();
-	groundCube->addComponent(new RenderComponent(groundCube, cube, StandardShaderID, GridTexture));
-	groundCube->Transform->setScale(20, 1, 20);
-	PhysicsComponent* phys = new PhysicsComponent(groundCube, BOX, 0, std::vector<float>());
-	groundCube->addComponent(phys);
-
-	GameEntities.push_back(groundCube);
-	*/
 }
 
 void Render()
@@ -254,19 +243,14 @@ void Render()
 
 	vertexCount = 0;
 
-	//CEGUI::System::getSingleton().renderAllGUIContexts();
-
-
 	for (int i = 0; i < GameEntities.size(); i++)
 	{
 		GameEntities[i]->Update();
 	}
 
-	sprintf(debugBuffer, "Vertex Count\n: %d", vertexCount);
-	debugDisplay->addDebug(debugBuffer);
+	CEGUI::System::getSingleton().renderAllGUIContexts();	
 
-	//timedDebugDisplay->Draw();
-	//debugDisplay->Draw();	
+	glDisable(GL_BLEND);
 	
 	glfwSwapBuffers(window);
 }

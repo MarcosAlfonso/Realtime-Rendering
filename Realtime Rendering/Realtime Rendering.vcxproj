@@ -101,6 +101,7 @@
     <ClCompile Include="Common\Util\noiseutils.cpp" />
     <ClCompile Include="Common\Util\text2D.cpp" />
     <ClCompile Include="Common\Util\textureLoad.cpp" />
+    <ClCompile Include="Common\EngineObjects\Components\InputComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Common\EngineObjects\Components\PhysicsComponent.cpp" />
   </ItemGroup>
@@ -121,6 +122,7 @@
     <ClInclude Include="Common\Util\textureLoad.h" />
     <ClInclude Include="Common\Util\loadShader.h" />
     <ClInclude Include="Common\EngineObjects\Components\PhysicsComponent.h" />
+    <ClInclude Include="Common\EngineObjects\Components\InputComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cube.model" />
