@@ -47,6 +47,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Libraries\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Libraries\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -61,7 +63,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnoise.lib;assimp.lib;opengl32.lib;glfw3.lib;glu32.lib;glew32s.lib;SOIL.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;libnoise.lib;assimp.lib;opengl32.lib;glfw3.lib;glu32.lib;glew32s.lib;SOIL.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>C:\OpenGL\assimp\lib\assimpd.dll</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -81,6 +83,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>CEGUIOpenGLRenderer-0.lib;CEGUIBase-0.lib;libnoise.lib;assimp.lib;opengl32.lib;glfw3.lib;glu32.lib;glew32s.lib;SOIL.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -135,9 +138,6 @@
     <None Include="Shaders\standard.vert" />
     <None Include="Shaders\text.frag" />
     <None Include="Shaders\text.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\CloudTexture.dds">

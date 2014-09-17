@@ -23,6 +23,7 @@ GLFWwindow* window;
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
+
 //Include external project files
 #include "Common/Util/loadShader.h"
 #include "Common/Util/textureLoad.h"
@@ -37,7 +38,9 @@ GLFWwindow* window;
 #include "Common/EngineObjects/Components/PhysicsComponent.h"
 #include "Common/EngineObjects/Components/CameraComponent.h"
 #include "Common/EngineObjects/Entities/FreeCamera.h"
- 
+
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
 
 #pragma region Declarations
 void SetupConfiguration();
@@ -46,6 +49,7 @@ void Render();
 void CleanupMemory();
 void CalculateFrameTime();
 void InitializeBullet();
+void InitializeCEGUI();
 void BulletStep();
 void CleanupBullet();
 
@@ -168,6 +172,8 @@ void SetupConfiguration()
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");
 	}
+	
+	InitializeCEGUI();
 
 	// Config Stuff
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
@@ -248,6 +254,9 @@ void Render()
 
 	vertexCount = 0;
 
+	//CEGUI::System::getSingleton().renderAllGUIContexts();
+
+
 	for (int i = 0; i < GameEntities.size(); i++)
 	{
 		GameEntities[i]->Update();
@@ -256,8 +265,8 @@ void Render()
 	sprintf(debugBuffer, "Vertex Count\n: %d", vertexCount);
 	debugDisplay->addDebug(debugBuffer);
 
-	timedDebugDisplay->Draw();
-	debugDisplay->Draw();
+	//timedDebugDisplay->Draw();
+	//debugDisplay->Draw();	
 	
 	glfwSwapBuffers(window);
 }
@@ -331,10 +340,54 @@ void InitializeBullet()
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 	
-	drawer = new bulletDebugDraw();
+	//drawer = new bulletDebugDraw();
 
-	dynamicsWorld->setDebugDrawer(drawer); 
-	dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+	//dynamicsWorld->setDebugDrawer(drawer); 
+	//dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+}
+
+void InitializeCEGUI()
+{
+	CEGUI::OpenGL3Renderer& myRenderer = CEGUI::OpenGL3Renderer::bootstrapSystem();
+
+	CEGUI::DefaultResourceProvider* rp = static_cast<CEGUI::DefaultResourceProvider*>
+		(CEGUI::System::getSingleton().getResourceProvider());
+
+
+	rp->setResourceGroupDirectory("schemes", "Assets/CEGUI/schemes/");
+	rp->setResourceGroupDirectory("imagesets", "Assets/CEGUI/imagesets/");
+	rp->setResourceGroupDirectory("fonts", "Assets/CEGUI/fonts/");
+	rp->setResourceGroupDirectory("layouts", "Assets/CEGUI/layouts/");
+	rp->setResourceGroupDirectory("looknfeels", "Assets/CEGUI/looknfeel/");
+	rp->setResourceGroupDirectory("lua_scripts", "Assets/CEGUI/lua_scripts/");
+
+	CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
+	CEGUI::Font::setDefaultResourceGroup("fonts");
+	CEGUI::Scheme::setDefaultResourceGroup("schemes");
+	CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeels");
+	CEGUI::WindowManager::setDefaultResourceGroup("layouts");
+	CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
+
+    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+
+	
+	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
+
+	CEGUI::Window* myRoot = wmgr.createWindow("DefaultWindow", "root");
+	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
+
+	CEGUI::FrameWindow* fWnd = static_cast<CEGUI::FrameWindow*>(
+		wmgr.createWindow("TaharezLook/FrameWindow", "testWindow"));
+
+	myRoot->addChild(fWnd);
+
+	// position a quarter of the way in from the top-left of parent.
+	fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
+	// set size to be half the size of the parent
+	fWnd->setSize(CEGUI::USize(CEGUI::UDim(0.25f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
+
+	fWnd->setText("Hello World!");
+	
 }
 
 void CleanupBullet()

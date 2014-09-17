@@ -1,3 +1,0 @@
-Todo is now handled by GitHub Issues
-
-Please keep it up to date.

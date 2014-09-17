@@ -104,7 +104,8 @@ void printText2D(const char * text, int x, int y, int size){
 	glBindBuffer(GL_ARRAY_BUFFER, Text2DUVBufferID);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0 );
 
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_ONE, GL_ONE);
+	glBlendEquation(GL_ADD);
 	glEnable(GL_BLEND);
 
 	// Draw call
