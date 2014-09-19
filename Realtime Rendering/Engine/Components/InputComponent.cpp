@@ -8,4 +8,21 @@ InputComponent::InputComponent(BaseEntity* parent)
 
 InputComponent::~InputComponent()
 {
+
 }
+
+void InputComponent::Cleanup()
+{
+	delete(this);
+}
+
+void InputComponent::Update()
+{
+	
+}
+
+void InputComponent::toString()
+{
+
+}
+

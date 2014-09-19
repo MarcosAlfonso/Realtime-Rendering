@@ -1,7 +1,10 @@
 #pragma once
-#include <GLFW/glfw3.h>
-#include <vector>
+#define GLEW_STATIC
+#include <gl/glew.h>
 
+#include <glm/glm.hpp>
+
+#include <vector>
 
 class Mesh
 {

@@ -1,39 +1,44 @@
-// Include GLFW
+#pragma once
+#include "Input.h"
+
+#include "Entities/BaseEntity.h"
+#include "Components/RenderComponent.h"
+#include "Components/PhysicsComponent.h"
+#include "Components/CameraComponent.h"
+#include "Entities/FreeCamera.h"
+
+#define GLEW_STATIC
+#include <gl/glew.h>
 #include <GLFW/glfw3.h>
 
-extern GLFWwindow* window; // The "extern" keyword here is to access the variable "window" declared in tutorialXXX.cpp. This is a hack to keep the tutorials simple. Please avoid this.
+// Include GLM
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
+//Bullet Physics
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
+
+// Include GLFW
+extern GLFWwindow* window; // The "extern" keyword here is to access the variable "window" declared in tutorialXXX.cpp. This is a hack to keep the tutorials simple. Please avoid this.
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 
-// Include GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+
 using namespace glm;
 
-extern char debugBuffer[];
-#include "Util/DebugDisplay.h"
-extern DebugDisplay * timedDebugDisplay;
-extern DebugDisplay * debugDisplay;
-
-extern float lightRot;
-
-#include "controls.h"
-#include "EngineObjects/Entities/BaseEntity.h"
-#include "EngineObjects/Components/RenderComponent.h"
-#include "EngineObjects/Components/PhysicsComponent.h"
-#include "EngineObjects/Components/CameraComponent.h"
-#include "EngineObjects/Entities/FreeCamera.h"
 
 extern std::vector<BaseEntity*> GameEntities;
+
 extern Mesh * sphere;
 extern GLuint GridTexture;
 extern GLuint StandardShaderID;
+extern float lightRot;
+
 
 extern FreeCamera * mainCamera;
-extern bool shouldClose;
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
 
@@ -47,17 +52,23 @@ glm::mat4 getProjectionMatrix(){
 	return ProjectionMatrix;
 }
 
+std::vector<InputComponent*> InputList;
+
 
 bool moveMode = true;
 
 float moveSpeed; // 3 units / second
 float mouseSpeed = 0.005f;
 
+void addInput(InputComponent* input)
+{
+	InputList.push_back(input);
+}
+
 void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_Q && action == GLFW_PRESS)
 	{
-		timedDebugDisplay->addDebug("Spawned: Physics Sphere", 1);
 		BaseEntity* physicsSphere = new BaseEntity("Physics Test Sphere");
 		physicsSphere->Transform->setPosition(0, 5, 0);
 
@@ -66,14 +77,14 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		GameEntities.push_back(physicsSphere);
 	}
 
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-	{
-		shouldClose = true;
-	}
-
 	if (key == GLFW_KEY_M && action == GLFW_PRESS)
 	{
 		moveMode = !moveMode;
+	}
+
+	for (int i = 0; i < GameEntities.size(); i++)
+	{
+		GameEntities[i]->Update();
 	}
 }
 
@@ -115,7 +126,6 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			void * hitPointer = RayCallback.m_collisionObject->getUserPointer();
 			PhysicsComponent* hitPhys = static_cast<PhysicsComponent*>(hitPointer);
 			
-			timedDebugDisplay->addDebug(hitPhys->parentEntity->Name, 1);
 		}
 	}
 }
@@ -186,10 +196,6 @@ void ControlsUpdate(){
 
 		}
 
-		mainCamera->Update();
-
-		sprintf(debugBuffer, "Cam Pos: %4.1f,%4.1f,%4.1f", mainCamera->Camera->positionOffset.x, mainCamera->Camera->positionOffset.y, mainCamera->Camera->positionOffset.z);
-		debugDisplay->addDebug(debugBuffer);
 
 		// For the next frame, the "last time" will be "now"
 		lastTime = currentTime;

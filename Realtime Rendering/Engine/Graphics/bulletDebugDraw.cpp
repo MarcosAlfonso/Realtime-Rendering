@@ -1,8 +1,12 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#pragma once
 #include "bulletDebugDraw.h"
-#include "../controls.h"
-#include <stdexcept>
+
+#include "../Entities/FreeCamera.h"
+
+extern FreeCamera * mainCamera;
+
+#define GLEW_STATIC
+#include <GL/glew.h>
 
 void bulletDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
@@ -17,8 +21,8 @@ void bulletDebugDraw::drawLine(const btVector3& from, const btVector3& to, const
 
 	glUseProgram(0);
 
-	glm::mat4 ProjectionMatrix = getProjectionMatrix();
-	glm::mat4 ViewMatrix = getViewMatrix();
+	glm::mat4 ProjectionMatrix = mainCamera->Camera->ProjectionMatrix;
+	glm::mat4 ViewMatrix = mainCamera->Camera->ViewMatrix;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf((const GLfloat*)&ProjectionMatrix[0]);

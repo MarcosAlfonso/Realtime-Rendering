@@ -1,3 +1,5 @@
+#include "GridMesh.h"
+
 #include <vector>
 #include <stdio.h>
 #include <iostream>
@@ -6,18 +8,8 @@
 #include <glm/gtc/constants.hpp>
 #include <glm/gtc/noise.hpp>
 
+#define GLEW_STATIC
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-
-// Include AssImp
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
-
-#include "GridMesh.h"
-#include "../controls.h"
-
 
 ///////////////////
 //Generate a grid//
@@ -43,8 +35,6 @@ GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing)
 	PopulateBuffers();
 
 }
-
-
 
 void GridMesh::PopulateVertices()
 {

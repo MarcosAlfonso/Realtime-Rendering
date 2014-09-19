@@ -1,12 +1,18 @@
 #pragma once
-#include <iostream>
 #include "PhysicsComponent.h"
+
+#include "../Entities/BaseEntity.h"
+#include "../Util/helpers.cpp"
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include "../Entities/BaseEntity.h"
+
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
+
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
-#include <exception>
-#include "../../Util/helpers.cpp"
+
+#include <iostream>
 
 //dynamicsWorld from main
 extern btDiscreteDynamicsWorld* dynamicsWorld;

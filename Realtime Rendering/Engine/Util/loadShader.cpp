@@ -1,3 +1,9 @@
+#pragma once
+#include "loadShader.h"
+
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -9,9 +15,6 @@ using namespace std;
 #include <stdlib.h>
 #include <string.h>
 
-#include <GL/glew.h>
-
-#include "loadShader.h"
 
 //Generic Shader Load Function
 GLuint LoadShader(GLenum type, const char * shader_path)

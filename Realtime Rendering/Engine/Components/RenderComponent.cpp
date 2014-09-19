@@ -1,23 +1,22 @@
 #pragma once
-#include <vector>
-#include <stdio.h>
-#include <string>
-#include <cstring>
+#include "RenderComponent.h"
+
+#include "../Graphics/mesh.h"
+#include "../Input.h"
+#include "TransformComponent.h"
+#include "../Entities/FreeCamera.h"
+
+#define GLEW_STATIC
+#include <GL/glew.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <GL/gl.h>
-
-
-#include "../../Graphics/mesh.h"
-#include "../../controls.h"
-#include "RenderComponent.h"
-#include "TransformComponent.h"
-#include "../Entities/FreeCamera.h"
+#include <vector>
+#include <stdio.h>
+#include <string>
+#include <cstring>
 
 extern int vertexCount;
 extern FreeCamera * mainCamera;

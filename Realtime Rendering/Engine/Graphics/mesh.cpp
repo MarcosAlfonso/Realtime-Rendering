@@ -1,21 +1,19 @@
-#include <vector>
-#include <stdio.h>
-#include <string>
-#include <cstring>
+#include "mesh.h"
+
+#define GLEW_STATIC
+#include <GL/glew.h>
 
 #include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 // Include AssImp
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 
-#include "mesh.h"
-#include "../controls.h"
+#include <vector>
+#include <stdio.h>
+#include <string>
+#include <cstring>
 
 Mesh::Mesh()
 {

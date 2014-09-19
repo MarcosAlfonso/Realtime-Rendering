@@ -1,7 +1,13 @@
 #pragma once
-#include "../../Graphics/mesh.h"
 #include "BaseComponent.h"
-#include "../Entities/BaseEntity.h"
+
+#define GLEW_STATIC
+#include <gl/glew.h>
+
+#include <glm/glm.hpp>
+
+class Mesh;
+class BaseEntity;
 
 class RenderComponent: public BaseComponent
 {

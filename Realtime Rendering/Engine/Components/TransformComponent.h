@@ -1,6 +1,7 @@
 #pragma once
-#include <glm/glm.hpp>
 #include "BaseComponent.h"
+
+#include <glm/glm.hpp>
 
 class TransformComponent : public BaseComponent
 {

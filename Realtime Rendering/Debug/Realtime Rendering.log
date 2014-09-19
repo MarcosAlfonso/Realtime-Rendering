@@ -1,24 +1,31 @@
-﻿Build started 9/17/2014 5:18:42 PM.
+﻿Build started 9/19/2014 12:35:36 AM.
      1>Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Common\EngineObjects\Components\InputComponent.cpp
-         InputComponent.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\physicscomponent.h(10): warning C4099: 'btDefaultMotionState' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\linearmath\btdefaultmotionstate.h(7) : see declaration of 'btDefaultMotionState'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glfw\glfw3.h(574): warning C4099: 'GLFWwindow' : type name first seen using 'class' now seen using 'struct'
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\inputcomponent.h(4) : see declaration of 'GLFWwindow'
+     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
+                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glfw\glfw3.h(92) : see previous definition of 'APIENTRY'
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(226): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(256): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(272): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" "CEGUIOpenGLRenderer-0_d.lib" "CEGUIBase-0_d.lib" libnoise.lib assimp.lib opengl32.lib glfw3.lib glu32.lib glew32s.lib SOIL.lib BulletDynamics.lib BulletCollision.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\assimp\lib\assimpd.dll" /MACHINE:X86 Debug\controls.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" "CEGUIOpenGLRenderer-0_d.lib" "CEGUIBase-0_d.lib" libnoise.lib assimp.lib opengl32.lib glfw3.lib glu32.lib glew32s.lib SOIL.lib BulletDynamics.lib BulletCollision.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\assimp\lib\assimpd.dll" /MACHINE:X86 Debug\Input.obj
          Debug\CameraComponent.obj
          Debug\RenderComponent.obj
          Debug\TransformComponent.obj
          Debug\BaseEntity.obj
          Debug\bulletDebugDraw.obj
          Debug\GridMesh.obj
-         Debug\DebugDisplay.obj
          Debug\helpers.obj
          Debug\loadShader.obj
          Debug\mesh.obj
-         Debug\noiseutils.obj
-         Debug\text2D.obj
          Debug\textureLoad.obj
          Debug\InputComponent.obj
          Debug\main.obj
@@ -31,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.39
+Time Elapsed 00:00:03.24

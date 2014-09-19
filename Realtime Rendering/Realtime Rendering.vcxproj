@@ -87,42 +87,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="common\controls.cpp" />
-    <ClCompile Include="Common\EngineObjects\Components\CameraComponent.cpp" />
-    <ClCompile Include="Common\EngineObjects\Components\RenderComponent.cpp" />
-    <ClCompile Include="Common\EngineObjects\Components\TransformComponent.cpp" />
-    <ClCompile Include="Common\EngineObjects\Entities\BaseEntity.cpp" />
-    <ClCompile Include="Common\Graphics\bulletDebugDraw.cpp" />
-    <ClCompile Include="Common\Graphics\GridMesh.cpp" />
-    <ClCompile Include="Common\Util\DebugDisplay.cpp" />
-    <ClCompile Include="Common\Util\helpers.cpp" />
-    <ClCompile Include="Common\Util\loadShader.cpp" />
-    <ClCompile Include="Common\Graphics\mesh.cpp" />
-    <ClCompile Include="Common\Util\noiseutils.cpp" />
-    <ClCompile Include="Common\Util\text2D.cpp" />
-    <ClCompile Include="Common\Util\textureLoad.cpp" />
-    <ClCompile Include="Common\EngineObjects\Components\InputComponent.cpp" />
+    <ClCompile Include="Engine\Input.cpp" />
+    <ClCompile Include="Engine\Components\CameraComponent.cpp" />
+    <ClCompile Include="Engine\Components\RenderComponent.cpp" />
+    <ClCompile Include="Engine\Components\TransformComponent.cpp" />
+    <ClCompile Include="Engine\Entities\BaseEntity.cpp" />
+    <ClCompile Include="Engine\Graphics\bulletDebugDraw.cpp" />
+    <ClCompile Include="Engine\Graphics\GridMesh.cpp" />
+    <ClCompile Include="Engine\Util\helpers.cpp" />
+    <ClCompile Include="Engine\Util\loadShader.cpp" />
+    <ClCompile Include="Engine\Graphics\mesh.cpp" />
+    <ClCompile Include="Engine\Util\textureLoad.cpp" />
+    <ClCompile Include="Engine\Components\InputComponent.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Common\EngineObjects\Components\PhysicsComponent.cpp" />
+    <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="common\controls.h" />
-    <ClInclude Include="Common\EngineObjects\Components\BaseComponent.h" />
-    <ClInclude Include="Common\EngineObjects\Components\CameraComponent.h" />
-    <ClInclude Include="Common\EngineObjects\Components\TransformComponent.h" />
-    <ClInclude Include="Common\EngineObjects\Components\RenderComponent.h" />
-    <ClInclude Include="Common\EngineObjects\Entities\BaseEntity.h" />
-    <ClInclude Include="Common\EngineObjects\Entities\FreeCamera.h" />
-    <ClInclude Include="Common\Graphics\bulletDebugDraw.h" />
-    <ClInclude Include="Common\Graphics\GridMesh.h" />
-    <ClInclude Include="Common\Graphics\mesh.h" />
-    <ClInclude Include="Common\Util\DebugDisplay.h" />
-    <ClInclude Include="Common\Util\noiseutils.h" />
-    <ClInclude Include="Common\Util\text2D.h" />
-    <ClInclude Include="Common\Util\textureLoad.h" />
-    <ClInclude Include="Common\Util\loadShader.h" />
-    <ClInclude Include="Common\EngineObjects\Components\PhysicsComponent.h" />
-    <ClInclude Include="Common\EngineObjects\Components\InputComponent.h" />
+    <ClInclude Include="Engine\Input.h" />
+    <ClInclude Include="Engine\Components\BaseComponent.h" />
+    <ClInclude Include="Engine\Components\CameraComponent.h" />
+    <ClInclude Include="Engine\Components\TransformComponent.h" />
+    <ClInclude Include="Engine\Components\RenderComponent.h" />
+    <ClInclude Include="Engine\Entities\BaseEntity.h" />
+    <ClInclude Include="Engine\Entities\FreeCamera.h" />
+    <ClInclude Include="Engine\Graphics\bulletDebugDraw.h" />
+    <ClInclude Include="Engine\Graphics\GridMesh.h" />
+    <ClInclude Include="Engine\Graphics\mesh.h" />
+    <ClInclude Include="Engine\Util\loadShader.h" />
+    <ClInclude Include="Engine\Util\textureLoad.h" />
+    <ClInclude Include="Engine\Components\PhysicsComponent.h" />
+    <ClInclude Include="Engine\Components\InputComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cube.model" />
@@ -132,14 +126,14 @@
     <None Include="Assets\suzanne.model" />
     <None Include="Assets\torus.model" />
     <None Include="ClassDiagram.cd" />
-    <None Include="Shaders\debugLine.frag" />
-    <None Include="Shaders\debugLine.vert" />
-    <None Include="Shaders\fullbright.frag" />
-    <None Include="Shaders\fullbright.vert" />
-    <None Include="Shaders\standard.frag" />
-    <None Include="Shaders\standard.vert" />
-    <None Include="Shaders\text.frag" />
-    <None Include="Shaders\text.vert" />
+    <None Include="Engine\Shaders\debugLine.frag" />
+    <None Include="Engine\Shaders\debugLine.vert" />
+    <None Include="Engine\Shaders\fullbright.frag" />
+    <None Include="Engine\Shaders\fullbright.vert" />
+    <None Include="Engine\Shaders\standard.frag" />
+    <None Include="Engine\Shaders\standard.vert" />
+    <None Include="Engine\Shaders\text.frag" />
+    <None Include="Engine\Shaders\text.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\CloudTexture.dds">

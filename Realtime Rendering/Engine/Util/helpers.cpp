@@ -1,6 +1,6 @@
-#include <btBulletCollisionCommon.h>
 #include <glm/glm.hpp>
 
+#include <btBulletCollisionCommon.h>
 
 class Helper
 {

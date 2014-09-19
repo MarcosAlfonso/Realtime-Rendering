@@ -1,9 +1,15 @@
 #pragma once
+#include "Components/InputComponent.h"
+#include <glm/glm.hpp>
 
+void addInput(InputComponent* input);
 void ControlsUpdate();
+
 glm::mat4 getViewMatrix();
 glm::mat4 getProjectionMatrix();
+
 void ControlInit();
+
 void ScreenPosToWorldRay(
 	int mouseX, int mouseY,             // Mouse position, in pixels, from bottom-left corner of the window
 	int screenWidth, int screenHeight,  // Window size, in pixels

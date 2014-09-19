@@ -1,12 +1,15 @@
-// Include standard headers
-#include <vector>
-#include <iostream>
-
-#include <btBulletCollisionCommon.h>
-#include <btBulletDynamicsCommon.h>
-
-//Uncomment for leak detection
-//#include <vld.h>
+//Include external project files
+#include "Engine/Input.h"
+#include "Engine/Graphics/GridMesh.h"
+#include "Engine/Graphics/Mesh.h"
+#include "Engine/Util/loadShader.h"
+#include "Engine/Util/textureLoad.h"
+#include "Engine/Graphics/bulletDebugDraw.h"
+#include "Engine/Entities/BaseEntity.h"
+#include "Engine/Components/RenderComponent.h"
+#include "Engine/Components/PhysicsComponent.h"
+#include "Engine/Components/CameraComponent.h"
+#include "Engine/Entities/FreeCamera.h"
 
 // Include GLEW
 #define GLEW_STATIC
@@ -23,24 +26,15 @@ GLFWwindow* window;
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-
-//Include external project files
-#include "Common/Util/loadShader.h"
-#include "Common/Util/textureLoad.h"
-#include "Common/controls.h"
-#include "Common/Graphics/mesh.h"
-#include "Common/Graphics/GridMesh.h"
-#include "Common/Graphics/bulletDebugDraw.h"
-#include "Common/Util/text2D.h"
-#include "Common/Util/DebugDisplay.h"
-#include "Common/EngineObjects/Entities/BaseEntity.h"
-#include "Common/EngineObjects/Components/RenderComponent.h"
-#include "Common/EngineObjects/Components/PhysicsComponent.h"
-#include "Common/EngineObjects/Components/CameraComponent.h"
-#include "Common/EngineObjects/Entities/FreeCamera.h"
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
 
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
+
+// Include standard headers
+#include <vector>
+#include <iostream>
 
 #pragma region Declarations
 void SetupConfiguration();
@@ -61,9 +55,6 @@ int vertexCount;
 double lastTime;
 int nbFrames = 0;
 
-//Window
-bool shouldClose;
-
 // Create and compile our GLSL program from the shaders
 GLuint StandardShaderID;
 GLuint FullbrightShaderID;
@@ -83,10 +74,6 @@ Mesh * cube;
 
 //Grid Mesh
 GridMesh * grid;
-
-//Debug
-DebugDisplay * debugDisplay;
-DebugDisplay * timedDebugDisplay;
 
 //GameEntities
 std::vector<BaseEntity*> GameEntities;
@@ -122,13 +109,13 @@ int main(void)
 		ControlsUpdate();
 
 		Render();
-
+		
 		dynamicsWorld->stepSimulation(1 / 60.f, 10);	
 
 		glfwPollEvents();
 
 	} // Check if the ESC key was pressed or the window was closed
-	while (!shouldClose && glfwWindowShouldClose(window) == 0);
+	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
 
 	CleanupMemory();
 
@@ -141,10 +128,6 @@ void SetupConfiguration()
 {
 	//frameTime Update
 	lastTime = glfwGetTime();
-
-	//Text Debuggers
-	debugDisplay = new DebugDisplay(glm::vec2(10, 565), false);
-	timedDebugDisplay = new DebugDisplay(glm::vec2(525, 565), true);
 
 	// Initialize GLFW
 	if (!glfwInit())
@@ -187,13 +170,10 @@ void SetupConfiguration()
 
 void LoadAssets()
 {
-	//Initialize Text
-	initText2D("Assets/DroidSansMonoSmall.dds");
-
 	// Create and compile our GLSL program from the shaders
-	StandardShaderID = CreateShaderProgram("Shaders/standard.vert", "Shaders/standard.frag", NULL);
-	FullbrightShaderID = CreateShaderProgram("Shaders/fullbright.vert", "Shaders/fullbright.frag", NULL);
-	debugLineShaderID = CreateShaderProgram("Shaders/debugLine.vert", "Shaders/debugLine.frag", NULL);
+	StandardShaderID = CreateShaderProgram("Engine/Shaders/standard.vert", "Engine/Shaders/standard.frag", NULL);
+	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", "Engine/Shaders/fullbright.frag", NULL);
+	debugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL);
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -278,15 +258,8 @@ void CleanupMemory()
 		delete(GameEntities[i]);
 	}
 
-	// Delete the text's VBO, the shader and the texture
-	cleanupText2D();
-
 	//Physics
 	CleanupBullet();
-
-	//Delete debuggers
-	delete(debugDisplay);
-	delete(timedDebugDisplay);
 }
 
 void CalculateFrameTime()
@@ -301,7 +274,6 @@ void CalculateFrameTime()
 		lastTime += 1.0;
 	}
 
-	debugDisplay->addDebug(frameTimeBuffer);
 
 }
 
@@ -352,7 +324,7 @@ void InitializeCEGUI()
 	CEGUI::WindowManager::setDefaultResourceGroup("layouts");
 	CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
 
-    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+	CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
 
 	
 	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
