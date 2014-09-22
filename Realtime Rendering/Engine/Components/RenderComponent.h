@@ -17,7 +17,6 @@ public:
 	~RenderComponent();
 
 	void Update();
-	void toString();
 	void Cleanup();
 
 	void calculateLight();

@@ -101,9 +101,3 @@ void PhysicsComponent::SetPosition(glm::vec3 trans)
 	transform.setOrigin(Helper::toBullet(trans));
 	rigidBody->setCenterOfMassTransform(transform);
 }
-
-void PhysicsComponent::toString()
-{
-
-}
-

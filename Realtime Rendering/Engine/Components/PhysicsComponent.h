@@ -22,7 +22,6 @@ public:
 	~PhysicsComponent();
 
 	void Update();
-	void toString();
 	void Cleanup();
 	void TransformUpdate();
 	void SetPosition(glm::vec3 trans);

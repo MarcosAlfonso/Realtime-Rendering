@@ -143,8 +143,3 @@ void RenderComponent::calculateLight()
 {
 	lightDirection = glm::vec3(glm::sin(lightRotation), .5, glm::cos(lightRotation));
 }
-
-void RenderComponent::toString()
-{
-	
-}

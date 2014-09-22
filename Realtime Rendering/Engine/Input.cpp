@@ -20,15 +20,12 @@
 #include <btBulletDynamicsCommon.h>
 
 // Include GLFW
-extern GLFWwindow* window; // The "extern" keyword here is to access the variable "window" declared in tutorialXXX.cpp. This is a hack to keep the tutorials simple. Please avoid this.
+extern GLFWwindow* window; 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-
-
-using namespace glm;
-
+#include <CEGUI/GUILayout_xmlHandler.h>
 
 extern std::vector<BaseEntity*> GameEntities;
 
@@ -36,7 +33,6 @@ extern Mesh * sphere;
 extern GLuint GridTexture;
 extern GLuint StandardShaderID;
 extern float lightRot;
-
 
 extern FreeCamera * mainCamera;
 extern btDiscreteDynamicsWorld* dynamicsWorld;
@@ -54,12 +50,6 @@ glm::mat4 getProjectionMatrix(){
 
 std::vector<InputComponent*> InputList;
 
-
-bool moveMode = true;
-
-float moveSpeed; // 3 units / second
-float mouseSpeed = 0.005f;
-
 void addInput(InputComponent* input)
 {
 	InputList.push_back(input);
@@ -67,6 +57,7 @@ void addInput(InputComponent* input)
 
 void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	//Global Keyboard Input
 	if (key == GLFW_KEY_Q && action == GLFW_PRESS)
 	{
 		BaseEntity* physicsSphere = new BaseEntity("Physics Test Sphere");
@@ -77,19 +68,18 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		GameEntities.push_back(physicsSphere);
 	}
 
-	if (key == GLFW_KEY_M && action == GLFW_PRESS)
+	//InputComponent Keyboards Callbacks
+	for (int i = 0; i < InputList.size(); i++)
 	{
-		moveMode = !moveMode;
+		InputList[i]->KeyboardInputCallback(window, key, scancode, action, mods);
 	}
 
-	for (int i = 0; i < GameEntities.size(); i++)
-	{
-		GameEntities[i]->Update();
-	}
+	//CEGUI Keyboard Callbacks 
 }
 
 void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 {
+	//Global Mouse Button Input
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
 		double * mouseX = new double;
@@ -128,6 +118,35 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			
 		}
 	}
+
+	//InputComponent Mouse Button Callback
+	for (int i = 0; i < InputList.size(); i++)
+	{
+		InputList[i]->MouseInputCallback(window, button, action, mods);
+	}
+
+	//CEGUI Mouse Button Injections
+	CEGUI::MouseButton CEGUIMouseButton;
+
+	//Convert from GLFW mouse to CEGUI mouse
+	switch (button)
+	{
+	case GLFW_MOUSE_BUTTON_LEFT:
+		CEGUIMouseButton = CEGUI::MouseButton::LeftButton;
+	case GLFW_MOUSE_BUTTON_RIGHT:
+		CEGUIMouseButton = CEGUI::MouseButton::RightButton;
+	}
+
+	//Inject Up or Down based on GLFW action
+	if (action == GLFW_PRESS)
+	{
+		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(CEGUIMouseButton);
+	}
+	else if (action == GLFW_RELEASE)
+	{
+		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(CEGUIMouseButton);
+	}
+
 }
 
 void ControlInit()
@@ -138,71 +157,19 @@ void ControlInit()
 
 void ControlsUpdate(){
 
-
+	//Update Input Components
 	if (glfwGetWindowAttrib(window, GLFW_FOCUSED))
 	{
-
-		// glfwGetTime is called only once, the first time this function is called
-		static double lastTime = glfwGetTime();
-
-		// Compute time difference between current and last frame
-		double currentTime = glfwGetTime();
-		float deltaTime = float(currentTime - lastTime);
-
-		// Get mouse position
-		double xpos, ypos;
-		glfwGetCursorPos(window, &xpos, &ypos);
-
-		// Reset mouse position for next frame
-		glfwSetCursorPos(window, 1024 / 2, 768 / 2);
-
-
-		// Compute new orientation
-		mainCamera->Camera->horizontalAngle += mouseSpeed * float(1024 / 2 - xpos);
-		mainCamera->Camera->verticalAngle += mouseSpeed * float(768 / 2 - ypos);
-
-		//Prevents camera from getting flipped upside down
-		mainCamera->Camera->verticalAngle = clamp(mainCamera->Camera->verticalAngle, -1.57f, 1.57f);
-
-		moveSpeed = 5;
-
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-			moveSpeed = 20;
+		for (int i = 0; i < InputList.size(); i++)
+		{
+			InputList[i]->Update();
 		}
+	}	
 
-		// Move forward
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-			mainCamera->Camera->positionOffset += mainCamera->Camera->direction * deltaTime * moveSpeed;
-		}
-		// Move backward
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
-			mainCamera->Camera->positionOffset -= mainCamera->Camera->direction * deltaTime * moveSpeed;
-		}
-		// Strafe right
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
-			mainCamera->Camera->positionOffset += mainCamera->Camera->right * deltaTime * moveSpeed;
-		}
-		// Strafe left
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
-			mainCamera->Camera->positionOffset -= mainCamera->Camera->right * deltaTime * moveSpeed;
-		}
-		// Space move upward
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-			mainCamera->Camera->positionOffset += glm::vec3(0, 1, 0) * deltaTime * moveSpeed;
-		}
-		// Space move upward
-		if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS){
-			mainCamera->Camera->positionOffset += glm::vec3(0, -1, 0) * deltaTime * moveSpeed;
-
-		}
-
-
-		// For the next frame, the "last time" will be "now"
-		lastTime = currentTime;
-
-	}
-
-	
+	//CEGUI Mouse Position Injection 
+	double xpos, ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(xpos, ypos);
 
 }
 

@@ -10,7 +10,6 @@ public:
 	~CameraComponent();
 
 	void Update();
-	void toString();
 	void Cleanup();
 	
 	glm::mat4 ViewMatrix;

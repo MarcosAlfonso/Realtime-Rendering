@@ -53,7 +53,8 @@ char frameTimeBuffer[128] = "";
 int vertexCount;
 
 double lastTime;
-int nbFrames = 0;
+double curTime;
+float DeltaTime;
 
 // Create and compile our GLSL program from the shaders
 GLuint StandardShaderID;
@@ -128,6 +129,7 @@ void SetupConfiguration()
 {
 	//frameTime Update
 	lastTime = glfwGetTime();
+	curTime = glfwGetTime();
 
 	// Initialize GLFW
 	if (!glfwInit())
@@ -264,16 +266,9 @@ void CleanupMemory()
 
 void CalculateFrameTime()
 {
-	//Updates frametime
-	double currentTime = glfwGetTime();
-	nbFrames++;
-	if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
-		// printf and reset
-		sprintf(frameTimeBuffer, "%.2f ms/frame\n", 1000.0 / double(nbFrames));
-		nbFrames = 0;
-		lastTime += 1.0;
-	}
-
+	lastTime = curTime;
+	curTime = glfwGetTime();
+	DeltaTime = float(curTime - lastTime);
 
 }
 
@@ -324,7 +319,7 @@ void InitializeCEGUI()
 	CEGUI::WindowManager::setDefaultResourceGroup("layouts");
 	CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
 
-	CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+	CEGUI::SchemeManager::getSingleton().createFromFile("AlfiskoSkin.scheme");
 
 	
 	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
@@ -333,14 +328,18 @@ void InitializeCEGUI()
 	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
 
 	CEGUI::FrameWindow* fWnd = static_cast<CEGUI::FrameWindow*>(
-		wmgr.createWindow("TaharezLook/FrameWindow", "testWindow"));
+		wmgr.createWindow("AlfiskoSkin/FrameWindow", "testWindow"));
+
+	CEGUI::Window* EditBox = wmgr.createWindow("AlfiskoSkin/Editbox", "OurDialog_Editbox");
+
 
 	myRoot->addChild(fWnd);
+	fWnd->addChild(EditBox);
 
 	// position a quarter of the way in from the top-left of parent.
 	fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
 	// set size to be half the size of the parent
-	fWnd->setSize(CEGUI::USize(CEGUI::UDim(0.25f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
+	fWnd->setSize(CEGUI::USize(CEGUI::UDim(0.5f, 0.0f), CEGUI::UDim(0.5f, 0.0f)));
 
 	fWnd->setText("Hello World!");
 	

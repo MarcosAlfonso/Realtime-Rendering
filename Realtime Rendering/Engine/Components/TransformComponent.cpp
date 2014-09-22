@@ -81,9 +81,3 @@ void TransformComponent::setPosition(float x, float y, float z)
 	transMatrix = glm::translate(transMatrix, transVec);
 	updateModelMatrix = true;
 }
-
-void TransformComponent::toString()
-{
-	
-}
-

@@ -98,7 +98,6 @@
     <ClCompile Include="Engine\Util\loadShader.cpp" />
     <ClCompile Include="Engine\Graphics\mesh.cpp" />
     <ClCompile Include="Engine\Util\textureLoad.cpp" />
-    <ClCompile Include="Engine\Components\InputComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
   </ItemGroup>

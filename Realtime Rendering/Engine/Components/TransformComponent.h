@@ -10,7 +10,6 @@ public:
 	~TransformComponent();
 
 	void Update();
-	void toString();
 	void Cleanup();
 
 
@@ -24,8 +23,7 @@ public:
 	void setScale(float x, float y, float z);
 
 	void calculateModelMatrix();
-
-
+	
 	glm::mat4 ModelMatrix;
 
 private:
