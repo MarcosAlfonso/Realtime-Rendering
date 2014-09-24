@@ -2,7 +2,7 @@
 #include "RenderComponent.h"
 
 #include "../Graphics/mesh.h"
-#include "../Input.h"
+#include "../InputManager.h"
 #include "TransformComponent.h"
 #include "../Entities/FreeCamera.h"
 

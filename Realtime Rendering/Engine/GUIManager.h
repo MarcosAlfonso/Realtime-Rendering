@@ -1,0 +1,4 @@
+
+
+void InitializeGUI();
+void RenderGUI();

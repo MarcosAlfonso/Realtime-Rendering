@@ -1,10 +1,11 @@
 //Include external project files
-#include "Engine/Input.h"
+#include "Engine/PhysicsManager.h"
+#include "Engine/GUIManager.h"
+#include "Engine/InputManager.h"
 #include "Engine/Graphics/GridMesh.h"
 #include "Engine/Graphics/Mesh.h"
 #include "Engine/Util/loadShader.h"
 #include "Engine/Util/textureLoad.h"
-#include "Engine/Graphics/bulletDebugDraw.h"
 #include "Engine/Entities/BaseEntity.h"
 #include "Engine/Components/RenderComponent.h"
 #include "Engine/Components/PhysicsComponent.h"
@@ -25,12 +26,6 @@ GLFWwindow* window;
 #include <glm/gtc/constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
-
-#include <btBulletCollisionCommon.h>
-#include <btBulletDynamicsCommon.h>
-
-#include <CEGUI/CEGUI.h>
-#include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
 
 // Include standard headers
 #include <vector>
@@ -84,22 +79,11 @@ BaseEntity* groundCube;
 BaseEntity* terrain;
 FreeCamera * mainCamera;
 
-//Physics
-btDiscreteDynamicsWorld* dynamicsWorld;
-btDefaultCollisionConfiguration* collisionConfiguration;
-btCollisionDispatcher* dispatcher;
-btBroadphaseInterface* overlappingPairCache;
-btSequentialImpulseConstraintSolver* solver;
-bulletDebugDraw* drawer;
-
-
 #pragma endregion 
 
 int main(void)
 {
 	SetupConfiguration();
-
-	InitializeBullet();
 
 	LoadAssets();
 	
@@ -107,11 +91,11 @@ int main(void)
 
 		CalculateFrameTime();
 
-		ControlsUpdate();
-
 		Render();
-		
-		dynamicsWorld->stepSimulation(1 / 60.f, 10);	
+
+		UpdateInput();
+
+		UpdatePhysics();
 
 		glfwPollEvents();
 
@@ -165,9 +149,11 @@ void SetupConfiguration()
 	glDepthFunc(GL_LESS);
 	glPointSize(5);
 
-	InitializeCEGUI();
+	InitializeGUI();
 
-	ControlInit();
+	InitializePhysics();
+
+	InitializeInput();
 }
 
 void LoadAssets()
@@ -230,7 +216,7 @@ void Render()
 		GameEntities[i]->Update();
 	}
 
-	CEGUI::System::getSingleton().renderAllGUIContexts();	
+	RenderGUI();
 
 	glDisable(GL_BLEND);
 	
@@ -260,8 +246,7 @@ void CleanupMemory()
 		delete(GameEntities[i]);
 	}
 
-	//Physics
-	CleanupBullet();
+	CleanupPhysics();
 }
 
 void CalculateFrameTime()
@@ -272,85 +257,3 @@ void CalculateFrameTime()
 
 }
 
-void InitializeBullet()
-{
-	
-	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
-	collisionConfiguration = new btDefaultCollisionConfiguration();
-
-	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-	dispatcher = new	btCollisionDispatcher(collisionConfiguration);
-
-	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
-	overlappingPairCache = new btDbvtBroadphase();
-
-	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-	solver = new btSequentialImpulseConstraintSolver;
-
-	//Creates Bullet world with the stuff referenced 
-	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0, -10, 0));
-	
-	//drawer = new bulletDebugDraw();
-
-	//dynamicsWorld->setDebugDrawer(drawer); 
-	//dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
-}
-
-void InitializeCEGUI()
-{
-	CEGUI::OpenGL3Renderer& myRenderer = CEGUI::OpenGL3Renderer::bootstrapSystem();
-
-	CEGUI::DefaultResourceProvider* rp = static_cast<CEGUI::DefaultResourceProvider*>
-		(CEGUI::System::getSingleton().getResourceProvider());
-
-
-	rp->setResourceGroupDirectory("schemes", "Assets/CEGUI/schemes/");
-	rp->setResourceGroupDirectory("imagesets", "Assets/CEGUI/imagesets/");
-	rp->setResourceGroupDirectory("fonts", "Assets/CEGUI/fonts/");
-	rp->setResourceGroupDirectory("layouts", "Assets/CEGUI/layouts/");
-	rp->setResourceGroupDirectory("looknfeels", "Assets/CEGUI/looknfeel/");
-	rp->setResourceGroupDirectory("lua_scripts", "Assets/CEGUI/lua_scripts/");
-
-	CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
-	CEGUI::Font::setDefaultResourceGroup("fonts");
-	CEGUI::Scheme::setDefaultResourceGroup("schemes");
-	CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeels");
-	CEGUI::WindowManager::setDefaultResourceGroup("layouts");
-	CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
-
-	CEGUI::SchemeManager::getSingleton().createFromFile("AlfiskoSkin.scheme");
-
-	
-	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
-
-	CEGUI::Window* myRoot = wmgr.createWindow("DefaultWindow", "root");
-	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
-
-	CEGUI::FrameWindow* fWnd = static_cast<CEGUI::FrameWindow*>(
-		wmgr.createWindow("AlfiskoSkin/FrameWindow", "testWindow"));
-
-	CEGUI::Window* EditBox = wmgr.createWindow("AlfiskoSkin/Editbox", "OurDialog_Editbox");
-
-
-	myRoot->addChild(fWnd);
-	fWnd->addChild(EditBox);
-
-	// position a quarter of the way in from the top-left of parent.
-	fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
-	// set size to be half the size of the parent
-	fWnd->setSize(CEGUI::USize(CEGUI::UDim(0.5f, 0.0f), CEGUI::UDim(0.5f, 0.0f)));
-
-	fWnd->setText("Hello World!");
-	
-}
-
-void CleanupBullet()
-{
-
-	 delete(collisionConfiguration);
-	 delete(dispatcher);
-	 delete(overlappingPairCache);
-	 delete(solver);
-	 delete(dynamicsWorld);
-}

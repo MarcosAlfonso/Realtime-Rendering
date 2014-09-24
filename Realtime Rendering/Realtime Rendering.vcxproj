@@ -87,13 +87,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Input.cpp" />
+    <ClCompile Include="Engine\GUIManager.cpp" />
+    <ClCompile Include="Engine\InputManager.cpp" />
     <ClCompile Include="Engine\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\Components\RenderComponent.cpp" />
     <ClCompile Include="Engine\Components\TransformComponent.cpp" />
     <ClCompile Include="Engine\Entities\BaseEntity.cpp" />
     <ClCompile Include="Engine\Graphics\bulletDebugDraw.cpp" />
     <ClCompile Include="Engine\Graphics\GridMesh.cpp" />
+    <ClCompile Include="Engine\PhysicsManager.cpp" />
     <ClCompile Include="Engine\Util\helpers.cpp" />
     <ClCompile Include="Engine\Util\loadShader.cpp" />
     <ClCompile Include="Engine\Graphics\mesh.cpp" />
@@ -102,7 +104,8 @@
     <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Input.h" />
+    <ClInclude Include="Engine\GUIManager.h" />
+    <ClInclude Include="Engine\InputManager.h" />
     <ClInclude Include="Engine\Components\BaseComponent.h" />
     <ClInclude Include="Engine\Components\CameraComponent.h" />
     <ClInclude Include="Engine\Components\TransformComponent.h" />
@@ -112,6 +115,7 @@
     <ClInclude Include="Engine\Graphics\bulletDebugDraw.h" />
     <ClInclude Include="Engine\Graphics\GridMesh.h" />
     <ClInclude Include="Engine\Graphics\mesh.h" />
+    <ClInclude Include="Engine\PhysicsManager.h" />
     <ClInclude Include="Engine\Util\loadShader.h" />
     <ClInclude Include="Engine\Util\textureLoad.h" />
     <ClInclude Include="Engine\Components\PhysicsComponent.h" />

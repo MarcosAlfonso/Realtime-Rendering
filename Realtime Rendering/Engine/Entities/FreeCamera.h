@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseEntity.h"
 
-#include "../Input.h"
+#include "../InputManager.h"
 
 #include "../Components/TransformComponent.h"
 #include "../Components/CameraComponent.h"
