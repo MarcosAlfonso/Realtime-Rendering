@@ -79,6 +79,10 @@ BaseEntity* groundCube;
 BaseEntity* terrain;
 FreeCamera * mainCamera;
 
+//Window
+int screenX = 1200;
+int screenY = 900;
+
 #pragma endregion 
 
 int main(void)
@@ -129,7 +133,7 @@ void SetupConfiguration()
 
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(1024, 768, "Modern OpenGL", NULL, NULL);
+	window = glfwCreateWindow(screenX, screenY, "Realtime Rendering Engine", NULL, NULL);
 	if (window == NULL){
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		glfwTerminate();

@@ -17,6 +17,10 @@
 #include <vector>
 
 extern float DeltaTime;
+
+extern int screenX;
+extern int screenY;
+
 extern GLFWwindow* window;
 
 class FreeCameraInput : public InputComponent
@@ -29,6 +33,8 @@ public:
 	bool mouseControlRefresh = false;
 	float moveSpeed = 3; // 3 units / second
 	float mouseSpeed = 0.005f;
+
+	double oldMouseX, oldMouseY;
 
 	FreeCameraInput(BaseEntity* parent, CameraComponent* _camera)
 	{
@@ -79,20 +85,24 @@ public:
 			Camera->positionOffset += glm::vec3(0, -1, 0) * DeltaTime * moveSpeed;
 		}
 
-		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS){
+ 
+		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)	{
+
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 			if (mouseControlRefresh)
-				glfwSetCursorPos(window, 1024 / 2, 768 / 2);
+				glfwSetCursorPos(window, screenX / 2, screenY / 2);
 			
 			// Get mouse position
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
 
 			// Reset mouse position for next frame
-			glfwSetCursorPos(window, 1024 / 2, 768 / 2);
+			glfwSetCursorPos(window, screenX / 2, screenY / 2);
 			
 			// Compute new orientation
-			Camera->horizontalAngle += mouseSpeed * float(1024 / 2 - xpos);
-			Camera->verticalAngle += mouseSpeed * float(768 / 2 - ypos);
+			Camera->horizontalAngle += mouseSpeed * float(screenX / 2 - xpos);
+			Camera->verticalAngle += mouseSpeed * float(screenY / 2 - ypos);
 
 			//Prevents camera from getting flipped upside down
 			Camera->verticalAngle = glm::clamp(Camera->verticalAngle, -1.57f, 1.57f);
@@ -101,8 +111,12 @@ public:
 		}
 		else
 		{
+			// Get mouse position
+			glfwGetCursorPos(window, &oldMouseX, &oldMouseY);
 			mouseControlRefresh = true;
+
 		}
+
 	}
 
 	void KeyboardInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -112,6 +126,12 @@ public:
 
 	void MouseInputCallback(GLFWwindow* window, int button, int action, int mods)
 	{
+		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			glfwSetCursorPos(window, oldMouseX, oldMouseY);
+
+		}
 
 	}
 

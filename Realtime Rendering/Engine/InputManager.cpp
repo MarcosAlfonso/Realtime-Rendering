@@ -34,13 +34,16 @@ extern GLuint GridTexture;
 extern GLuint StandardShaderID;
 extern float lightRot;
 
+extern int screenX;
+extern int screenY;
+
 extern FreeCamera * mainCamera;
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
 std::vector<InputComponent*> InputList;
 
 CEGUI::MouseButton GlfwToCeguiButton(int glfwButton);
-unsigned int GlfwToCeguiKey(int glfwKey);
+CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey);
 
 
 void addInput(InputComponent* input)
@@ -66,12 +69,29 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 	{
 		InputList[i]->KeyboardInputCallback(window, key, scancode, action, mods);
 	}
-
+	
 	//CEGUI Keyboard Callbacks 
-	if (action == GLFW_PRESS)
+
+	CEGUI::Key::Scan CEGUIKey = GlfwToCeguiKey(key);
+
+	if (action == GLFW_PRESS || action == GLFW_REPEAT)
 	{
-		//unsigned int 
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectChar(key);
+		if (CEGUIKey != CEGUI::Key::Unknown)
+		{
+			CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyDown(CEGUIKey);
+		}
+		else if (key > 32 && key < 96)
+		{
+			CEGUI::System::getSingleton().getDefaultGUIContext().injectChar(key);
+		}
+	}
+
+	if (action == GLFW_RELEASE)
+	{
+		if (CEGUIKey != CEGUI::Key::Unknown)
+		{
+			CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyUp(CEGUIKey);
+		}
 	}
 }
 
@@ -91,7 +111,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 		
 		ScreenPosToWorldRay(
 			(int)*mouseX, (int)*mouseY,             // Mouse position, in pixels, from bottom-left corner of the window
-			1024, 768,  // Window size, in pixels
+			screenX, screenY,  // Window size, in pixels
 			mainCamera->Camera->ViewMatrix,               // Camera position and orientation
 			mainCamera->Camera->ProjectionMatrix,         // Camera parameters (ratio, field of view, near and far planes)
 			out_origin,              // Ouput : Origin of the ray. /!\ Starts at the near plane, so if you want the ray to start at the camera's position instead, ignore this.
@@ -174,8 +194,8 @@ void ScreenPosToWorldRay(
 
 	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
 	glm::vec4 lRayStart_NDC(
-		((float)mouseX / (float)screenWidth - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
-		((float)mouseY / (float)screenHeight - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
+		((float)mouseX / (float)screenWidth - 0.5f) * 2.0f, 
+		((float)mouseY / (float)screenHeight - 0.5f) * 2.0f,
 		-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
 		1.0f
 		);
@@ -226,7 +246,7 @@ CEGUI::MouseButton GlfwToCeguiButton(int glfwButton)
 	}
 }
 
-unsigned int GlfwToCeguiKey(int glfwKey)
+CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey)
 {
 	switch (glfwKey)
 	{
@@ -266,6 +286,7 @@ unsigned int GlfwToCeguiKey(int glfwKey)
 	case GLFW_KEY_HOME: return CEGUI::Key::Home;
 	case GLFW_KEY_END: return CEGUI::Key::End;
 	case GLFW_KEY_KP_ENTER: return CEGUI::Key::NumpadEnter;
-	default: return 0;
+	case GLFW_KEY_CAPS_LOCK: return CEGUI::Key::Capital;
+	default: return CEGUI::Key::Unknown;
 	}
 }

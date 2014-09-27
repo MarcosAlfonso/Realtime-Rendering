@@ -43,11 +43,11 @@ void InitializeGUI()
 	fWnd->addChild(EditBox);
 
 	// position a quarter of the way in from the top-left of parent.
-	fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
+	fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.0f, 0.0f), CEGUI::UDim(0.75f, 0.0f)));
 	// set size to be half the size of the parent
-	fWnd->setSize(CEGUI::USize(CEGUI::UDim(0.5f, 0.0f), CEGUI::UDim(0.5f, 0.0f)));
+	fWnd->setSize(CEGUI::USize(CEGUI::UDim(1.0f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
 
-	fWnd->setText("Hello World!");
+	fWnd->setText("Console");
 
 }
 
