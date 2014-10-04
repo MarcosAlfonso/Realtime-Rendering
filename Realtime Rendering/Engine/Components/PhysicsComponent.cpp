@@ -19,6 +19,8 @@ extern btDiscreteDynamicsWorld* dynamicsWorld;
 
 PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, int _mass, std::vector<float> heights )
 {
+	Name = "Physics Component";
+
 	//Set parent container
 	parentEntity = parent;
 
@@ -30,9 +32,7 @@ PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, 
 	else if (type == SPHERE)
 	{
 		mass = _mass;
-		btVector3 positions[1] = { btVector3(0, 0, 0)};
-		btScalar radi[1] = { 1 };
-		collisionShape = new btMultiSphereShape(positions, radi, 1);
+		collisionShape = new btSphereShape(parentEntity->Transform->scaleVec.x);
 		collisionShape->setLocalScaling(Helper::toBullet(parentEntity->Transform->scaleVec));
 	}
 	else if (type == TERRAIN)

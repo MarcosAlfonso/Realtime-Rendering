@@ -7,6 +7,7 @@
 
 TransformComponent::TransformComponent(BaseEntity* parent)
 {
+	Name = "Transform Component";
 	parentEntity = parent;
 
 	transVec = glm::vec3(0);

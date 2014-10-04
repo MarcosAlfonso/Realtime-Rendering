@@ -1,6 +1,11 @@
 #pragma once
 #include "InputManager.h"
 
+#include "GUI/Console.h"
+#include "GUI/Inspector.h"
+#include "GUI/Hierarchy.h"
+#include "GUI/Stats.h"
+#include "SceneManager.h"
 #include "Entities/BaseEntity.h"
 #include "Components/RenderComponent.h"
 #include "Components/PhysicsComponent.h"
@@ -25,10 +30,12 @@ extern GLFWwindow* window;
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <CEGUI/GUILayout_xmlHandler.h>
+#include <CEGUI/CEGUI.h>
+
 
 extern std::vector<BaseEntity*> GameEntities;
 
+extern Mesh * cube;
 extern Mesh * sphere;
 extern GLuint GridTexture;
 extern GLuint StandardShaderID;
@@ -44,6 +51,18 @@ std::vector<InputComponent*> InputList;
 
 CEGUI::MouseButton GlfwToCeguiButton(int glfwButton);
 CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey);
+int charShiftCheck(int glfwKey);
+
+PhysicsComponent* selectedObjectPhys;
+extern char debugBuffer[];
+extern bool doRenderGui;
+
+extern Inspector* inspector;
+extern Hierarchy* hierarchy;
+extern Stats* stats;
+extern Console* console;
+
+bool shiftHeldDown;
 
 
 void addInput(InputComponent* input)
@@ -53,21 +72,42 @@ void addInput(InputComponent* input)
 
 void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	//Global Keyboard Input
-	if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+	//If typing inside an editbox, skip to CEGUI
+	if (!console->editbox->isActive())
 	{
-		BaseEntity* physicsSphere = new BaseEntity("Physics Test Sphere");
-		physicsSphere->Transform->setPosition(0, 5, 0);
+		//Global Keyboard Input
+		if (key == GLFW_KEY_Q && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		{
+			BaseEntity* physicsSphere = new BaseEntity("Physics Sphere");
+			physicsSphere->Transform->setPosition(0, 5, 0);
 
-		physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-		physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
-		GameEntities.push_back(physicsSphere);
-	}
+			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
+			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
+			AddEntity(physicsSphere);
 
-	//InputComponent Keyboards Callbacks
-	for (int i = 0; i < InputList.size(); i++)
-	{
-		InputList[i]->KeyboardInputCallback(window, key, scancode, action, mods);
+		}
+
+		if (key == GLFW_KEY_E && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		{
+			BaseEntity* physicsSphere = new BaseEntity("Physics Cube");
+			physicsSphere->Transform->setPosition(0, 5, 0);
+
+			physicsSphere->addComponent(new RenderComponent(physicsSphere, cube, StandardShaderID, GridTexture));
+			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, BOX, 1, std::vector<float>()));
+			AddEntity(physicsSphere);
+
+		}
+
+		if (key == GLFW_KEY_G && (action == GLFW_PRESS))
+		{
+			doRenderGui = !doRenderGui;
+		}
+
+		//InputComponent Keyboards Callbacks
+		for (int i = 0; i < InputList.size(); i++)
+		{
+			InputList[i]->KeyboardInputCallback(window, key, scancode, action, mods);
+		}
 	}
 	
 	//CEGUI Keyboard Callbacks 
@@ -80,9 +120,12 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		{
 			CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyDown(CEGUIKey);
 		}
-		else if (key > 32 && key < 96)
+		else
 		{
-			CEGUI::System::getSingleton().getDefaultGUIContext().injectChar(key);
+			int adjustedCharKey = charShiftCheck(key);
+
+			if (adjustedCharKey != -1)
+				CEGUI::System::getSingleton().getDefaultGUIContext().injectChar(charShiftCheck(key));
 		}
 	}
 
@@ -130,11 +173,47 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			RayCallback
 			);
 
+		for (int i = 0; i < inspector->Listbox->getItemCount(); i++)
+		{
+			inspector->Listbox->removeItem(inspector->Listbox->getListboxItemFromIndex(i));
+		}
+
 		if (RayCallback.hasHit()) {
 			void * hitPointer = RayCallback.m_collisionObject->getUserPointer();
-			PhysicsComponent* hitPhys = static_cast<PhysicsComponent*>(hitPointer);
+			selectedObjectPhys = static_cast<PhysicsComponent*>(hitPointer);
 			
+			console->logString(selectedObjectPhys->parentEntity->Name + " selected.");
+
+			int numItems = inspector->Listbox->getItemCount();
+
+			for (int i = numItems - 1; i >= 0; i--)
+			{
+				inspector->Listbox->removeItem(inspector->Listbox->getListboxItemFromIndex(i));
+			}
+
+			inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->Transform->Name));
+
+			for (int i = 0; i < selectedObjectPhys->parentEntity->components.size(); i++)
+			{
+				inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->components[i]->Name));
+			}
 		}
+		else
+		{
+			selectedObjectPhys = NULL;
+		}
+	}
+
+	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
+	{
+		int numItems = inspector->Listbox->getItemCount();
+
+		for (int i = numItems - 1; i >= 0; i--)
+		{
+			inspector->Listbox->removeItem(inspector->Listbox->getListboxItemFromIndex(i));
+		}
+
+		selectedObjectPhys = NULL;
 	}
 
 	//InputComponent Mouse Button Callback
@@ -167,8 +246,23 @@ void InitializeInput()
 
 void UpdateInput(){
 
+	//Global Input Frame Update
+	if (selectedObjectPhys != NULL)
+	{
+		stats->Label->appendText("Object Selected: True\n");
+	}
+	else
+	{
+		stats->Label->appendText("Object Selected: False\n");
+	}
+
+	shiftHeldDown = false;
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		shiftHeldDown = true;
+
 	//Update Input Components
-	if (glfwGetWindowAttrib(window, GLFW_FOCUSED))
+	if (glfwGetWindowAttrib(window, GLFW_FOCUSED) && !console->editbox->isActive())
 	{
 		for (int i = 0; i < InputList.size(); i++)
 		{
@@ -179,7 +273,7 @@ void UpdateInput(){
 	//CEGUI Mouse Position Injection 
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
-	bool test =	CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(xpos, ypos);
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(xpos, ypos);
 	return;
 }
 
@@ -289,4 +383,112 @@ CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey)
 	case GLFW_KEY_CAPS_LOCK: return CEGUI::Key::Capital;
 	default: return CEGUI::Key::Unknown;
 	}
+}
+
+int charShiftCheck(int glfwKey)
+{
+	//Shift not held
+	if (!shiftHeldDown)
+	{
+		//Convert normally uppercase alphabetical keys to lower
+		switch (glfwKey)
+		{
+		case 65: return 97;  //a
+		case 66: return 98;  //b
+		case 67: return 99;  //c
+		case 68: return 100; //d
+		case 69: return 101; //e
+		case 70: return 102; //f
+		case 71: return 103; //g
+		case 72: return 104; //h
+		case 73: return 105; //i
+		case 74: return 106; //j
+		case 75: return 107; //k
+		case 76: return 108; //l
+		case 77: return 109; //m
+		case 78: return 110; //n
+		case 79: return 111; //o
+		case 80: return 112; //p
+		case 81: return 113; //q
+		case 82: return 114; //r
+		case 83: return 115; //s
+		case 84: return 116; //t
+		case 85: return 117; //u
+		case 86: return 118; //v
+		case 87: return 119; //w
+		case 88: return 120; //x
+		case 89: return 121; //y
+		case 90: return 122; //z
+
+		default:
+			break;
+		}
+	}
+	else
+	{
+		//Shift held, take care of non-alphabetical keys
+		switch (glfwKey)
+		{
+		case 96:return 126;//~
+		case 49:return 33; //!
+		case 50:return 64; //@
+		case 51:return 35; //#
+		case 52:return 36; //$
+		case 53:return 37; //%
+		case 54:return 94; //^
+		case 55:return 38; //&
+		case 56:return 42; //*
+		case 57:return 40; //(
+		case 48:return 41; //)
+		case 45:return 95; //_
+		case 61:return 43; //+
+		case 91:return 123;//{
+		case 93:return 125;//}
+		case 59:return 58; //:
+		case 39:return 34; //"
+		case 92:return 124;//|
+		case 44:return 60; //<
+		case 46:return 62; //>
+		case 47:return 63; //?
+			
+		default:
+			break;
+		}
+	}
+
+	//Numpad keys, don't care about shift
+	switch (glfwKey)
+	{
+	case 320:return 48;//0
+	case 321:return 49;//1
+	case 322:return 50;//2
+	case 323:return 51;//3
+	case 324:return 52;//4
+	case 325:return 53;//5
+	case 326:return 54;//6
+	case 327:return 55;//7
+	case 328:return 56;//8
+	case 329:return 57;//9
+	case 330:return 46;//.
+	case 331:return 47;///
+	case 332:return 42;//*
+	case 333:return 45;//-
+	case 334:return 43;//+
+
+	//Kill these keys regardless, -1 sentinel
+	case 281:
+	case 282:
+	case 283:
+	case 284:
+	case 343:
+	case 347:
+	case 348:
+		return -1;
+	
+	default:
+		break;
+	}
+
+	return glfwKey;
+	
 }

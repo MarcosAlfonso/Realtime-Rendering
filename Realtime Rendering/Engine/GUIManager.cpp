@@ -1,7 +1,19 @@
+#include "GUI/Console.h"
+#include "GUI/Hierarchy.h"
+#include "GUI/Inspector.h"
+#include "GUI/Stats.h"
+
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
 
 extern float DeltaTime;
+
+Console* console;
+Hierarchy* hierarchy;
+Inspector* inspector;
+Stats* stats;
+bool doRenderGui;
+
 
 void InitializeGUI()
 {
@@ -25,31 +37,27 @@ void InitializeGUI()
 	CEGUI::WindowManager::setDefaultResourceGroup("layouts");
 	CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
 
-	CEGUI::SchemeManager::getSingleton().createFromFile("AlfiskoSkin.scheme");
+	CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+
+	CEGUI::FontManager::getSingleton().createFromFile("DejaVuSans-10.font");
 
 
-	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
+	CEGUI::WindowManager& windowManager = CEGUI::WindowManager::getSingleton();
 
-	CEGUI::Window* myRoot = wmgr.createWindow("DefaultWindow", "root");
-	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
+	CEGUI::Window* rootWindow = windowManager.createWindow("DefaultWindow", "root");
+	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(rootWindow);
+	
+	hierarchy = new Hierarchy(rootWindow, "RRHierarchy.layout");
+	console = new Console(rootWindow, "RRConsole.layout");
+	inspector = new Inspector(rootWindow, "RRInspector.layout");
+	stats = new Stats(rootWindow, "RRStats.layout");
 
-	CEGUI::FrameWindow* fWnd = static_cast<CEGUI::FrameWindow*>(
-		wmgr.createWindow("AlfiskoSkin/FrameWindow", "testWindow"));
+	console->RegisterHandlers();
 
-	CEGUI::Window* EditBox = wmgr.createWindow("AlfiskoSkin/Editbox", "OurDialog_Editbox");
-
-
-	myRoot->addChild(fWnd);
-	fWnd->addChild(EditBox);
-
-	// position a quarter of the way in from the top-left of parent.
-	fWnd->setPosition(CEGUI::UVector2(CEGUI::UDim(0.0f, 0.0f), CEGUI::UDim(0.75f, 0.0f)));
-	// set size to be half the size of the parent
-	fWnd->setSize(CEGUI::USize(CEGUI::UDim(1.0f, 0.0f), CEGUI::UDim(0.25f, 0.0f)));
-
-	fWnd->setText("Console");
-
+	doRenderGui = true;
 }
+
+
 
 void RenderGUI()
 {

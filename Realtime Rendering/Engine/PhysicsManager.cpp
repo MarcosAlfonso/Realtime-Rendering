@@ -11,6 +11,8 @@ btBroadphaseInterface* overlappingPairCache;
 btSequentialImpulseConstraintSolver* solver;
 bulletDebugDraw* drawer;
 
+extern float DeltaTime;
+
 void InitializePhysics()
 {
 
@@ -38,7 +40,7 @@ void InitializePhysics()
 
 void UpdatePhysics()
 {
-	dynamicsWorld->stepSimulation(1 / 60.f, 10);
+	dynamicsWorld->stepSimulation(DeltaTime);
 }
 
 

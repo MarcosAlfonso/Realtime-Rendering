@@ -7,6 +7,7 @@
 
 CameraComponent::CameraComponent(BaseEntity* parent)
 {
+	Name = "Camera Component";
 	parentEntity = parent;
 
 }

@@ -23,6 +23,7 @@ extern FreeCamera * mainCamera;
 
 RenderComponent::RenderComponent(BaseEntity* parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
+	Name = "Render Component";
 	parentEntity = parent;
 	mesh = _mesh;
 	shader_ID = _shader;

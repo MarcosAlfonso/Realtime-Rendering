@@ -1,4 +1,6 @@
 //Include external project files
+#include "Engine/GUI/Stats.h"
+#include "Engine/SceneManager.h"
 #include "Engine/PhysicsManager.h"
 #include "Engine/GUIManager.h"
 #include "Engine/InputManager.h"
@@ -31,6 +33,8 @@ GLFWwindow* window;
 #include <vector>
 #include <iostream>
 
+#include <CEGUI/CEGUI.h>
+
 #pragma region Declarations
 void SetupConfiguration();
 void LoadAssets();
@@ -50,6 +54,8 @@ int vertexCount;
 double lastTime;
 double curTime;
 float DeltaTime;
+float printDeltaTime;
+
 
 // Create and compile our GLSL program from the shaders
 GLuint StandardShaderID;
@@ -71,17 +77,16 @@ Mesh * cube;
 //Grid Mesh
 GridMesh * grid;
 
-//GameEntities
-std::vector<BaseEntity*> GameEntities;
-BaseEntity* physicsSphere;
-BaseEntity* skySphere;
-BaseEntity* groundCube;
-BaseEntity* terrain;
-FreeCamera * mainCamera;
-
 //Window
-int screenX = 1200;
-int screenY = 900;
+int screenX = 1920;
+int screenY = 1080;
+extern bool doRenderGui;
+
+//Entities from external
+extern std::vector<BaseEntity*> GameEntities;
+
+extern Stats * stats;
+
 
 #pragma endregion 
 
@@ -95,11 +100,11 @@ int main(void)
 
 		CalculateFrameTime();
 
-		Render();
-
 		UpdateInput();
 
 		UpdatePhysics();
+
+		Render();
 
 		glfwPollEvents();
 
@@ -129,11 +134,13 @@ void SetupConfiguration()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_DECORATED, GL_FALSE);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(screenX, screenY, "Realtime Rendering Engine", NULL, NULL);
+	window = glfwCreateWindow(screenX, screenY, "Realtime Rendering Engine", nullptr, nullptr);
+
 	if (window == NULL){
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		glfwTerminate();
@@ -185,28 +192,8 @@ void LoadAssets()
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
 	grid = new GridMesh(30, 30, 2, 2);
-
-
-	skySphere = new BaseEntity("Sky Sphere");
-	skySphere->addComponent(new RenderComponent(skySphere, sphere, FullbrightShaderID, skySphereTexture));
-	skySphere->Transform->setScale(100, -100, 100);
-	GameEntities.push_back(skySphere);
-
-
-	terrain = new BaseEntity("Terrain");
-	RenderComponent * terrainRender = new RenderComponent(terrain, grid, StandardShaderID, GrassTexture);
-	terrainRender->flipCullFace = true;
-	terrain->addComponent(terrainRender);
-	terrain->Transform->setScale(-1, 1, 1);
-	terrain->Transform->setRotation(0, glm::half_pi<float>(), 0);
-
-	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArray));
-	GameEntities.push_back(terrain);
-
-	mainCamera = new FreeCamera("Main Camera");
-	mainCamera->Transform->setPosition(2, 1, 8);
-	mainCamera->Camera->horizontalAngle = 3.14f;
-	GameEntities.push_back(mainCamera);
+		
+	CreateScene();
 }
 
 void Render()
@@ -220,11 +207,23 @@ void Render()
 		GameEntities[i]->Update();
 	}
 
-	RenderGUI();
+	sprintf(debugBuffer, "Delta Time: %fms\n", DeltaTime*1000);
+	stats->Label->appendText(debugBuffer);
+
+
+	sprintf(debugBuffer, "Vertex Count: %d\n", vertexCount);
+	stats->Label->appendText(debugBuffer);
+
+	if (doRenderGui)
+	{
+		RenderGUI();
+	}
 
 	glDisable(GL_BLEND);
 	
 	glfwSwapBuffers(window);
+
+	stats->Label->setText("");
 }
 
 void CleanupMemory()
@@ -258,6 +257,7 @@ void CalculateFrameTime()
 	lastTime = curTime;
 	curTime = glfwGetTime();
 	DeltaTime = float(curTime - lastTime);
+
 
 }
 

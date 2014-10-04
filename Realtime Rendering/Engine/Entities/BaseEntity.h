@@ -18,8 +18,9 @@ public:
 	TransformComponent* Transform;
 
 	std::string Name;
+	std::vector<BaseComponent*> components;
+
 
 
 private:
-	std::vector<BaseComponent*> components;
 };

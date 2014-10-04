@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\GUI\Console.cpp" />
     <ClCompile Include="Engine\GUIManager.cpp" />
     <ClCompile Include="Engine\InputManager.cpp" />
     <ClCompile Include="Engine\Components\CameraComponent.cpp" />
@@ -96,15 +97,22 @@
     <ClCompile Include="Engine\Graphics\bulletDebugDraw.cpp" />
     <ClCompile Include="Engine\Graphics\GridMesh.cpp" />
     <ClCompile Include="Engine\PhysicsManager.cpp" />
+    <ClCompile Include="Engine\SceneManager.cpp" />
     <ClCompile Include="Engine\Util\helpers.cpp" />
     <ClCompile Include="Engine\Util\loadShader.cpp" />
     <ClCompile Include="Engine\Graphics\mesh.cpp" />
     <ClCompile Include="Engine\Util\textureLoad.cpp" />
+    <ClCompile Include="Engine\GUI\Hierarchy.cpp" />
+    <ClCompile Include="Engine\GUI\Inspector.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
+    <ClCompile Include="Engine\GUI\Stats.cpp" />
+    <ClCompile Include="Engine\GUI\GUIBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\GUI\Console.h" />
     <ClInclude Include="Engine\GUIManager.h" />
+    <ClInclude Include="Engine\SceneManager.h" />
     <ClInclude Include="Engine\InputManager.h" />
     <ClInclude Include="Engine\Components\BaseComponent.h" />
     <ClInclude Include="Engine\Components\CameraComponent.h" />
@@ -120,6 +128,10 @@
     <ClInclude Include="Engine\Util\textureLoad.h" />
     <ClInclude Include="Engine\Components\PhysicsComponent.h" />
     <ClInclude Include="Engine\Components\InputComponent.h" />
+    <ClInclude Include="Engine\GUI\Hierarchy.h" />
+    <ClInclude Include="Engine\GUI\Inspector.h" />
+    <ClInclude Include="Engine\GUI\Stats.h" />
+    <ClInclude Include="Engine\GUI\GUIBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cube.model" />
