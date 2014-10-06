@@ -18,6 +18,7 @@ public:
 	TransformComponent* Transform;
 
 	std::string Name;
+	int ID;
 	std::vector<BaseComponent*> components;
 
 

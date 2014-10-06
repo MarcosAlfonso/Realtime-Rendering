@@ -52,6 +52,7 @@ void InitializeGUI()
 	inspector = new Inspector(rootWindow, "RRInspector.layout");
 	stats = new Stats(rootWindow, "RRStats.layout");
 
+
 	console->RegisterHandlers();
 
 	doRenderGui = true;

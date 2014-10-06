@@ -84,6 +84,8 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
 			AddEntity(physicsSphere);
+			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
+
 
 		}
 
@@ -95,6 +97,8 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 			physicsSphere->addComponent(new RenderComponent(physicsSphere, cube, StandardShaderID, GridTexture));
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, BOX, 1, std::vector<float>()));
 			AddEntity(physicsSphere);
+			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsCube Created"));
+
 
 		}
 
@@ -140,8 +144,10 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 
 void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 {
+	bool overCEGUIWindow = console->myWindow->isMouseContainedInArea() || hierarchy->myWindow->isMouseContainedInArea() || inspector->myWindow->isMouseContainedInArea() || stats->myWindow->isMouseContainedInArea();
+
 	//Global Mouse Button Input
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && !overCEGUIWindow)
 	{
 		double * mouseX = new double;
 		double * mouseY = new double;
@@ -197,6 +203,15 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			{
 				inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->components[i]->Name));
 			}
+
+			hierarchy->Listbox->clearAllSelections();
+
+			for (int i = 0; i < hierarchy->Listbox->getItemCount(); i++)
+			{
+
+				if (hierarchy->Listbox->getListboxItemFromIndex(i)->getID() == selectedObjectPhys->parentEntity->ID)
+					hierarchy->Listbox->getListboxItemFromIndex(i)->setSelected(true);
+			}
 		}
 		else
 		{
@@ -228,13 +243,14 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 	//Inject Up or Down based on GLFW action
 	if (action == GLFW_PRESS)
 	{
-		bool test =  CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(CEGUIMouseButton);
+		bool test = CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(CEGUIMouseButton);
 		return;
 	}
 	else if (action == GLFW_RELEASE)
 	{
 		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(CEGUIMouseButton);
 	}
+
 
 }
 

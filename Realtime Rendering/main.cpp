@@ -202,10 +202,7 @@ void Render()
 
 	vertexCount = 0;
 
-	for (int i = 0; i < GameEntities.size(); i++)
-	{
-		GameEntities[i]->Update();
-	}
+	UpdateScene();
 
 	sprintf(debugBuffer, "Delta Time: %fms\n", DeltaTime*1000);
 	stats->Label->appendText(debugBuffer);
