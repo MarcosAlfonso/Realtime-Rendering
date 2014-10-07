@@ -3,7 +3,7 @@
 
 class GLFWwindow;
 
-
+//Input component is completely purely virtual, an interface
 class InputComponent :	public BaseComponent
 {
 public:

@@ -15,6 +15,7 @@
 #include <string>
 #include <cstring>
 
+//Mesh Class, loads in meshes from OBJ's at the moment
 Mesh::Mesh()
 {
 	//Create VAO for Mesh

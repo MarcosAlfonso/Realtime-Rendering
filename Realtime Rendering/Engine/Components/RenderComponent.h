@@ -9,6 +9,7 @@
 class Mesh;
 class BaseEntity;
 
+//Render Component, attached to a Entity needing Mesh rendering
 class RenderComponent: public BaseComponent
 {
 
@@ -17,7 +18,6 @@ public:
 	~RenderComponent();
 
 	void Update();
-	void Cleanup();
 
 	void calculateLight();
 

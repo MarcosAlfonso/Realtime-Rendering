@@ -14,16 +14,19 @@
 
 #include <iostream>
 
-//dynamicsWorld from main
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
+//Physics Component, added to any entity that needs physical interaction (and selection at the moment)
 PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, int _mass, std::vector<float> heights )
 {
 	Name = "Physics Component";
 
 	//Set parent container
 	parentEntity = parent;
+	componentType = PHYSICS;
 
+
+	//Set from the CollisionShapeEnum, figures out which kind collisionShape to create
 	if (type == BOX)
 	{
 		mass = _mass;
@@ -42,6 +45,8 @@ PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, 
 		heightFieldArray = heights;
 		
 		collisionShape = new btHeightfieldTerrainShape(30, 30, &heightFieldArray[0], 1, -100, 100, 1, PHY_FLOAT, false);
+
+		//Why is the scaling of this non-uniform?
 		collisionShape->setLocalScaling(btVector3(2,1,2));
 
 	}
@@ -60,6 +65,7 @@ PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, 
 	rigidBody = new btRigidBody(rigidBodyCI);
 	rigidBody->setMassProps(mass, fallInertia);
 
+	//UserPointer to itself, to make object selection work
 	rigidBody->setUserPointer((void*)this);
 
 	dynamicsWorld->addRigidBody(rigidBody);
@@ -67,11 +73,6 @@ PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, 
 }
 
 PhysicsComponent::~PhysicsComponent()
-{
-
-}
-
-void PhysicsComponent::Cleanup()
 {
 	delete(collisionShape);
 	delete(motionState);

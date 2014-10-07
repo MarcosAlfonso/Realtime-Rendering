@@ -11,9 +11,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 
-///////////////////
-//Generate a grid//
-///////////////////
+//Generates a gridded plane mesh of uniformly spaced points
 GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing)
 {
 

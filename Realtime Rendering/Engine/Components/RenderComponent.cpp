@@ -21,10 +21,14 @@
 extern int vertexCount;
 extern FreeCamera * mainCamera;
 
+//Render Component, attached to a Entity needing Mesh rendering
 RenderComponent::RenderComponent(BaseEntity* parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
 	Name = "Render Component";
 	parentEntity = parent;
+	componentType = RENDER;
+
+
 	mesh = _mesh;
 	shader_ID = _shader;
 	texture_ID = _texture;
@@ -32,13 +36,9 @@ RenderComponent::RenderComponent(BaseEntity* parent, Mesh * _mesh, GLuint _shade
 
 RenderComponent::~RenderComponent()
 {
-
-}
-
-void RenderComponent::Cleanup()
-{
 	delete(this);
 }
+
 
 ////////////////////////
 //Render this instance//
@@ -46,10 +46,9 @@ void RenderComponent::Cleanup()
 void RenderComponent::Update()
 {
 	//Binds this Mesh's VAO
-
 	glBindVertexArray(mesh->vaoID);
 	
-
+	//Set the shader
 	glUseProgram(shader_ID);
 
 	//Light positioning TODO should be abstracted

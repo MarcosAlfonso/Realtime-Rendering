@@ -10,11 +10,10 @@ class btRigidBody;
 class btDefaultMotionState;
 class btCollisionShape;
 
-typedef unsigned char byte_t;
-
 //Physics Types
 enum CollisionShapeEnum{ BOX, SPHERE, TERRAIN };
 
+//Physics Component, added to any entity that needs physical interaction (and selection at the moment)
 class PhysicsComponent : public BaseComponent
 {
 public:
@@ -22,18 +21,16 @@ public:
 	~PhysicsComponent();
 
 	void Update();
-	void Cleanup();
 	void TransformUpdate();
 	void SetPosition(glm::vec3 trans);
 
 	btCollisionShape* collisionShape;
-
+	btRigidBody* rigidBody;
 
 
 private:
 	int mass;
 	std::vector<float> heightFieldArray;
-	btRigidBody* rigidBody;
 	btDefaultMotionState* motionState;
 
 };

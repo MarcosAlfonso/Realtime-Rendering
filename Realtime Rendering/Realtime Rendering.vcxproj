@@ -97,6 +97,7 @@
     <ClCompile Include="Engine\Graphics\bulletDebugDraw.cpp" />
     <ClCompile Include="Engine\Graphics\GridMesh.cpp" />
     <ClCompile Include="Engine\PhysicsManager.cpp" />
+    <ClCompile Include="Engine\Scene.cpp" />
     <ClCompile Include="Engine\SceneManager.cpp" />
     <ClCompile Include="Engine\Util\helpers.cpp" />
     <ClCompile Include="Engine\Util\loadShader.cpp" />
@@ -112,6 +113,7 @@
   <ItemGroup>
     <ClInclude Include="Engine\GUI\Console.h" />
     <ClInclude Include="Engine\GUIManager.h" />
+    <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\SceneManager.h" />
     <ClInclude Include="Engine\InputManager.h" />
     <ClInclude Include="Engine\Components\BaseComponent.h" />

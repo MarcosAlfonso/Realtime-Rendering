@@ -1,7 +1,14 @@
 #pragma once
 #include <string>
 
+//Forward Declarations
 class BaseEntity;
+
+//Component types
+enum ComponentTypeEnum{ CAMERA, INPUT, PHYSICS, RENDER, TRANSFORM};
+
+
+//Base Class for all Components
 class BaseComponent
 {
 public:
@@ -9,7 +16,8 @@ public:
 	BaseEntity* parentEntity;
 	std::string Name;
 
-	virtual void Cleanup() = 0; 
+	ComponentTypeEnum componentType;
+
 	virtual void Update() = 0;
 
 private:

@@ -8,6 +8,18 @@ extern FreeCamera * mainCamera;
 #define GLEW_STATIC
 #include <GL/glew.h>
 
+//Kind of a wierd one, we have to implement the btIDebugDraw interface to do debug drawing of Bullet Physics
+
+bulletDebugDraw::bulletDebugDraw()
+{
+
+}
+
+bulletDebugDraw::~bulletDebugDraw()
+{
+
+}
+
 void bulletDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
 
@@ -35,16 +47,6 @@ void bulletDebugDraw::drawLine(const btVector3& from, const btVector3& to, const
 		glVertex3f(x1, y1, z1);
 		glVertex3f(x2, y2, z2);
 	glEnd();
-
-}
-
-bulletDebugDraw::bulletDebugDraw()
-{
-
-}
-
-bulletDebugDraw::~bulletDebugDraw()
-{
 
 }
 

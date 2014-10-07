@@ -6,6 +6,7 @@
 
 #include <vector>
 
+//Mesh Class, loads in meshes from OBJ's at the moment
 class Mesh
 {
 public:

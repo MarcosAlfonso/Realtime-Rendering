@@ -23,10 +23,9 @@ extern int screenY;
 
 extern GLFWwindow* window;
 
+//Free Camera Input Implentation of InputComponent interface 
 class FreeCameraInput : public InputComponent
 {
-
-
 public:
 
 	CameraComponent* Camera;
@@ -40,24 +39,21 @@ public:
 	{
 		parentEntity = parent;
 		Camera = _camera;
-
 	}
 	
 	~FreeCameraInput()
 	{
 		delete(this);
 	}
-
-	void Cleanup()
-	{
-		delete(this);
-	}
-
+	 
 	void Update()
 	{
+		//Camera movement speed
 		moveSpeed = 6;
+
+		//Sprint camera
 		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-			moveSpeed = 12;
+			moveSpeed = 16;
 		}
 
 		// Move forward
@@ -85,11 +81,13 @@ public:
 			Camera->positionOffset += glm::vec3(0, -1, 0) * DeltaTime * moveSpeed;
 		}
 
- 
+		//Right clicking rotates camera
 		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)	{
 
+			//Hides cursor, and makes mouse boundless for infinite rotation
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+			//Moves mouse pointer to middle of screen on start
 			if (mouseControlRefresh)
 				glfwSetCursorPos(window, screenX / 2, screenY / 2);
 			
@@ -100,18 +98,19 @@ public:
 			// Reset mouse position for next frame
 			glfwSetCursorPos(window, screenX / 2, screenY / 2);
 			
-			// Compute new orientation
+			// Compute new orientation by seeing how much mouse moved
 			Camera->horizontalAngle += mouseSpeed * float(screenX / 2 - xpos);
 			Camera->verticalAngle += mouseSpeed * float(screenY / 2 - ypos);
 
 			//Prevents camera from getting flipped upside down
 			Camera->verticalAngle = glm::clamp(Camera->verticalAngle, -1.57f, 1.57f);
 
+			//After its happened the first time we don't need to pre set the mouse to middle
 			mouseControlRefresh = false;
 		}
 		else
 		{
-			// Get mouse position
+			// Get mouse position, saves it for later
 			glfwGetCursorPos(window, &oldMouseX, &oldMouseY);
 			mouseControlRefresh = true;
 
@@ -126,8 +125,10 @@ public:
 
 	void MouseInputCallback(GLFWwindow* window, int button, int action, int mods)
 	{
+		//If right click is released
 		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
 		{
+			//Make mouse visible and normal, and move it back to where it was when you first clicked
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			glfwSetCursorPos(window, oldMouseX, oldMouseY);
 
@@ -137,6 +138,7 @@ public:
 
 };
 
+//Prefab: Free Camera
 class FreeCamera : public BaseEntity
 {
 public:	
@@ -156,7 +158,7 @@ public:
 
 	~FreeCamera()
 	{
-		Camera->Cleanup();
+		delete(Camera);
 	}
 
 private:

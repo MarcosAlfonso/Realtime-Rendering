@@ -2,6 +2,7 @@
 #include "Components/InputComponent.h"
 #include <glm/glm.hpp>
 
+//Input Manager, handles the Input system
 void addInput(InputComponent* input);
 void UpdateInput();
 

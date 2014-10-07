@@ -34,6 +34,7 @@ GLFWwindow* window;
 #include <iostream>
 
 #include <CEGUI/CEGUI.h>
+#include "Engine/Graphics/bulletDebugDraw.h"
 
 #pragma region Declarations
 void SetupConfiguration();
@@ -82,8 +83,12 @@ int screenX = 1920;
 int screenY = 1080;
 extern bool doRenderGui;
 
-//Entities from external
-extern std::vector<BaseEntity*> GameEntities;
+extern bulletDebugDraw* drawer;
+extern btDiscreteDynamicsWorld* dynamicsWorld;
+
+extern PhysicsComponent* selectedObjectPhys;
+
+Scene * scene;
 
 extern Stats * stats;
 
@@ -133,9 +138,9 @@ void SetupConfiguration()
 	glfwWindowHint(GLFW_SAMPLES, 1);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_DECORATED, GL_FALSE);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
 
 	// Open a window and create its OpenGL context
@@ -193,7 +198,8 @@ void LoadAssets()
 	//Terrain
 	grid = new GridMesh(30, 30, 2, 2);
 		
-	CreateScene();
+	scene = new Scene();
+	LoadScene(scene);
 }
 
 void Render()
@@ -202,24 +208,30 @@ void Render()
 
 	vertexCount = 0;
 
-	UpdateScene();
-
+	//Debug printing
 	sprintf(debugBuffer, "Delta Time: %fms\n", DeltaTime*1000);
 	stats->Label->appendText(debugBuffer);
 
-
 	sprintf(debugBuffer, "Vertex Count: %d\n", vertexCount);
 	stats->Label->appendText(debugBuffer);
+
+	UpdateScene();
 
 	if (doRenderGui)
 	{
 		RenderGUI();
 	}
 
+	//Renders selected object with phys wireframe (uses old school render...)
+	if (selectedObjectPhys != NULL)
+		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape, btVector3(0, 0, 0));
+	
+	//Because CEGUI demands it
 	glDisable(GL_BLEND);
 	
 	glfwSwapBuffers(window);
 
+	//Clears stats label for next frame
 	stats->Label->setText("");
 }
 
@@ -241,9 +253,9 @@ void CleanupMemory()
 	delete(grid);
 
 	//Delete Entities
-	for (int i = 0; i < GameEntities.size(); i++)
+	for (int i = 0; i < scene->GameEntities.size(); i++)
 	{
-		delete(GameEntities[i]);
+		delete(scene->GameEntities[i]);
 	}
 
 	CleanupPhysics();

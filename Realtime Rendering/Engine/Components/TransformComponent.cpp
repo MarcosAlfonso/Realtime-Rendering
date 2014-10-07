@@ -5,10 +5,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+//Transform Component, required component for all entities
 TransformComponent::TransformComponent(BaseEntity* parent)
 {
 	Name = "Transform Component";
 	parentEntity = parent;
+	componentType = TRANSFORM;
 
 	transVec = glm::vec3(0);
 	rotVec = glm::vec3(0);
@@ -22,12 +24,6 @@ TransformComponent::~TransformComponent()
 
 }
 
-void TransformComponent::Cleanup()
-{
-	delete(this);
-}
-
-
 void TransformComponent::Update()
 {
 	//If anything has changed, update Matrix to reflect changes
@@ -37,12 +33,14 @@ void TransformComponent::Update()
 	}
 }
 
+//Matrix multiplication to figure out model matrix
 void TransformComponent::calculateModelMatrix()
 {
 	ModelMatrix = transMatrix * rotMatrix * scaleMatrix;
 	updateModelMatrix = false;
 }
 
+//Set non uniform scale
 void TransformComponent::setScale(float x, float y, float z)
 {
 	scaleVec = glm::vec3(x, y, z);
@@ -75,6 +73,8 @@ void TransformComponent::setRotation(glm::quat quat)
 	rotMatrix = glm::rotate(rotMatrix, angle, axis);
 	updateModelMatrix = true;
 }
+
+//Set position
 void TransformComponent::setPosition(float x, float y, float z)
 {
 	transVec = glm::vec3(x,y,z);

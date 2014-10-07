@@ -5,6 +5,7 @@
 
 #include <vector>
 
+//Base Entity, basis for all Entities
 class BaseEntity
 {
 public:
@@ -21,7 +22,7 @@ public:
 	int ID;
 	std::vector<BaseComponent*> components;
 
-
+	void * getComponent(ComponentTypeEnum _componentType);
 
 private:
 };

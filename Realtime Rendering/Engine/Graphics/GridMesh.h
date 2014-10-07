@@ -5,6 +5,7 @@
 
 #include <btBulletCollisionCommon.h>
 
+//Generates a gridded plane mesh of uniformly spaced points
 class GridMesh : public Mesh
 {
 public:

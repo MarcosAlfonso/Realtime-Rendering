@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 
+//Transform Component, required component for all entities
 class TransformComponent : public BaseComponent
 {
 public:
@@ -10,8 +11,6 @@ public:
 	~TransformComponent();
 
 	void Update();
-	void Cleanup();
-
 
 	glm::vec3 transVec;
 	glm::vec3 rotVec;

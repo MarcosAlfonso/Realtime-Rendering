@@ -9,6 +9,7 @@
 
 #include <vector>
 
+//Kind of a wierd one, we have to implement the btIDebugDraw interface to do debug drawing of Bullet Physics
 class bulletDebugDraw : public btIDebugDraw
 {
 public:
@@ -31,7 +32,6 @@ public:
 
 	virtual int getDebugMode() const;
 
-	void DrawLineArray();
 private:
 
 };

@@ -47,13 +47,6 @@ extern int screenY;
 extern FreeCamera * mainCamera;
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
-std::vector<InputComponent*> InputList;
-
-CEGUI::MouseButton GlfwToCeguiButton(int glfwButton);
-CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey);
-int charShiftCheck(int glfwKey);
-
-PhysicsComponent* selectedObjectPhys;
 extern char debugBuffer[];
 extern bool doRenderGui;
 
@@ -63,7 +56,17 @@ extern Stats* stats;
 extern Console* console;
 
 bool shiftHeldDown;
+std::vector<InputComponent*> InputList;
 
+CEGUI::MouseButton GlfwToCeguiButton(int glfwButton);
+CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey);
+int charCheck(int glfwKey);
+
+PhysicsComponent* selectedObjectPhys;
+
+extern Scene * scene;
+
+//Input Manager, handles the Input system
 
 void addInput(InputComponent* input)
 {
@@ -72,10 +75,12 @@ void addInput(InputComponent* input)
 
 void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	//If typing inside an editbox, skip to CEGUI
+	//If typing inside an editbox, skip to CEGUI Section
 	if (!console->editbox->isActive())
 	{
 		//Global Keyboard Input
+
+		//Q Spanws a Physics Sphere
 		if (key == GLFW_KEY_Q && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		{
 			BaseEntity* physicsSphere = new BaseEntity("Physics Sphere");
@@ -83,12 +88,12 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 
 			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
-			AddEntity(physicsSphere);
+			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
 
 
 		}
-
+		//E Spanws a Physics Cube
 		if (key == GLFW_KEY_E && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		{
 			BaseEntity* physicsSphere = new BaseEntity("Physics Cube");
@@ -96,16 +101,19 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 
 			physicsSphere->addComponent(new RenderComponent(physicsSphere, cube, StandardShaderID, GridTexture));
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, BOX, 1, std::vector<float>()));
-			AddEntity(physicsSphere);
+			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsCube Created"));
 
 
 		}
 
+		//G hides or show GUI
 		if (key == GLFW_KEY_G && (action == GLFW_PRESS))
 		{
 			doRenderGui = !doRenderGui;
 		}
+
+
 
 		//InputComponent Keyboards Callbacks
 		for (int i = 0; i < InputList.size(); i++)
@@ -114,29 +122,36 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		}
 	}
 	
-	//CEGUI Keyboard Callbacks 
-
+	//CEGUI Keyboard conversion
 	CEGUI::Key::Scan CEGUIKey = GlfwToCeguiKey(key);
 
+	//If key is pressed or repeating
 	if (action == GLFW_PRESS || action == GLFW_REPEAT)
 	{
+		//And the key isn't an unknown key send it as a key down injection
 		if (CEGUIKey != CEGUI::Key::Unknown)
 		{
 			CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyDown(CEGUIKey);
 		}
+		//If key is "unknown", it is probably a char
 		else
 		{
-			int adjustedCharKey = charShiftCheck(key);
+			//charCheck checks for capital letters, dead keys, and more
+			int adjustedCharKey = charCheck(key);
 
+			//If its a key we want to print, do it
 			if (adjustedCharKey != -1)
-				CEGUI::System::getSingleton().getDefaultGUIContext().injectChar(charShiftCheck(key));
+				CEGUI::System::getSingleton().getDefaultGUIContext().injectChar(charCheck(key));
 		}
 	}
 
+	//On key release
 	if (action == GLFW_RELEASE)
 	{
+		//If not "unknown" (which really means its a char key most likely)
 		if (CEGUIKey != CEGUI::Key::Unknown)
 		{
+			//Key release event
 			CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyUp(CEGUIKey);
 		}
 	}
@@ -144,9 +159,12 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 
 void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 {
+	//Checks if mouse is over any core GUI windows
 	bool overCEGUIWindow = console->myWindow->isMouseContainedInArea() || hierarchy->myWindow->isMouseContainedInArea() || inspector->myWindow->isMouseContainedInArea() || stats->myWindow->isMouseContainedInArea();
 
 	//Global Mouse Button Input
+
+	//Left click press for ray casted selection, if not over a window
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && !overCEGUIWindow)
 	{
 		double * mouseX = new double;
@@ -157,7 +175,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 		glm::vec3 out_origin;
 		glm::vec3 out_direction;
 
-		
+		//Turn a click into a ray extending from camera to that point
 		ScreenPosToWorldRay(
 			(int)*mouseX, (int)*mouseY,             // Mouse position, in pixels, from bottom-left corner of the window
 			screenX, screenY,  // Window size, in pixels
@@ -167,68 +185,69 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			out_direction            // Ouput : Direction, in world space, of the ray that goes "through" the mouse.
 			);
 
+		//Make it really long
 		out_direction = out_direction*1000.0f;
 
+		//Sets up the ray casting function
 		btCollisionWorld::ClosestRayResultCallback RayCallback(
 			btVector3(out_origin.x, out_origin.y, out_origin.z),
 			btVector3(out_direction.x, out_direction.y, out_direction.z)
 			);
+		
+		//Cast ray into world
 		dynamicsWorld->rayTest(
 			btVector3(out_origin.x, out_origin.y, out_origin.z),
 			btVector3(out_direction.x, out_direction.y, out_direction.z),
 			RayCallback
 			);
 
-		for (int i = 0; i < inspector->Listbox->getItemCount(); i++)
-		{
-			inspector->Listbox->removeItem(inspector->Listbox->getListboxItemFromIndex(i));
-		}
-
-		if (RayCallback.hasHit()) {
-			void * hitPointer = RayCallback.m_collisionObject->getUserPointer();
-			selectedObjectPhys = static_cast<PhysicsComponent*>(hitPointer);
-			
-			console->logString(selectedObjectPhys->parentEntity->Name + " selected.");
-
-			int numItems = inspector->Listbox->getItemCount();
-
-			for (int i = numItems - 1; i >= 0; i--)
-			{
-				inspector->Listbox->removeItem(inspector->Listbox->getListboxItemFromIndex(i));
-			}
-
-			inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->Transform->Name));
-
-			for (int i = 0; i < selectedObjectPhys->parentEntity->components.size(); i++)
-			{
-				inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->components[i]->Name));
-			}
-
-			hierarchy->Listbox->clearAllSelections();
-
-			for (int i = 0; i < hierarchy->Listbox->getItemCount(); i++)
-			{
-
-				if (hierarchy->Listbox->getListboxItemFromIndex(i)->getID() == selectedObjectPhys->parentEntity->ID)
-					hierarchy->Listbox->getListboxItemFromIndex(i)->setSelected(true);
-			}
-		}
-		else
-		{
-			selectedObjectPhys = NULL;
-		}
-	}
-
-	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
-	{
 		int numItems = inspector->Listbox->getItemCount();
 
+		//Clear inspector
 		for (int i = numItems - 1; i >= 0; i--)
 		{
 			inspector->Listbox->removeItem(inspector->Listbox->getListboxItemFromIndex(i));
 		}
 
-		selectedObjectPhys = NULL;
+		//If there is a hit
+		if (RayCallback.hasHit()) {
+			//Store pointer to the object hit
+			void * hitPointer = RayCallback.m_collisionObject->getUserPointer();
+			//Get the PhysicsComponent out of that pointer
+			selectedObjectPhys = static_cast<PhysicsComponent*>(hitPointer);
+
+			
+			//Debug print to console
+			console->logString(selectedObjectPhys->parentEntity->Name + " selected.");
+
+			//Add selected object transform to inspector list
+			inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->Transform->Name));
+
+			//Add rest of components to inspector list
+			for (int i = 0; i < selectedObjectPhys->parentEntity->components.size(); i++)
+			{
+				inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->components[i]->Name));
+			}
+
+			//Clear selection
+			hierarchy->Listbox->clearAllSelections();
+
+			//Pretty hacky I think, 
+			for (int i = 0; i < hierarchy->Listbox->getItemCount(); i++)
+			{
+				//iterate through Listbox and check if selectedObject shares an ID with the currently selected object's ID
+				if (hierarchy->Listbox->getListboxItemFromIndex(i)->getID() == selectedObjectPhys->parentEntity->ID)
+				{
+					//Match? That's the currently selected object
+					hierarchy->Listbox->getListboxItemFromIndex(i)->setSelected(true);
+				}
+			}
+		}
+		else
+		{
+			//No hit? Nothing selected
+			selectedObjectPhys = NULL;
+		}
 	}
 
 	//InputComponent Mouse Button Callback
@@ -254,6 +273,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 
 }
 
+//Sets up callbacks
 void InitializeInput()
 {
 	glfwSetKeyCallback(window, KeyboardCallback);
@@ -274,7 +294,7 @@ void UpdateInput(){
 
 	shiftHeldDown = false;
 
-	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
 		shiftHeldDown = true;
 
 	//Update Input Components
@@ -293,6 +313,7 @@ void UpdateInput(){
 	return;
 }
 
+//Converts mouse location to a ray casted from that point through camera 
 void ScreenPosToWorldRay(
 	int mouseX, int mouseY,             // Mouse position, in pixels, from bottom-left corner of the window
 	int screenWidth, int screenHeight,  // Window size, in pixels
@@ -305,13 +326,13 @@ void ScreenPosToWorldRay(
 	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
 	glm::vec4 lRayStart_NDC(
 		((float)mouseX / (float)screenWidth - 0.5f) * 2.0f, 
-		((float)mouseY / (float)screenHeight - 0.5f) * 2.0f,
+		((float)mouseY / (float)screenHeight - 0.5f) * -2.0f,
 		-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
 		1.0f
 		);
 	glm::vec4 lRayEnd_NDC(
 		((float)mouseX / (float)screenWidth - 0.5f) * 2.0f,
-		((float)mouseY / (float)screenHeight - 0.5f) * 2.0f,
+		((float)mouseY / (float)screenHeight - 0.5f) * -2.0f,
 		0.0,
 		1.0f
 		);
@@ -345,6 +366,7 @@ void ScreenPosToWorldRay(
 	out_direction = glm::normalize(lRayDir_world);
 }
 
+//Converts GLFW input to good stuff
 CEGUI::MouseButton GlfwToCeguiButton(int glfwButton)
 {
 	switch (glfwButton)
@@ -401,7 +423,7 @@ CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey)
 	}
 }
 
-int charShiftCheck(int glfwKey)
+int charCheck(int glfwKey)
 {
 	//Shift not held
 	if (!shiftHeldDown)

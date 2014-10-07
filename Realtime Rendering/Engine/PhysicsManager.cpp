@@ -13,6 +13,7 @@ bulletDebugDraw* drawer;
 
 extern float DeltaTime;
 
+//Physics Manager, handles the Bullet Physics sytem
 void InitializePhysics()
 {
 
@@ -32,10 +33,11 @@ void InitializePhysics()
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
-	//drawer = new bulletDebugDraw();
+	//Debug drawing options here
+	drawer = new bulletDebugDraw();
 
-	//dynamicsWorld->setDebugDrawer(drawer); 
-	//dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+	dynamicsWorld->setDebugDrawer(drawer); 
+	dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 }
 
 void UpdatePhysics()
@@ -43,14 +45,13 @@ void UpdatePhysics()
 	dynamicsWorld->stepSimulation(DeltaTime);
 }
 
-
-
 void CleanupPhysics()
 {
-
 	delete(collisionConfiguration);
 	delete(dispatcher);
 	delete(overlappingPairCache);
 	delete(solver);
-	delete(dynamicsWorld);
+	
+	//This is commented because it now causes a crash, but it needs to happen im thinking
+	//delete(dynamicsWorld);
 }
