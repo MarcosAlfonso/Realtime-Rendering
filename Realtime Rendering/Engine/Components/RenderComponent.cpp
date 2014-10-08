@@ -21,6 +21,10 @@
 extern int vertexCount;
 extern FreeCamera * mainCamera;
 
+glm::vec3 groundColor = glm::vec3(.95, .9, .8);
+glm::vec3 skyColor = glm::vec3(.34, .6, .75);
+
+
 //Render Component, attached to a Entity needing Mesh rendering
 RenderComponent::RenderComponent(BaseEntity* parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
@@ -68,6 +72,13 @@ void RenderComponent::Update()
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureUniformID = glGetUniformLocation(shader_ID, "DiffuseTextureSampler");
+
+	//SkySphere uniforms
+	GLuint groundColorID = glGetUniformLocation(shader_ID, "groundColor");
+	GLuint skyColorID = glGetUniformLocation(shader_ID, "skyColor");
+
+	glUniform3f(groundColorID, groundColor.x, groundColor.y, groundColor.z);
+	glUniform3f(skyColorID, skyColor.x, skyColor.y, skyColor.z);
 
 	// Bind our diffuse texture in Texture Unit 0
 	glActiveTexture(GL_TEXTURE0);

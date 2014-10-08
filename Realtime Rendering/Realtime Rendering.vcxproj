@@ -147,6 +147,8 @@
     <None Include="Engine\Shaders\debugLine.vert" />
     <None Include="Engine\Shaders\fullbright.frag" />
     <None Include="Engine\Shaders\fullbright.vert" />
+    <None Include="Engine\Shaders\gradient.frag" />
+    <None Include="Engine\Shaders\gradient.vert" />
     <None Include="Engine\Shaders\standard.frag" />
     <None Include="Engine\Shaders\standard.vert" />
     <None Include="Engine\Shaders\text.frag" />

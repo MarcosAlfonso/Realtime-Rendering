@@ -24,7 +24,9 @@ FreeCamera * mainCamera;
 // Create and compile our GLSL program from the shaders
 extern GLuint StandardShaderID;
 extern GLuint FullbrightShaderID;
-extern GLuint debugLineShaderID;
+extern GLuint DebugLineShaderID;
+extern GLuint GradientShaderID;
+
 
 // Load the texture
 extern GLuint GridTexture;
@@ -51,7 +53,8 @@ void Scene::AddEntity(BaseEntity * ent)
 	GameEntities.push_back(ent);
 
 	//Add an entry to the Hierarchy and set up selection and shiz
-	CEGUI::ListboxTextItem * newItem = new CEGUI::ListboxTextItem(ent->Name, ID_Count, ent);
+	CEGUI::ListboxTextItem * newItem = new CEGUI::ListboxTextItem(ent->Name, ID_Count);
+	newItem->setUserData(ent);
 	newItem->setSelectionColours(CEGUI::Colour(1, 1, 1, .2));
 	newItem->setSelectionBrushImage("TaharezLook/GenericBrush");
 	hierarchy->Listbox->addItem(newItem);
@@ -64,8 +67,8 @@ void Scene::AddEntity(BaseEntity * ent)
 Scene::Scene()
 {
 	skySphere = new BaseEntity("Sky Sphere");
-	skySphere->addComponent(new RenderComponent(skySphere, sphere, FullbrightShaderID, skySphereTexture));
-	skySphere->Transform->setScale(100, -100, 100);
+	skySphere->addComponent(new RenderComponent(skySphere, sphere, GradientShaderID, skySphereTexture));
+	skySphere->Transform->setScale(1000, 1000, 1000);
 	AddEntity(skySphere);
 
 

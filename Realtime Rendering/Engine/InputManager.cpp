@@ -66,6 +66,9 @@ PhysicsComponent* selectedObjectPhys;
 
 extern Scene * scene;
 
+extern glm::vec3 groundColor;
+extern glm::vec3 skyColor;
+
 //Input Manager, handles the Input system
 
 void addInput(InputComponent* input)
@@ -79,7 +82,21 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 	if (!console->editbox->isActive())
 	{
 		//Global Keyboard Input
+		if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+		{
+			groundColor = glm::vec3(.1, .1, .1);
+			skyColor = glm::vec3(.9, 0, 0);
+			console->logString("WELCOME TO HELL!");
+		}
 
+		if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+		{
+			groundColor = glm::vec3(.22, .6, .23);
+			skyColor = glm::vec3(1, 1, 0);
+			console->logString("Welcome to Gzar'Bxu!");
+
+		}
+			
 		//Q Spanws a Physics Sphere
 		if (key == GLFW_KEY_Q && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		{

@@ -61,7 +61,8 @@ float printDeltaTime;
 // Create and compile our GLSL program from the shaders
 GLuint StandardShaderID;
 GLuint FullbrightShaderID;
-GLuint debugLineShaderID;
+GLuint DebugLineShaderID;
+GLuint GradientShaderID;
 
 // Load the texture
 GLuint GridTexture;
@@ -177,7 +178,8 @@ void LoadAssets()
 	// Create and compile our GLSL program from the shaders
 	StandardShaderID = CreateShaderProgram("Engine/Shaders/standard.vert", "Engine/Shaders/standard.frag", NULL);
 	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", "Engine/Shaders/fullbright.frag", NULL);
-	debugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL);
+	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL);
+	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", "Engine/Shaders/gradient.frag", NULL);
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");
