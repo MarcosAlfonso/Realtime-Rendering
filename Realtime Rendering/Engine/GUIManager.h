@@ -2,4 +2,5 @@
 
 //GUI Manager, handles the GUI system
 void InitializeGUI();
-void RenderGUI();
+void RenderGUI(); 
+void CleanupGUI();

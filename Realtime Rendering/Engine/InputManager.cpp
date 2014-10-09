@@ -33,10 +33,10 @@ extern GLFWwindow* window;
 #include <CEGUI/CEGUI.h>
 
 
-extern std::vector<BaseEntity*> GameEntities;
+extern std::vector<std::shared_ptr<BaseEntity>> GameEntities;
 
-extern Mesh * cube;
-extern Mesh * sphere;
+extern std::shared_ptr<Mesh> cube;
+extern std::shared_ptr<Mesh> sphere;
 extern GLuint GridTexture;
 extern GLuint StandardShaderID;
 extern float lightRot;
@@ -44,7 +44,7 @@ extern float lightRot;
 extern int screenX;
 extern int screenY;
 
-extern FreeCamera * mainCamera;
+//extern std::shared_ptr<FreeCamera> mainCamera;
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
 extern char debugBuffer[];
@@ -56,7 +56,7 @@ extern Stats* stats;
 extern Console* console;
 
 bool shiftHeldDown;
-std::vector<InputComponent*> InputList;
+std::vector<std::shared_ptr<InputComponent>> InputList;
 
 CEGUI::MouseButton GlfwToCeguiButton(int glfwButton);
 CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey);
@@ -64,14 +64,14 @@ int charCheck(int glfwKey);
 
 PhysicsComponent* selectedObjectPhys;
 
-extern Scene * scene;
+extern std::shared_ptr<Scene> scene;
 
 extern glm::vec3 groundColor;
 extern glm::vec3 skyColor;
 
 //Input Manager, handles the Input system
 
-void addInput(InputComponent* input)
+void addInput(std::shared_ptr<InputComponent> input)
 {
 	InputList.push_back(input);
 }
@@ -100,26 +100,13 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		//Q Spanws a Physics Sphere
 		if (key == GLFW_KEY_Q && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		{
-			BaseEntity* physicsSphere = new BaseEntity("Physics Sphere");
+			std::shared_ptr<BaseEntity> physicsSphere = std::shared_ptr<BaseEntity>(new BaseEntity("Physics Sphere"));
 			physicsSphere->Transform->setPosition(0, 5, 0);
 
-			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
-			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
+			physicsSphere->addComponent(std::shared_ptr<RenderComponent>(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture)));
+			physicsSphere->addComponent(std::shared_ptr<PhysicsComponent>(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>())));
 			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
-
-
-		}
-		//E Spanws a Physics Cube
-		if (key == GLFW_KEY_E && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		{
-			BaseEntity* physicsSphere = new BaseEntity("Physics Cube");
-			physicsSphere->Transform->setPosition(0, 5, 0);
-
-			physicsSphere->addComponent(new RenderComponent(physicsSphere, cube, StandardShaderID, GridTexture));
-			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, BOX, 1, std::vector<float>()));
-			scene->AddEntity(physicsSphere);
-			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsCube Created"));
 
 
 		}
@@ -182,6 +169,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 	//Global Mouse Button Input
 
 	//Left click press for ray casted selection, if not over a window
+	/*
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && !overCEGUIWindow)
 	{
 		double * mouseX = new double;
@@ -266,6 +254,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			selectedObjectPhys = NULL;
 		}
 	}
+	*/
 
 	//InputComponent Mouse Button Callback
 	for (int i = 0; i < InputList.size(); i++)

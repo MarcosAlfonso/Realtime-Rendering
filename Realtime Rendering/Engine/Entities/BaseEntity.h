@@ -13,16 +13,16 @@ public:
 	~BaseEntity();
 
 	void Update();
-	void addComponent(BaseComponent* comp);
+	void addComponent(std::shared_ptr<BaseComponent> comp);
 	void Init();
 
-	TransformComponent* Transform;
+	std::shared_ptr<TransformComponent> Transform;
 
 	std::string Name;
 	int ID;
-	std::vector<BaseComponent*> components;
+	std::vector<std::shared_ptr<BaseComponent>> components;
 
-	void * getComponent(ComponentTypeEnum _componentType);
+	std::shared_ptr<BaseComponent> getComponent(ComponentTypeEnum _componentType);
 
 private:
 };

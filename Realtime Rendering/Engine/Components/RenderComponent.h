@@ -14,7 +14,7 @@ class RenderComponent: public BaseComponent
 {
 
 public:
-	RenderComponent(BaseEntity* paren, Mesh * _mesh, GLuint _shader, GLuint _texture);
+	RenderComponent(std::shared_ptr<BaseEntity> parent, std::shared_ptr<Mesh> _mesh, GLuint _shader, GLuint _texture);
 	~RenderComponent();
 
 	void Update();
@@ -25,7 +25,7 @@ public:
 
 
 private:
-	Mesh * mesh;
+	std::shared_ptr<Mesh> mesh;
 	GLuint shader_ID;
 	GLuint texture_ID;
 	float lightRotation = 0;

@@ -1,13 +1,12 @@
 //Include external project files
 #include "Engine/GUI/Stats.h"
+#include "Engine/AssetManager.h"
 #include "Engine/SceneManager.h"
 #include "Engine/PhysicsManager.h"
 #include "Engine/GUIManager.h"
 #include "Engine/InputManager.h"
 #include "Engine/Graphics/GridMesh.h"
 #include "Engine/Graphics/Mesh.h"
-#include "Engine/Util/loadShader.h"
-#include "Engine/Util/textureLoad.h"
 #include "Engine/Entities/BaseEntity.h"
 #include "Engine/Components/RenderComponent.h"
 #include "Engine/Components/PhysicsComponent.h"
@@ -36,16 +35,15 @@ GLFWwindow* window;
 #include <CEGUI/CEGUI.h>
 #include "Engine/Graphics/bulletDebugDraw.h"
 
+#include <vld.h>
+
 #pragma region Declarations
 void SetupConfiguration();
 void LoadAssets();
 void Render();
 void CleanupMemory();
 void CalculateFrameTime();
-void InitializeBullet();
-void InitializeCEGUI();
-void BulletStep();
-void CleanupBullet();
+
 
 //Debug String
 char debugBuffer[512] = "";
@@ -57,28 +55,6 @@ double curTime;
 float DeltaTime;
 float printDeltaTime;
 
-
-// Create and compile our GLSL program from the shaders
-GLuint StandardShaderID;
-GLuint FullbrightShaderID;
-GLuint DebugLineShaderID;
-GLuint GradientShaderID;
-
-// Load the texture
-GLuint GridTexture;
-GLuint CloudTexture;
-GLuint skySphereTexture;
-GLuint GrassTexture;
-
-//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
-//Suzanne
-Mesh * suzanne;
-Mesh * sphere;
-Mesh * cube;
-
-//Grid Mesh
-GridMesh * grid;
-
 //Window
 int screenX = 1920;
 int screenY = 1080;
@@ -89,7 +65,7 @@ extern btDiscreteDynamicsWorld* dynamicsWorld;
 
 extern PhysicsComponent* selectedObjectPhys;
 
-Scene * scene;
+std::shared_ptr<Scene> scene;
 
 extern Stats * stats;
 
@@ -175,32 +151,9 @@ void SetupConfiguration()
 
 void LoadAssets()
 {
-	// Create and compile our GLSL program from the shaders
-	StandardShaderID = CreateShaderProgram("Engine/Shaders/standard.vert", "Engine/Shaders/standard.frag", NULL);
-	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", "Engine/Shaders/fullbright.frag", NULL);
-	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL);
-	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", "Engine/Shaders/gradient.frag", NULL);
-
-	// Load the texture
-	GridTexture = loadDDS("Assets/GridTexture.dds");
-	CloudTexture = loadDDS("Assets/CloudTexture.dds");
-	skySphereTexture = loadDDS("Assets/skySphere.dds");
-	GrassTexture = loadDDS("Assets/grass.dds");
-
-	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
-	//Suzanne
-	suzanne = new Mesh();
-	suzanne->loadFromFile("Assets/suzanne.model");
-	//Sphere
-	sphere = new Mesh();
-	sphere->loadFromFile("Assets/sphere.model");
-	//Sphere
-	cube = new Mesh();
-	cube->loadFromFile("Assets/cube.model");
-	//Terrain
-	grid = new GridMesh(30, 30, 2, 2);
+	InitializeAssets();
 		
-	scene = new Scene();
+	scene = std::shared_ptr<Scene>(new Scene());
 	LoadScene(scene);
 }
 
@@ -226,7 +179,7 @@ void Render()
 
 	//Renders selected object with phys wireframe (uses old school render...)
 	if (selectedObjectPhys != NULL)
-		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape, btVector3(0, 0, 0));
+		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape.get(), btVector3(0, 0, 0));
 	
 	//Because CEGUI demands it
 	glDisable(GL_BLEND);
@@ -239,28 +192,10 @@ void Render()
 
 void CleanupMemory()
 {
-	//Cleanup Shaders
-	glDeleteProgram(StandardShaderID);
-	glDeleteProgram(FullbrightShaderID);
 
-	//Delete Textures
-	glDeleteTextures(1, &GridTexture);
-	glDeleteTextures(1, &FullbrightShaderID);
-	glDeleteTextures(1, &CloudTexture);
-	glDeleteTextures(1, &GrassTexture);
-
-	//Delete Loaded Meshes
-	delete(suzanne);
-	delete(sphere);
-	delete(grid);
-
-	//Delete Entities
-	for (int i = 0; i < scene->GameEntities.size(); i++)
-	{
-		delete(scene->GameEntities[i]);
-	}
-
+	CleanupAssets();
 	CleanupPhysics();
+	CleanupGUI();
 }
 
 void CalculateFrameTime()

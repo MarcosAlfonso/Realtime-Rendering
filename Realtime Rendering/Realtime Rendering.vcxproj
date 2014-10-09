@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\AssetManager.cpp" />
     <ClCompile Include="Engine\GUI\Console.cpp" />
     <ClCompile Include="Engine\GUIManager.cpp" />
     <ClCompile Include="Engine\InputManager.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="Engine\GUI\GUIBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\AssetManager.h" />
     <ClInclude Include="Engine\GUI\Console.h" />
     <ClInclude Include="Engine\GUIManager.h" />
     <ClInclude Include="Engine\Scene.h" />

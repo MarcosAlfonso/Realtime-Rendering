@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 
 //Forward Declarations
 class BaseEntity;
@@ -13,7 +14,8 @@ class BaseComponent
 {
 public:
 
-	BaseEntity* parentEntity;
+
+	std::shared_ptr<BaseEntity> parentEntity;
 	std::string Name;
 
 	ComponentTypeEnum componentType;

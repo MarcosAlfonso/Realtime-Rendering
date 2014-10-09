@@ -17,7 +17,7 @@
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
 //Physics Component, added to any entity that needs physical interaction (and selection at the moment)
-PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, int _mass, std::vector<float> heights )
+PhysicsComponent::PhysicsComponent(std::shared_ptr<BaseEntity> parent, CollisionShapeEnum type, int _mass, std::vector<float> heights )
 {
 	Name = "Physics Component";
 
@@ -30,12 +30,12 @@ PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, 
 	if (type == BOX)
 	{
 		mass = _mass;
-		collisionShape = new btBoxShape(Helper::toBullet(parentEntity->Transform->scaleVec));
+		collisionShape = std::shared_ptr<btBoxShape>(new btBoxShape(Helper::toBullet(parentEntity->Transform->scaleVec)));
 	}
 	else if (type == SPHERE)
 	{
 		mass = _mass;
-		collisionShape = new btSphereShape(parentEntity->Transform->scaleVec.x);
+		collisionShape = std::shared_ptr<btSphereShape>(new btSphereShape(parentEntity->Transform->scaleVec.x));
 		collisionShape->setLocalScaling(Helper::toBullet(parentEntity->Transform->scaleVec));
 	}
 	else if (type == TERRAIN)
@@ -44,7 +44,7 @@ PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, 
 		
 		heightFieldArray = heights;
 		
-		collisionShape = new btHeightfieldTerrainShape(30, 30, &heightFieldArray[0], 1, -100, 100, 1, PHY_FLOAT, false);
+		collisionShape = std::shared_ptr<btHeightfieldTerrainShape>(new btHeightfieldTerrainShape(30, 30, &heightFieldArray[0], 1, -100, 100, 1, PHY_FLOAT, false));
 
 		//Why is the scaling of this non-uniform?
 		collisionShape->setLocalScaling(btVector3(2,1,2));
@@ -54,32 +54,27 @@ PhysicsComponent::PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, 
 	
 
 	//Motion state sets up initial position and rotation of physics, which is set to Transform
-	motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), Helper::toBullet(parentEntity->Transform->transVec)));
+	motionState = std::shared_ptr<btDefaultMotionState>(new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), Helper::toBullet(parentEntity->Transform->transVec))));
 
 	//Mass calculations
 	btVector3 fallInertia(0, 0, 0);
 	collisionShape->calculateLocalInertia(mass, fallInertia);
 	
 	//Rigid body creation
-	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, collisionShape, fallInertia);
-	rigidBody = new btRigidBody(rigidBodyCI);
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState.get(), collisionShape.get(), fallInertia);
+	rigidBody = std::shared_ptr<btRigidBody>(new btRigidBody(rigidBodyCI));
 	rigidBody->setMassProps(mass, fallInertia);
 
 	//UserPointer to itself, to make object selection work
 	rigidBody->setUserPointer((void*)this);
 
-	dynamicsWorld->addRigidBody(rigidBody);
+	dynamicsWorld->addRigidBody(rigidBody.get());
 
 }
 
 PhysicsComponent::~PhysicsComponent()
 {
-	delete(collisionShape);
-	delete(motionState);
-
-	dynamicsWorld->removeRigidBody(rigidBody);
-	delete(rigidBody);
-	delete(this);
+	dynamicsWorld->removeRigidBody(rigidBody.get());
 }
 
 void PhysicsComponent::Update()

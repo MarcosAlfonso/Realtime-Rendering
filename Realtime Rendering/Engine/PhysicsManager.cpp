@@ -53,5 +53,5 @@ void CleanupPhysics()
 	delete(solver);
 	
 	//This is commented because it now causes a crash, but it needs to happen im thinking
-	//delete(dynamicsWorld);
+	delete(dynamicsWorld);
 }

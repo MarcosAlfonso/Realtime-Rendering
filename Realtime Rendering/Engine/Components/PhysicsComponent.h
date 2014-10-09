@@ -17,20 +17,20 @@ enum CollisionShapeEnum{ BOX, SPHERE, TERRAIN };
 class PhysicsComponent : public BaseComponent
 {
 public:
-	PhysicsComponent(BaseEntity* parent, CollisionShapeEnum type, int _mass, std::vector<float> heights);
+	PhysicsComponent(std::shared_ptr<BaseEntity> parent, CollisionShapeEnum type, int _mass, std::vector<float> heights);
 	~PhysicsComponent();
 
 	void Update();
 	void TransformUpdate();
 	void SetPosition(glm::vec3 trans);
 
-	btCollisionShape* collisionShape;
-	btRigidBody* rigidBody;
+	std::shared_ptr<btCollisionShape> collisionShape;
+	std::shared_ptr<btRigidBody> rigidBody;
 
 
 private:
 	int mass;
 	std::vector<float> heightFieldArray;
-	btDefaultMotionState* motionState;
+	std::shared_ptr<btDefaultMotionState> motionState;
 
 };

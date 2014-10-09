@@ -3,7 +3,7 @@
 
 #include "../Entities/FreeCamera.h"
 
-extern FreeCamera * mainCamera;
+//extern std::shared_ptr<FreeCamera> mainCamera;
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -33,14 +33,14 @@ void bulletDebugDraw::drawLine(const btVector3& from, const btVector3& to, const
 
 	glUseProgram(0);
 
-	glm::mat4 ProjectionMatrix = mainCamera->Camera->ProjectionMatrix;
-	glm::mat4 ViewMatrix = mainCamera->Camera->ViewMatrix;
+	//glm::mat4 ProjectionMatrix = mainCamera->Camera->ProjectionMatrix;
+	//glm::mat4 ViewMatrix = mainCamera->Camera->ViewMatrix;
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf((const GLfloat*)&ProjectionMatrix[0]);
+	//glLoadMatrixf((const GLfloat*)&ProjectionMatrix[0]);
 	glMatrixMode(GL_MODELVIEW);
-	glm::mat4 MV = ViewMatrix;
-	glLoadMatrixf((const GLfloat*)&MV[0]);
+	//glm::mat4 MV = ViewMatrix;
+	//glLoadMatrixf((const GLfloat*)&MV[0]);
 
 	glColor3f(1, 1, 1);
 	glBegin(GL_LINES);

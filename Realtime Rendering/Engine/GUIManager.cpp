@@ -71,3 +71,12 @@ void RenderGUI()
 	CEGUI::System::getSingleton().injectTimePulse(DeltaTime);
 	CEGUI::System::getSingleton().renderAllGUIContexts();
 }
+
+void CleanupGUI()
+{
+	delete(hierarchy);
+	delete(console);
+	delete(inspector);
+	delete(stats);
+
+}

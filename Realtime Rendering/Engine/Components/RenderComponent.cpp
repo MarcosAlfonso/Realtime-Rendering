@@ -19,14 +19,14 @@
 #include <cstring>
 
 extern int vertexCount;
-extern FreeCamera * mainCamera;
+extern std::shared_ptr<BaseEntity> mainCamera;
 
 glm::vec3 groundColor = glm::vec3(.95, .9, .8);
 glm::vec3 skyColor = glm::vec3(.34, .6, .75);
 
 
 //Render Component, attached to a Entity needing Mesh rendering
-RenderComponent::RenderComponent(BaseEntity* parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
+RenderComponent::RenderComponent(std::shared_ptr<BaseEntity> parent, std::shared_ptr<Mesh> _mesh, GLuint _shader, GLuint _texture)
 {
 	Name = "Render Component";
 	parentEntity = parent;
@@ -40,7 +40,7 @@ RenderComponent::RenderComponent(BaseEntity* parent, Mesh * _mesh, GLuint _shade
 
 RenderComponent::~RenderComponent()
 {
-	delete(this);
+
 }
 
 
@@ -65,9 +65,12 @@ void RenderComponent::Update()
 	GLuint ViewMatrixID = glGetUniformLocation(shader_ID, "V");
 	GLuint ModelMatrixID = glGetUniformLocation(shader_ID, "M");
 
+	
+	std::shared_ptr<CameraComponent> cam = std::static_pointer_cast<CameraComponent>(mainCamera->getComponent(CAMERA));
+
 	// Compute the MVP matrix
-	glm::mat4 ProjectionMatrix = mainCamera->Camera->ProjectionMatrix;
-	glm::mat4 ViewMatrix = mainCamera->Camera->ViewMatrix;
+	glm::mat4 ProjectionMatrix = cam->ProjectionMatrix;
+	glm::mat4 ViewMatrix = cam->ViewMatrix;
 	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * parentEntity->Transform->ModelMatrix;
 
 	// Get a handle for our "myTextureSampler" uniform
