@@ -6,7 +6,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 //Transform Component, required component for all entities
-TransformComponent::TransformComponent(std::shared_ptr<BaseEntity> parent)
+TransformComponent::TransformComponent(BaseEntity * parent)
 {
 	Name = "Transform Component";
 	parentEntity = parent;
@@ -21,7 +21,6 @@ TransformComponent::TransformComponent(std::shared_ptr<BaseEntity> parent)
 
 TransformComponent::~TransformComponent()
 {
-
 }
 
 void TransformComponent::Update()

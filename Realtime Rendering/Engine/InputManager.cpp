@@ -10,7 +10,6 @@
 #include "Components/RenderComponent.h"
 #include "Components/PhysicsComponent.h"
 #include "Components/CameraComponent.h"
-#include "Entities/FreeCamera.h"
 
 #define GLEW_STATIC
 #include <gl/glew.h>
@@ -31,12 +30,13 @@ extern GLFWwindow* window;
 #include <stdlib.h>
 #include <iostream>
 #include <CEGUI/CEGUI.h>
+#include "Scene.h"
 
 
-extern std::vector<std::shared_ptr<BaseEntity>> GameEntities;
+extern std::vector<BaseEntity> GameEntities;
 
-extern std::shared_ptr<Mesh> cube;
-extern std::shared_ptr<Mesh> sphere;
+extern Mesh * cube;
+extern Mesh * sphere;
 extern GLuint GridTexture;
 extern GLuint StandardShaderID;
 extern float lightRot;
@@ -44,7 +44,7 @@ extern float lightRot;
 extern int screenX;
 extern int screenY;
 
-//extern std::shared_ptr<FreeCamera> mainCamera;
+
 extern btDiscreteDynamicsWorld* dynamicsWorld;
 
 extern char debugBuffer[];
@@ -56,22 +56,24 @@ extern Stats* stats;
 extern Console* console;
 
 bool shiftHeldDown;
-std::vector<std::shared_ptr<InputComponent>> InputList;
+std::vector<InputComponent*> InputList;
 
 CEGUI::MouseButton GlfwToCeguiButton(int glfwButton);
 CEGUI::Key::Scan GlfwToCeguiKey(int glfwKey);
 int charCheck(int glfwKey);
 
-PhysicsComponent* selectedObjectPhys;
+PhysicsComponent * selectedObjectPhys;
 
-extern std::shared_ptr<Scene> scene;
+extern BaseEntity * mainCamera;
+
+extern Scene * scene;
 
 extern glm::vec3 groundColor;
 extern glm::vec3 skyColor;
 
 //Input Manager, handles the Input system
 
-void addInput(std::shared_ptr<InputComponent> input)
+void addInput(InputComponent * input)
 {
 	InputList.push_back(input);
 }
@@ -96,19 +98,29 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 			console->logString("Welcome to Gzar'Bxu!");
 
 		}
+
+		if (key == GLFW_KEY_DELETE && action == GLFW_PRESS && selectedObjectPhys != nullptr)
+		{
+			for (int i = 0; i < scene->GameEntities.size(); i++)
+			{
+				if (selectedObjectPhys == scene->GameEntities[i]->getElementOfType<PhysicsComponent>())
+				{
+					selectedObjectPhys = nullptr;
+					scene->GameEntities.erase(scene->GameEntities.begin() + i);
+				}
+			}
+		}
 			
 		//Q Spanws a Physics Sphere
-		if (key == GLFW_KEY_Q && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		if (key == GLFW_KEY_Q && action == GLFW_PRESS)
 		{
-			std::shared_ptr<BaseEntity> physicsSphere = std::shared_ptr<BaseEntity>(new BaseEntity("Physics Sphere"));
+			BaseEntity * physicsSphere = new BaseEntity("Physics Sphere");
 			physicsSphere->Transform->setPosition(0, 5, 0);
 
-			physicsSphere->addComponent(std::shared_ptr<RenderComponent>(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture)));
-			physicsSphere->addComponent(std::shared_ptr<PhysicsComponent>(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>())));
+			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
+			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
 			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
-
-
 		}
 
 		//G hides or show GUI
@@ -169,7 +181,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 	//Global Mouse Button Input
 
 	//Left click press for ray casted selection, if not over a window
-	/*
+	
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && !overCEGUIWindow)
 	{
 		double * mouseX = new double;
@@ -184,8 +196,8 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 		ScreenPosToWorldRay(
 			(int)*mouseX, (int)*mouseY,             // Mouse position, in pixels, from bottom-left corner of the window
 			screenX, screenY,  // Window size, in pixels
-			mainCamera->Camera->ViewMatrix,               // Camera position and orientation
-			mainCamera->Camera->ProjectionMatrix,         // Camera parameters (ratio, field of view, near and far planes)
+			mainCamera->getElementOfType<CameraComponent>()->ViewMatrix,               // Camera position and orientation
+			mainCamera->getElementOfType<CameraComponent>()->ProjectionMatrix,         // Camera parameters (ratio, field of view, near and far planes)
 			out_origin,              // Ouput : Origin of the ray. /!\ Starts at the near plane, so if you want the ray to start at the camera's position instead, ignore this.
 			out_direction            // Ouput : Direction, in world space, of the ray that goes "through" the mouse.
 			);
@@ -254,7 +266,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			selectedObjectPhys = NULL;
 		}
 	}
-	*/
+	
 
 	//InputComponent Mouse Button Callback
 	for (int i = 0; i < InputList.size(); i++)

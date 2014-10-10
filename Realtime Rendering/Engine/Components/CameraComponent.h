@@ -7,7 +7,7 @@
 class CameraComponent : public BaseComponent
 {
 public:
-	CameraComponent(std::shared_ptr<BaseEntity> parent);
+	CameraComponent(BaseEntity * parent);
 	~CameraComponent();
 
 	void Update();

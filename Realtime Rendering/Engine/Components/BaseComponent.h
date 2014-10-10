@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <memory>
+
 
 //Forward Declarations
 class BaseEntity;
@@ -13,9 +13,8 @@ enum ComponentTypeEnum{ CAMERA, INPUT, PHYSICS, RENDER, TRANSFORM};
 class BaseComponent
 {
 public:
-
-
-	std::shared_ptr<BaseEntity> parentEntity;
+	
+	BaseEntity* parentEntity;
 	std::string Name;
 
 	ComponentTypeEnum componentType;

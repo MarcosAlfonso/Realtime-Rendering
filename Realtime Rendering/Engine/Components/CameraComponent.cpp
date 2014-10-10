@@ -6,12 +6,11 @@
 #include <glm/gtc/quaternion.hpp>
 
 //Camera Component, consisting of View and Projection Matrix
-CameraComponent::CameraComponent(std::shared_ptr<BaseEntity> parent)
+CameraComponent::CameraComponent(BaseEntity * parent)
 {
 	Name = "Camera Component";
 	parentEntity = parent;
 	componentType = CAMERA;
-
 }
 
 CameraComponent::~CameraComponent()

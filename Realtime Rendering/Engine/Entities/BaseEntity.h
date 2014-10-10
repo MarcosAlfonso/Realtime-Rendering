@@ -6,23 +6,47 @@
 #include <vector>
 
 //Base Entity, basis for all Entities
-class BaseEntity
-{
+class BaseEntity {
 public:
 	BaseEntity(std::string name);
 	~BaseEntity();
 
 	void Update();
-	void addComponent(std::shared_ptr<BaseComponent> comp);
+	void addComponent(BaseComponent* comp);
 	void Init();
 
-	std::shared_ptr<TransformComponent> Transform;
+	TransformComponent * Transform;
 
 	std::string Name;
 	int ID;
-	std::vector<std::shared_ptr<BaseComponent>> components;
+	std::vector<BaseComponent*> components;
 
-	std::shared_ptr<BaseComponent> getComponent(ComponentTypeEnum _componentType);
+	BaseComponent * getComponent(ComponentTypeEnum _componentType);	
+
+	template <typename Derived>
+	Derived* getElementOfType()
+	{
+		for (auto* component : components) {
+			auto* p = dynamic_cast<Derived*>(component);
+			if (p != nullptr) {
+				return p;
+			}
+		}
+		return nullptr;
+	}
+
+	template <typename Derived>
+	Derived* getElementAtIndex()
+	{
+		for (auto* component : components) {
+			auto* p = dynamic_cast<Derived*>(component);
+			if (p != nullptr) {
+				return p;
+			}
+		}
+		return nullptr;
+	}
 
 private:
 };
+

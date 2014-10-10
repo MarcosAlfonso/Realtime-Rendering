@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 
 //Input Manager, handles the Input system
-void addInput(std::shared_ptr<InputComponent> input);
+void addInput(InputComponent * input);
 void UpdateInput();
 
 glm::mat4 getViewMatrix();

@@ -4,16 +4,21 @@
 BaseEntity::BaseEntity(std::string name)
 {
 	Name = name;
-	Transform = std::shared_ptr<TransformComponent>(new TransformComponent(std::shared_ptr<BaseEntity>(this)));
+	Transform = new TransformComponent(this);
 }
 
 BaseEntity::~BaseEntity()
 {
+	delete(Transform);
 
+	for (int i = components.size()-1; i >= 0; i--)
+	{
+		delete(components[i]);
+	}
 }
 
 //Add component to this entity
-void BaseEntity::addComponent(std::shared_ptr<BaseComponent> comp)
+void BaseEntity::addComponent(BaseComponent* comp)
 {
 	components.push_back(comp);
 }
@@ -29,16 +34,4 @@ void BaseEntity::Update()
 	}
 }
 
-std::shared_ptr<BaseComponent> BaseEntity::getComponent(ComponentTypeEnum _componentType)
-{
 
-	for (int i = 0; i < components.size(); i++)
-	{
-		if (components[i]->componentType == _componentType)
-		{
-			return components[i];
-		}
-	}
-
-	return NULL;
-}

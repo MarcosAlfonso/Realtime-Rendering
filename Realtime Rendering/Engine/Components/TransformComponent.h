@@ -7,7 +7,7 @@
 class TransformComponent : public BaseComponent
 {
 public:
-	TransformComponent(std::shared_ptr<BaseEntity> parent);
+	TransformComponent(BaseEntity * parent);
 	~TransformComponent();
 
 	void Update();

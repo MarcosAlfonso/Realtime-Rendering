@@ -4,7 +4,9 @@
 #include "../Graphics/mesh.h"
 #include "../InputManager.h"
 #include "TransformComponent.h"
-#include "../Entities/FreeCamera.h"
+#include "../Entities/BaseEntity.h"
+#include "CameraComponent.h"
+
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -19,14 +21,13 @@
 #include <cstring>
 
 extern int vertexCount;
-extern std::shared_ptr<BaseEntity> mainCamera;
+extern BaseEntity* mainCamera;
 
 glm::vec3 groundColor = glm::vec3(.95, .9, .8);
 glm::vec3 skyColor = glm::vec3(.34, .6, .75);
 
-
 //Render Component, attached to a Entity needing Mesh rendering
-RenderComponent::RenderComponent(std::shared_ptr<BaseEntity> parent, std::shared_ptr<Mesh> _mesh, GLuint _shader, GLuint _texture)
+RenderComponent::RenderComponent(BaseEntity * parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
 {
 	Name = "Render Component";
 	parentEntity = parent;
@@ -64,9 +65,8 @@ void RenderComponent::Update()
 	GLuint MatrixID = glGetUniformLocation(shader_ID, "MVP");
 	GLuint ViewMatrixID = glGetUniformLocation(shader_ID, "V");
 	GLuint ModelMatrixID = glGetUniformLocation(shader_ID, "M");
-
-	
-	std::shared_ptr<CameraComponent> cam = std::static_pointer_cast<CameraComponent>(mainCamera->getComponent(CAMERA));
+		
+	CameraComponent * cam = mainCamera->getElementOfType<CameraComponent>();
 
 	// Compute the MVP matrix
 	glm::mat4 ProjectionMatrix = cam->ProjectionMatrix;

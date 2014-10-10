@@ -3,7 +3,7 @@
 
 
 #include <vector>
-#include <memory>
+
 
 class BaseEntity;
 
@@ -13,7 +13,7 @@ public:
 	Scene();
 	~Scene();
 
-	std::vector<std::shared_ptr<BaseEntity>> GameEntities;
-	void AddEntity(std::shared_ptr<BaseEntity> ent);
+	std::vector<BaseEntity*> GameEntities;
+	void AddEntity(BaseEntity * ent);
 };
 

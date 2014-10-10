@@ -123,7 +123,7 @@
     <ClInclude Include="Engine\Components\TransformComponent.h" />
     <ClInclude Include="Engine\Components\RenderComponent.h" />
     <ClInclude Include="Engine\Entities\BaseEntity.h" />
-    <ClInclude Include="Engine\Entities\FreeCamera.h" />
+    <ClInclude Include="Engine\Entities\FreeCameraInput.h" />
     <ClInclude Include="Engine\Graphics\bulletDebugDraw.h" />
     <ClInclude Include="Engine\Graphics\GridMesh.h" />
     <ClInclude Include="Engine\Graphics\mesh.h" />

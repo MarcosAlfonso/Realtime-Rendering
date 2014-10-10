@@ -11,7 +11,6 @@
 #include "Engine/Components/RenderComponent.h"
 #include "Engine/Components/PhysicsComponent.h"
 #include "Engine/Components/CameraComponent.h"
-#include "Engine/Entities/FreeCamera.h"
 
 // Include GLEW
 #define GLEW_STATIC
@@ -35,7 +34,7 @@ GLFWwindow* window;
 #include <CEGUI/CEGUI.h>
 #include "Engine/Graphics/bulletDebugDraw.h"
 
-#include <vld.h>
+//#include <vld.h>
 
 #pragma region Declarations
 void SetupConfiguration();
@@ -60,12 +59,12 @@ int screenX = 1920;
 int screenY = 1080;
 extern bool doRenderGui;
 
-extern bulletDebugDraw* drawer;
-extern btDiscreteDynamicsWorld* dynamicsWorld;
+extern bulletDebugDraw * drawer;
+extern btDiscreteDynamicsWorld * dynamicsWorld;
 
-extern PhysicsComponent* selectedObjectPhys;
+extern PhysicsComponent * selectedObjectPhys;
 
-std::shared_ptr<Scene> scene;
+Scene * scene;
 
 extern Stats * stats;
 
@@ -153,7 +152,7 @@ void LoadAssets()
 {
 	InitializeAssets();
 		
-	scene = std::shared_ptr<Scene>(new Scene());
+	scene =  new Scene();
 	LoadScene(scene);
 }
 
@@ -163,14 +162,14 @@ void Render()
 
 	vertexCount = 0;
 
+	UpdateScene();
+	
 	//Debug printing
 	sprintf(debugBuffer, "Delta Time: %fms\n", DeltaTime*1000);
 	stats->Label->appendText(debugBuffer);
 
 	sprintf(debugBuffer, "Vertex Count: %d\n", vertexCount);
 	stats->Label->appendText(debugBuffer);
-
-	UpdateScene();
 
 	if (doRenderGui)
 	{
@@ -179,7 +178,7 @@ void Render()
 
 	//Renders selected object with phys wireframe (uses old school render...)
 	if (selectedObjectPhys != NULL)
-		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape.get(), btVector3(0, 0, 0));
+		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape, btVector3(0, 0, 0));
 	
 	//Because CEGUI demands it
 	glDisable(GL_BLEND);
@@ -192,8 +191,8 @@ void Render()
 
 void CleanupMemory()
 {
-
 	CleanupAssets();
+	CleanupScene();
 	CleanupPhysics();
 	CleanupGUI();
 }

@@ -29,7 +29,6 @@ Mesh::~Mesh()
 	glDeleteBuffers(1, &uvsID);
 	glDeleteBuffers(1, &normalsID);
 	glDeleteBuffers(1, &indicesID);
-
 	glDeleteVertexArrays(1, &vaoID);
 }
 

@@ -1,12 +1,12 @@
 #pragma once
 #include "bulletDebugDraw.h"
 
-#include "../Entities/FreeCamera.h"
-
-//extern std::shared_ptr<FreeCamera> mainCamera;
-
 #define GLEW_STATIC
 #include <GL/glew.h>
+#include "../Entities/BaseEntity.h"
+#include "../Components/CameraComponent.h"
+
+extern BaseEntity * mainCamera;
 
 //Kind of a wierd one, we have to implement the btIDebugDraw interface to do debug drawing of Bullet Physics
 
@@ -33,14 +33,14 @@ void bulletDebugDraw::drawLine(const btVector3& from, const btVector3& to, const
 
 	glUseProgram(0);
 
-	//glm::mat4 ProjectionMatrix = mainCamera->Camera->ProjectionMatrix;
-	//glm::mat4 ViewMatrix = mainCamera->Camera->ViewMatrix;
+	glm::mat4 ProjectionMatrix = mainCamera->getElementOfType<CameraComponent>()->ProjectionMatrix;
+	glm::mat4 ViewMatrix = mainCamera->getElementOfType<CameraComponent>()->ViewMatrix;
 
 	glMatrixMode(GL_PROJECTION);
-	//glLoadMatrixf((const GLfloat*)&ProjectionMatrix[0]);
+	glLoadMatrixf((const GLfloat*)&ProjectionMatrix[0]);
 	glMatrixMode(GL_MODELVIEW);
-	//glm::mat4 MV = ViewMatrix;
-	//glLoadMatrixf((const GLfloat*)&MV[0]);
+	glm::mat4 MV = ViewMatrix;
+	glLoadMatrixf((const GLfloat*)&MV[0]);
 
 	glColor3f(1, 1, 1);
 	glBegin(GL_LINES);

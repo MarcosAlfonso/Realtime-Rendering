@@ -1,5 +1,5 @@
 #include "AssetManager.h"
-#include <memory>
+
 
 // Create and compile our GLSL program from the shaders
 GLuint StandardShaderID;
@@ -15,12 +15,12 @@ GLuint GrassTexture;
 
 //Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 //Suzanne
-std::shared_ptr<Mesh> suzanne;
-std::shared_ptr<Mesh> sphere;
-std::shared_ptr<Mesh> cube;
+Mesh * suzanne;
+Mesh * sphere;
+Mesh * cube;
 
 //Grid Mesh
-std::shared_ptr<GridMesh> grid;
+GridMesh * grid;
 
 void InitializeAssets()
 {
@@ -38,16 +38,16 @@ void InitializeAssets()
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Suzanne
-	suzanne = std::shared_ptr<Mesh>(new Mesh());
+	suzanne = new Mesh();
 	suzanne->loadFromFile("Assets/suzanne.model");
 	//Sphere
-	sphere = suzanne = std::shared_ptr<Mesh>(new Mesh());
+	sphere = new Mesh();
 	sphere->loadFromFile("Assets/sphere.model");
 	//Sphere
-	cube = suzanne = std::shared_ptr<Mesh>(new Mesh());
+	cube = new Mesh();
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
-	grid = std::shared_ptr<GridMesh>(new GridMesh(30, 30, 2, 2));
+	grid = new GridMesh(30, 30, 2, 2);
 
 }
 
@@ -62,5 +62,10 @@ void CleanupAssets()
 	glDeleteTextures(1, &FullbrightShaderID);
 	glDeleteTextures(1, &CloudTexture);
 	glDeleteTextures(1, &GrassTexture);
+	
+	delete(cube);
+	delete(sphere);
+	delete(suzanne);
+	delete(grid);
 
 }

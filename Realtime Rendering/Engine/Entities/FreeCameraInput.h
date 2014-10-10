@@ -28,17 +28,17 @@ class FreeCameraInput : public InputComponent
 {
 public:
 
-	std::shared_ptr<CameraComponent> Camera;
+	CameraComponent * Camera;
 	bool mouseControlRefresh = false;
 	float moveSpeed = 3; // 3 units / second
 	float mouseSpeed = 0.005f;
 
 	double oldMouseX, oldMouseY;
 
-	FreeCameraInput(std::shared_ptr<BaseEntity> parent, std::shared_ptr<CameraComponent> _camera)
+	FreeCameraInput(BaseEntity * parent)
 	{
 		parentEntity = parent;
-		Camera = _camera;
+		Camera = parentEntity->getElementOfType<CameraComponent>();
 	}
 	
 	~FreeCameraInput()
@@ -135,35 +135,5 @@ public:
 		}
 
 	}
-
-};
-
-//Prefab: Free Camera
-class FreeCamera : public BaseEntity
-{
-public:	
-
-	//std::shared_ptr<CameraComponent> Camera;
-	//std::shared_ptr<InputComponent> Input;
-
-	FreeCamera(std::string name) : BaseEntity(name)
-	{
-		//Camera = std::shared_ptr<CameraComponent>(new CameraComponent(std::shared_ptr<BaseEntity>(this)));
-		//Input = std::shared_ptr<FreeCameraInput>(new FreeCameraInput(std::shared_ptr<BaseEntity>(this), Camera));
-
-		//addInput(Input);
-
-		//addComponent(Camera);
-	}
-
-	~FreeCamera()
-	{
-
-	}
-
-private:
-
-
-
 
 };
