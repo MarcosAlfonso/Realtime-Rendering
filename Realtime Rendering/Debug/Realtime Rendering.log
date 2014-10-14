@@ -1,35 +1,21 @@
-﻿Build started 10/10/2014 4:01:40 AM.
+﻿Build started 10/14/2014 12:59:03 AM.
      1>Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
+         Creating "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Engine\Scene.cpp Engine\SceneManager.cpp main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
      1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\physicscomponent.h(10): warning C4099: 'btDefaultMotionState' : type name first seen using 'struct' now seen using 'class'
                  c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\linearmath\btdefaultmotionstate.h(7) : see declaration of 'btDefaultMotionState'
      1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glfw\glfw3.h(574): warning C4099: 'GLFWwindow' : type name first seen using 'class' now seen using 'struct'
                  c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\inputcomponent.h(4) : see declaration of 'GLFWwindow'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(168): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(181): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(171): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\main.cpp(184): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
-         SceneManager.cpp
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\linearmath\btdefaultmotionstate.h(7): warning C4099: 'btDefaultMotionState' : type name first seen using 'class' now seen using 'struct'
-                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\physicscomponent.h(10) : see declaration of 'btDefaultMotionState'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\scenemanager.cpp(32): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\scenemanager.cpp(37): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
-         Scene.cpp
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\linearmath\btdefaultmotionstate.h(7): warning C4099: 'btDefaultMotionState' : type name first seen using 'class' now seen using 'struct'
-                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\physicscomponent.h(10) : see declaration of 'btDefaultMotionState'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\glfw\glfw3.h(574): warning C4099: 'GLFWwindow' : type name first seen using 'class' now seen using 'struct'
-                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\inputcomponent.h(4) : see declaration of 'GLFWwindow'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\scene.cpp(61): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\scene.cpp(92): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\scene.cpp(102): warning C4018: '<' : signed/unsigned mismatch
-         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" "CEGUIOpenGLRenderer-0_d.lib" "CEGUIBase-0_d.lib" libnoise.lib assimp.lib opengl32.lib glfw3.lib glu32.lib glew32s.lib SOIL.lib BulletDynamics.lib BulletCollision.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\assimp\lib\assimpd.dll" /MACHINE:X86 Debug\AssetManager.obj
+         Debug\framebuffer.obj
          Debug\Console.obj
          Debug\GUIManager.obj
          Debug\InputManager.obj
@@ -60,4 +46,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:07.00
+Time Elapsed 00:00:02.80

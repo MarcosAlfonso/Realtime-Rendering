@@ -1,4 +1,5 @@
 //Include external project files
+#include "Engine/Graphics/framebuffer.h"
 #include "Engine/GUI/Stats.h"
 #include "Engine/AssetManager.h"
 #include "Engine/SceneManager.h"
@@ -64,9 +65,14 @@ extern btDiscreteDynamicsWorld * dynamicsWorld;
 
 extern PhysicsComponent * selectedObjectPhys;
 
+extern GLuint FramebufferShaderID;
+extern GLuint screenUvMapTexture;
+
 Scene * scene;
 
 extern Stats * stats;
+
+Framebuffer * frameBufferTest;
 
 
 #pragma endregion 
@@ -81,11 +87,12 @@ int main(void)
 
 		CalculateFrameTime();
 
-		UpdateInput();
 
 		UpdatePhysics();
 
 		Render();
+
+		UpdateInput();
 
 		glfwPollEvents();
 
@@ -154,14 +161,20 @@ void LoadAssets()
 		
 	scene =  new Scene();
 	LoadScene(scene);
+
+	frameBufferTest = new Framebuffer();
 }
 
 void Render()
 {
+	//Set frameBuffer as render target
+	frameBufferTest->set();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	vertexCount = 0;
 
+	//Render everything (update stuff too)
 	UpdateScene();
 	
 	//Debug printing
@@ -171,11 +184,15 @@ void Render()
 	sprintf(debugBuffer, "Vertex Count: %d\n", vertexCount);
 	stats->Label->appendText(debugBuffer);
 
+	frameBufferTest->RenderToScreen();
+
 	if (doRenderGui)
 	{
+		glClear(GL_DEPTH_BUFFER_BIT);
+
 		RenderGUI();
 	}
-
+	
 	//Renders selected object with phys wireframe (uses old school render...)
 	if (selectedObjectPhys != NULL)
 		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape, btVector3(0, 0, 0));

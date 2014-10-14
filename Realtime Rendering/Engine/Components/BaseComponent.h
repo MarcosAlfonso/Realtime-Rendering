@@ -13,6 +13,8 @@ enum ComponentTypeEnum{ CAMERA, INPUT, PHYSICS, RENDER, TRANSFORM};
 class BaseComponent
 {
 public:
+
+	virtual ~BaseComponent(){};
 	
 	BaseEntity* parentEntity;
 	std::string Name;

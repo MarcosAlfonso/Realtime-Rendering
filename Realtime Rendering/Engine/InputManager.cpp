@@ -71,6 +71,8 @@ extern Scene * scene;
 extern glm::vec3 groundColor;
 extern glm::vec3 skyColor;
 
+extern int ID_Count;
+
 //Input Manager, handles the Input system
 
 void addInput(InputComponent * input)
@@ -106,7 +108,12 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 				if (selectedObjectPhys == scene->GameEntities[i]->getElementOfType<PhysicsComponent>())
 				{
 					selectedObjectPhys = nullptr;
+
+					auto objectToDelete = scene->GameEntities.at(i);
+					hierarchy->Listbox->removeItem(objectToDelete->hierarchyItem);
+
 					scene->GameEntities.erase(scene->GameEntities.begin() + i);
+					delete(objectToDelete);
 				}
 			}
 		}
@@ -119,6 +126,18 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 
 			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
+			scene->AddEntity(physicsSphere);
+			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
+		}
+
+		//E Spanws a Physics Sphere
+		if (key == GLFW_KEY_E && action == GLFW_PRESS)
+		{
+			BaseEntity * physicsSphere = new BaseEntity("Physics Cube");
+			physicsSphere->Transform->setPosition(0, 5, 0);
+
+			physicsSphere->addComponent(new RenderComponent(physicsSphere, cube, StandardShaderID, GridTexture));
+			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, BOX, 1, std::vector<float>()));
 			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
 		}

@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+#include <CEGUI/CEGUI.h>
+
 #include <vector>
 
 //Base Entity, basis for all Entities
@@ -20,6 +22,7 @@ public:
 	std::string Name;
 	int ID;
 	std::vector<BaseComponent*> components;
+	CEGUI::ListboxTextItem * hierarchyItem;
 
 	BaseComponent * getComponent(ComponentTypeEnum _componentType);	
 

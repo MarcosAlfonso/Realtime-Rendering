@@ -49,18 +49,10 @@ int ID_Count = 0;
 
 void Scene::AddEntity(BaseEntity * ent)
 {
-	//Unique ID for all objects in scene (probably needs testing)
-	ent->ID = ID_Count;
-
 	//Add to Entities list
 	GameEntities.push_back(ent);
 
-	//Add an entry to the Hierarchy and set up selection and shiz
-	newItem = new CEGUI::ListboxTextItem(ent->Name, ID_Count);
-	newItem->setUserData(ent);
-	newItem->setSelectionColours(CEGUI::Colour(1, 1, 1, .2));
-	newItem->setSelectionBrushImage("TaharezLook/GenericBrush");
-	hierarchy->Listbox->addItem(newItem);
+	hierarchy->Listbox->addItem(ent->hierarchyItem);
 
 	//Increment Unique ID
 	ID_Count++;
@@ -69,6 +61,11 @@ void Scene::AddEntity(BaseEntity * ent)
 
 
 Scene::Scene()
+{
+	LoadScene();
+}
+
+void Scene::LoadScene()
 {
 	skySphere = new BaseEntity("Sky Sphere");
 	skySphere->addComponent(new RenderComponent(skySphere, sphere, GradientShaderID, skySphereTexture));
@@ -84,7 +81,7 @@ Scene::Scene()
 	terrain->Transform->setRotation(0, glm::half_pi<float>(), 0);
 	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArray));
 	AddEntity(terrain);
-		
+
 	mainCamera = new BaseEntity("Main Camera");
 	mainCamera->addComponent(new CameraComponent(mainCamera));
 	mainCamera->Transform->setPosition(2, 1, 8);
@@ -92,8 +89,6 @@ Scene::Scene()
 	cam->horizontalAngle = 3.14;
 	addInput(new FreeCameraInput(mainCamera));
 	AddEntity(mainCamera);
-
-	
 }
 
 

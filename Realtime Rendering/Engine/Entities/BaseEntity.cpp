@@ -1,10 +1,18 @@
 #include "BaseEntity.h"
 
+extern int ID_Count;
+
 //Base Entity, basis for all Entities
 BaseEntity::BaseEntity(std::string name)
 {
 	Name = name;
 	Transform = new TransformComponent(this);
+
+	//Creates hierarchy entry and set up selection and shiz
+	hierarchyItem = new CEGUI::ListboxTextItem(Name, ID_Count);
+	hierarchyItem->setUserData(this);
+	hierarchyItem->setSelectionColours(CEGUI::Colour(1, 1, 1, .2));
+	hierarchyItem->setSelectionBrushImage("TaharezLook/GenericBrush");
 }
 
 BaseEntity::~BaseEntity()

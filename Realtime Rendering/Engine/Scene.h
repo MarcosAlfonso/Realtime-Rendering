@@ -13,7 +13,9 @@ public:
 	Scene();
 	~Scene();
 
+
 	std::vector<BaseEntity*> GameEntities;
 	void AddEntity(BaseEntity * ent);
+	void LoadScene();
 };
 

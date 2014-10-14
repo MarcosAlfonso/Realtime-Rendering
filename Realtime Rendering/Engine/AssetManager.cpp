@@ -6,12 +6,14 @@ GLuint StandardShaderID;
 GLuint FullbrightShaderID;
 GLuint DebugLineShaderID;
 GLuint GradientShaderID;
+GLuint FramebufferShaderID;
 
 // Load the texture
 GLuint GridTexture;
 GLuint CloudTexture;
 GLuint skySphereTexture;
 GLuint GrassTexture;
+GLuint screenUvMapTexture;
 
 //Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 //Suzanne
@@ -29,12 +31,14 @@ void InitializeAssets()
 	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", "Engine/Shaders/fullbright.frag", NULL);
 	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL);
 	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", "Engine/Shaders/gradient.frag", NULL);
+	FramebufferShaderID = CreateShaderProgram("Engine/Shaders/framebuffer.vert", "Engine/Shaders/framebuffer.frag", NULL);
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");
 	CloudTexture = loadDDS("Assets/CloudTexture.dds");
 	skySphereTexture = loadDDS("Assets/skySphere.dds");
 	GrassTexture = loadDDS("Assets/grass.dds");
+	screenUvMapTexture = loadDDS("Assets/uvmap.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Suzanne
