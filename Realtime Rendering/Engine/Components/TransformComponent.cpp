@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include "PhysicsComponent.h"
+#include "../Entities/BaseEntity.h"
 
 //Transform Component, required component for all entities
 TransformComponent::TransformComponent(BaseEntity * parent)

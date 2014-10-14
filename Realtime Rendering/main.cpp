@@ -13,6 +13,8 @@
 #include "Engine/Components/PhysicsComponent.h"
 #include "Engine/Components/CameraComponent.h"
 
+#include "Libraries/include/pcre.h"
+
 // Include GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -27,6 +29,7 @@ GLFWwindow* window;
 #include <glm/gtc/constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+
 
 // Include standard headers
 #include <vector>
@@ -87,7 +90,6 @@ int main(void)
 
 		CalculateFrameTime();
 
-
 		UpdatePhysics();
 
 		Render();
@@ -95,6 +97,7 @@ int main(void)
 		UpdateInput();
 
 		glfwPollEvents();
+
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
@@ -124,7 +127,6 @@ void SetupConfiguration()
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_DECORATED, GL_FALSE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
-
 
 	// Open a window and create its OpenGL context
 	window = glfwCreateWindow(screenX, screenY, "Realtime Rendering Engine", nullptr, nullptr);
@@ -162,44 +164,36 @@ void LoadAssets()
 	scene =  new Scene();
 	LoadScene(scene);
 
-	frameBufferTest = new Framebuffer();
+	//frameBufferTest = new Framebuffer();
 }
 
 void Render()
 {
-	//Set frameBuffer as render target
-	frameBufferTest->set();
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	vertexCount = 0;
 
-	//Render everything (update stuff too)
 	UpdateScene();
-	
+
 	//Debug printing
-	sprintf(debugBuffer, "Delta Time: %fms\n", DeltaTime*1000);
+	sprintf(debugBuffer, "Delta Time: %fms\n", DeltaTime * 1000);
 	stats->Label->appendText(debugBuffer);
 
 	sprintf(debugBuffer, "Vertex Count: %d\n", vertexCount);
 	stats->Label->appendText(debugBuffer);
-
-	frameBufferTest->RenderToScreen();
-
+	
 	if (doRenderGui)
 	{
-		glClear(GL_DEPTH_BUFFER_BIT);
-
 		RenderGUI();
 	}
-	
+
 	//Renders selected object with phys wireframe (uses old school render...)
 	if (selectedObjectPhys != NULL)
 		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape, btVector3(0, 0, 0));
-	
+
 	//Because CEGUI demands it
 	glDisable(GL_BLEND);
-	
+
 	glfwSwapBuffers(window);
 
 	//Clears stats label for next frame

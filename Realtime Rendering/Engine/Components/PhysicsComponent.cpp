@@ -51,8 +51,6 @@ PhysicsComponent::PhysicsComponent(BaseEntity * parent, CollisionShapeEnum type,
 
 	}
 
-	
-
 	//Motion state sets up initial position and rotation of physics, which is set to Transform
 	motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), Helper::toBullet(parentEntity->Transform->transVec)));
 
@@ -99,4 +97,6 @@ void PhysicsComponent::SetPosition(glm::vec3 trans)
 	btTransform transform = rigidBody->getCenterOfMassTransform();
 	transform.setOrigin(Helper::toBullet(trans));
 	rigidBody->setCenterOfMassTransform(transform);
+
+	parentEntity->Transform->setPosition(transform.getOrigin().getX(), transform.getOrigin().getY(), transform.getOrigin().getZ());
 }

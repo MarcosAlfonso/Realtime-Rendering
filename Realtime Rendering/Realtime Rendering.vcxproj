@@ -63,7 +63,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;libnoise.lib;assimp.lib;opengl32.lib;glfw3.lib;glu32.lib;glew32s.lib;SOIL.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;pcre.lib;libnoise.lib;assimp.lib;opengl32.lib;glfw3.lib;glu32.lib;glew32s.lib;SOIL.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>C:\OpenGL\assimp\lib\assimpd.dll</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -107,6 +107,7 @@
     <ClCompile Include="Engine\Util\textureLoad.cpp" />
     <ClCompile Include="Engine\GUI\Hierarchy.cpp" />
     <ClCompile Include="Engine\GUI\Inspector.cpp" />
+    <ClCompile Include="Engine\Components\LightComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\GUI\Stats.cpp" />
@@ -138,6 +139,8 @@
     <ClInclude Include="Engine\GUI\Inspector.h" />
     <ClInclude Include="Engine\GUI\Stats.h" />
     <ClInclude Include="Engine\GUI\GUIBase.h" />
+    <ClInclude Include="Engine\Components\LightComponent.h" />
+    <ClInclude Include="Libraries\include\pcre.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\OpenGLTutorials\OpenGL-tutorial_v0014_33\tutorial14_render_to_texture\Passthrough.vertexshader" />
