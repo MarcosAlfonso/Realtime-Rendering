@@ -77,6 +77,9 @@ extern Stats * stats;
 
 Framebuffer * frameBufferTest;
 
+extern GLuint TessTerrainShaderID;
+
+
 
 #pragma endregion 
 
@@ -122,11 +125,12 @@ void SetupConfiguration()
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 1);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_DECORATED, GL_FALSE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+
 
 	// Open a window and create its OpenGL context
 	window = glfwCreateWindow(screenX, screenY, "Realtime Rendering Engine", nullptr, nullptr);
@@ -163,8 +167,6 @@ void LoadAssets()
 		
 	scene =  new Scene();
 	LoadScene(scene);
-
-	//frameBufferTest = new Framebuffer();
 }
 
 void Render()
@@ -187,9 +189,13 @@ void Render()
 		RenderGUI();
 	}
 
+	//glUseProgram(TessTerrainShaderID);
+
+	//glDrawElements()
+
+
 	//Renders selected object with phys wireframe (uses old school render...)
-	if (selectedObjectPhys != NULL)
-		dynamicsWorld->debugDrawObject(selectedObjectPhys->rigidBody->getCenterOfMassTransform(), selectedObjectPhys->collisionShape, btVector3(0, 0, 0));
+	//dynamicsWorld->debugDrawWorld();
 
 	//Because CEGUI demands it
 	glDisable(GL_BLEND);

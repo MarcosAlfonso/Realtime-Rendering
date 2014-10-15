@@ -7,6 +7,7 @@ GLuint FullbrightShaderID;
 GLuint DebugLineShaderID;
 GLuint GradientShaderID;
 GLuint FramebufferShaderID;
+GLuint TessTerrainShaderID;
 
 // Load the texture
 GLuint GridTexture;
@@ -27,11 +28,12 @@ GridMesh * grid;
 void InitializeAssets()
 {
 	// Create and compile our GLSL program from the shaders
-	StandardShaderID = CreateShaderProgram("Engine/Shaders/standard.vert", "Engine/Shaders/standard.frag", NULL);
-	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", "Engine/Shaders/fullbright.frag", NULL);
-	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL);
-	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", "Engine/Shaders/gradient.frag", NULL);
-	FramebufferShaderID = CreateShaderProgram("Engine/Shaders/framebuffer.vert", "Engine/Shaders/framebuffer.frag", NULL);
+	StandardShaderID = CreateShaderProgram("Engine/Shaders/standard.vert", "Engine/Shaders/standard.frag", NULL, NULL, NULL);
+	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", "Engine/Shaders/fullbright.frag", NULL, NULL, NULL);
+	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL, NULL, NULL);
+	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", "Engine/Shaders/gradient.frag", NULL, NULL, NULL);
+	FramebufferShaderID = CreateShaderProgram("Engine/Shaders/framebuffer.vert", "Engine/Shaders/framebuffer.frag", NULL, NULL, NULL);
+	TessTerrainShaderID = CreateShaderProgram("Engine/Shaders/Terrain/terrain.vert", "Engine/Shaders/Terrain/terrain.frag", NULL, NULL, NULL); //"Engine/Shaders/Terrain/terrain.tessCntrl", "Engine/Shaders/Terrain/terrain.tessEval", NULL);
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -51,7 +53,7 @@ void InitializeAssets()
 	cube = new Mesh();
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
-	grid = new GridMesh(30, 30, 2, 2);
+	grid = new GridMesh(250, 250, 2, 2);
 
 }
 

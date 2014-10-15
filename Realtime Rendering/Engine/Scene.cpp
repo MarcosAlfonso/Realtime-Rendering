@@ -72,7 +72,7 @@ void Scene::LoadScene()
 	skySphere->Transform->setScale(1000, 1000, 1000);
 	AddEntity(skySphere);
 
-
+	
 	terrain = new BaseEntity("Terrain");
 	auto terrainRender = new RenderComponent(terrain, grid, StandardShaderID, GrassTexture);
 	terrainRender->flipCullFace = true;
@@ -81,6 +81,7 @@ void Scene::LoadScene()
 	terrain->Transform->setRotation(0, glm::half_pi<float>(), 0);
 	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArray));
 	AddEntity(terrain);
+	
 
 	mainCamera = new BaseEntity("Main Camera");
 	mainCamera->addComponent(new CameraComponent(mainCamera));

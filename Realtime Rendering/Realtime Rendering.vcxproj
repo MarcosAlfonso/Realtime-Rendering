@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\AssetManager.cpp" />
     <ClCompile Include="Engine\Graphics\framebuffer.cpp" />
+    <ClCompile Include="Engine\Graphics\Terrain.cpp" />
     <ClCompile Include="Engine\GUI\Console.cpp" />
     <ClCompile Include="Engine\GUIManager.cpp" />
     <ClCompile Include="Engine\InputManager.cpp" />
@@ -116,6 +117,7 @@
   <ItemGroup>
     <ClInclude Include="Engine\AssetManager.h" />
     <ClInclude Include="Engine\Graphics\framebuffer.h" />
+    <ClInclude Include="Engine\Graphics\Terrain.h" />
     <ClInclude Include="Engine\GUI\Console.h" />
     <ClInclude Include="Engine\GUIManager.h" />
     <ClInclude Include="Engine\Scene.h" />
@@ -143,8 +145,6 @@
     <ClInclude Include="Libraries\include\pcre.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\OpenGLTutorials\OpenGL-tutorial_v0014_33\tutorial14_render_to_texture\Passthrough.vertexshader" />
-    <None Include="..\..\OpenGLTutorials\OpenGL-tutorial_v0014_33\tutorial14_render_to_texture\WobblyTexture.fragmentshader" />
     <None Include="Assets\cube.model" />
     <None Include="Assets\cylinder.model" />
     <None Include="Assets\dummyTerrain.model" />
@@ -161,12 +161,15 @@
     <None Include="Engine\Shaders\framebuffer.vert" />
     <None Include="Engine\Shaders\standard.frag" />
     <None Include="Engine\Shaders\standard.vert" />
+    <None Include="Engine\Shaders\Terrain\terrain.frag" />
+    <None Include="Engine\Shaders\Terrain\terrain.tessCntrl" />
+    <None Include="Engine\Shaders\Terrain\terrain.tessEval" />
+    <None Include="Engine\Shaders\Terrain\terrain.vert" />
     <None Include="Engine\Shaders\text.frag" />
     <None Include="Engine\Shaders\text.vert" />
     <None Include="Engine\Shaders\framebuffer.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\OpenGLTutorials\OpenGL-tutorial_v0014_33\tutorial14_render_to_texture\uvmap.DDS" />
     <Image Include="Assets\CloudTexture.dds">
       <DeploymentContent>true</DeploymentContent>
     </Image>

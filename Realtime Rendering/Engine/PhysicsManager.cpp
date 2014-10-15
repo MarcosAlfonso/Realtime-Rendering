@@ -12,6 +12,7 @@ btSequentialImpulseConstraintSolver* solver;
 bulletDebugDraw* drawer;
 
 extern float DeltaTime;
+extern bool pausePhysics;
 
 //Physics Manager, handles the Bullet Physics sytem
 void InitializePhysics()
@@ -42,7 +43,8 @@ void InitializePhysics()
 
 void UpdatePhysics()
 {
-	dynamicsWorld->stepSimulation(DeltaTime);
+	if (!pausePhysics)
+		dynamicsWorld->stepSimulation(DeltaTime);
 }
 
 void CleanupPhysics()

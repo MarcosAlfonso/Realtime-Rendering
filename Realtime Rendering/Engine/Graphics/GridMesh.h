@@ -20,6 +20,8 @@ private:
 	void PopulateIndices();
 	void PopulateNormals();
 	void PopulatesUVs();
+	void PopulateBarycentrics();
+
 
 	int posToCount(int x, int y);
 	glm::vec3 getVertex(int i, int j);

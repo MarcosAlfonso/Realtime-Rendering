@@ -73,6 +73,8 @@ extern glm::vec3 skyColor;
 
 extern int ID_Count;
 
+bool pausePhysics;
+
 //Input Manager, handles the Input system
 
 void addInput(InputComponent * input)
@@ -128,6 +130,12 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
 			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
+		}
+
+		//P Pauses Physics the power!
+		if (key == GLFW_KEY_P && action == GLFW_PRESS)
+		{
+			pausePhysics = !pausePhysics;
 		}
 
 		//E Spanws a Physics Sphere

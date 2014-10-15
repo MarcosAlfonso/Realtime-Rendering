@@ -59,28 +59,46 @@ GLuint LoadShader(GLenum type, const char * shader_path)
 }
 
 //Takes 3 paths to shaders defined in text files: Vertex, Fragment, Geometry. Unneeded shaders should be set to NULL
-GLuint CreateShaderProgram(const char * vertex_file_path, const char * fragment_file_path, const char * geometry_file_path){
+GLuint CreateShaderProgram(const char * vertex_shader_path, const char * fragment_shader_path, const char * tess_control_path, const char * tess_eval_path, const char * geometry_shader_path){
 
 	GLuint ProgramID = glCreateProgram();
 	
-	if (vertex_file_path != NULL)
+	if (vertex_shader_path != NULL)
 	{
-		GLuint VertexShaderID = LoadShader(GL_VERTEX_SHADER, vertex_file_path);
+		GLuint VertexShaderID = LoadShader(GL_VERTEX_SHADER, vertex_shader_path);
 		glAttachShader(ProgramID, VertexShaderID);
 		glDeleteShader(VertexShaderID);
 	}
 
-	if (fragment_file_path != NULL)
+	if (fragment_shader_path != NULL)
 	{
-		GLuint FragmentShaderID = LoadShader(GL_FRAGMENT_SHADER, fragment_file_path);
+		GLuint FragmentShaderID = LoadShader(GL_FRAGMENT_SHADER, fragment_shader_path);
 		glAttachShader(ProgramID, FragmentShaderID);
 		glDeleteShader(FragmentShaderID);
 
 	}
 
-	if (geometry_file_path != NULL)
+
+	if (tess_control_path != NULL)
 	{
-		GLuint GeometryShaderID = LoadShader(GL_GEOMETRY_SHADER, geometry_file_path);
+		GLuint TessControlShaderID = LoadShader(GL_TESS_CONTROL_SHADER, tess_control_path);
+		glAttachShader(ProgramID, TessControlShaderID);
+		glDeleteShader(TessControlShaderID);
+
+	}
+
+
+	if (tess_eval_path != NULL)
+	{
+		GLuint TessEvalShaderID = LoadShader(GL_TESS_EVALUATION_SHADER, tess_eval_path);
+		glAttachShader(ProgramID, TessEvalShaderID);
+		glDeleteShader(TessEvalShaderID);
+
+	}
+
+	if (geometry_shader_path != NULL)
+	{
+		GLuint GeometryShaderID = LoadShader(GL_GEOMETRY_SHADER, geometry_shader_path);
 		glAttachShader(ProgramID, GeometryShaderID);
 		glDeleteShader(GeometryShaderID);
 	}

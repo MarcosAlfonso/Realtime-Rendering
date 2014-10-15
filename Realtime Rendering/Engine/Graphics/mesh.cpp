@@ -36,7 +36,7 @@ bool Mesh::loadFromFile(const char * path){
 
 	Assimp::Importer importer;
 
-	const aiScene* scene = importer.ReadFile(path, aiProcessPreset_TargetRealtime_Quality);
+	const aiScene* scene = importer.ReadFile(path, 0);
 	if (!scene) {
 		fprintf(stderr, importer.GetErrorString());
 		getchar();
@@ -66,6 +66,8 @@ bool Mesh::loadFromFile(const char * path){
 		normals.push_back(glm::vec3(n.x, n.y, n.z));
 	}
 
+	PopulateBarycentrics();
+
 	// Fill face indices
 	indices.reserve(3 * mesh->mNumFaces);
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++){
@@ -73,10 +75,24 @@ bool Mesh::loadFromFile(const char * path){
 		indices.push_back(mesh->mFaces[i].mIndices[0]);
 		indices.push_back(mesh->mFaces[i].mIndices[1]);
 		indices.push_back(mesh->mFaces[i].mIndices[2]);
+
+
 	}
 
 	PopulateBuffers();
 
+}
+
+void Mesh::PopulateBarycentrics()
+{
+	barycentrics.reserve(vertices.size());
+	for (unsigned int i = 0; i < vertices.size() / 3; i++)
+	{
+		barycentrics.push_back(glm::vec3(1, 0, 0));
+		barycentrics.push_back(glm::vec3(0, 0, 1));
+		barycentrics.push_back(glm::vec3(0, 1, 0));
+		
+	}
 }
 
 void Mesh::PopulateBuffers()
@@ -93,6 +109,10 @@ void Mesh::PopulateBuffers()
 	glGenBuffers(1, &normalsID);
 	glBindBuffer(GL_ARRAY_BUFFER, normalsID);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &barycentricsID);
+	glBindBuffer(GL_ARRAY_BUFFER, barycentricsID);
+	glBufferData(GL_ARRAY_BUFFER, barycentrics.size() * sizeof(glm::vec3), &barycentrics[0], GL_STATIC_DRAW);
 
 	// Generate a buffer for the indices as well
 	glGenBuffers(1, &indicesID);

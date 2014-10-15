@@ -19,12 +19,16 @@
 #include <stdio.h>
 #include <string>
 #include <cstring>
+#include "PhysicsComponent.h"
 
 extern int vertexCount;
 extern BaseEntity* mainCamera;
 
 glm::vec3 groundColor = glm::vec3(.95, .9, .8);
 glm::vec3 skyColor = glm::vec3(.34, .6, .75);
+
+extern PhysicsComponent * selectedObjectPhys;
+
 
 //Render Component, attached to a Entity needing Mesh rendering
 RenderComponent::RenderComponent(BaseEntity * parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
@@ -76,12 +80,17 @@ void RenderComponent::Update()
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureUniformID = glGetUniformLocation(shader_ID, "DiffuseTextureSampler");
 
+
 	//SkySphere uniforms
 	GLuint groundColorID = glGetUniformLocation(shader_ID, "groundColor");
 	GLuint skyColorID = glGetUniformLocation(shader_ID, "skyColor");
 
 	glUniform3f(groundColorID, groundColor.x, groundColor.y, groundColor.z);
 	glUniform3f(skyColorID, skyColor.x, skyColor.y, skyColor.z);
+
+	PhysicsComponent * phys = parentEntity->getElementOfType<PhysicsComponent>();	
+
+	glUniform1i(glGetUniformLocation(shader_ID, "isSelected"), (phys != nullptr && phys == selectedObjectPhys));
 
 	// Bind our diffuse texture in Texture Unit 0
 	glActiveTexture(GL_TEXTURE0);
@@ -135,6 +144,19 @@ void RenderComponent::Update()
 		(void*)0                          // array buffer offset
 		);
 
+
+	// 4th attribute buffer : barycentricCoords
+	glEnableVertexAttribArray(3);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->barycentricsID);
+	glVertexAttribPointer(
+		3,                                // attribute
+		3,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+		);
+
 	// Index buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indicesID);
 
@@ -151,6 +173,7 @@ void RenderComponent::Update()
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
 }
 
 void RenderComponent::calculateLight()

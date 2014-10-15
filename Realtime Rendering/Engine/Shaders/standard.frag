@@ -4,6 +4,9 @@
 in vec2 UV;
 in vec3 Position_worldspace;
 in vec3 Normal_worldspace;
+in vec3 barycentricCoords;
+in float vertexDistance;
+
 
 // Ouput data
 out vec3 color;
@@ -12,6 +15,14 @@ out vec3 color;
 uniform sampler2D myTextureSampler;
 uniform mat4 MV;
 uniform vec3 LightDirection_worldspace;
+uniform bool isSelected;
+
+#extension GL_OES_standard_derivatives : enable
+float edgeFactor(){
+	vec3 d = fwidth(barycentricCoords);
+	vec3 a3 = smoothstep(vec3(0.0), d*1.5, barycentricCoords);
+	return min(min(a3.x, a3.y), a3.z);
+}
 
 void main(){
 
@@ -35,11 +46,20 @@ void main(){
 	//  - light is behind the triangle -> 0
 	float cosTheta = clamp(dot( n,l ), 0,1 );
 	
-	color = 
+			
+	vec3 textureColor = 
 		// Ambient : simulates indirect lighting
 		MaterialAmbientColor +
 		// Diffuse : "color" of the object
 		(MaterialDiffuseColor * LightColor * LightPower * cosTheta);
 
+	
+		
+	if (isSelected)
+		color = mix(vec3(0.0),textureColor, edgeFactor());
+	else
+		//Fog mix
+		color = mix(textureColor, vec3(.65,.75,.77), clamp(vertexDistance/350, 0, 1));
+	
 
 }

@@ -29,7 +29,9 @@ GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing)
 	PopulateVertices();
 	PopulateIndices();
 	PopulateNormals();
+
 	PopulatesUVs();
+	PopulateBarycentrics();
 	PopulateBuffers();
 
 }
@@ -48,9 +50,9 @@ void GridMesh::PopulateVertices()
 			float x = minX + i*xSpacing;
 			float z = minY + j*zSpacing;
 			
-			float height = glm::perlin(glm::vec2(i/16.0, j/16.0));
+			float height = glm::perlin(glm::vec2(i/20.0, j/20.0));
 						
-			float y = height * 16;
+			float y = height * 12;
 
 			heightFieldArray.push_back(y);
 
@@ -125,6 +127,19 @@ void GridMesh::PopulatesUVs()
 		float textureRepeat = 32;
 
 		uvs.push_back(glm::vec2(xLoc * (textureRepeat / xPoints), zLoc * (textureRepeat / zPoints)));
+	}
+}
+
+void GridMesh::PopulateBarycentrics()
+{
+	barycentrics.reserve(vertices.size());
+	for (unsigned int i = 0; i < vertices.size() / 4; i++)
+	{
+		barycentrics.push_back(glm::vec3(1, 0, 0));
+		barycentrics.push_back(glm::vec3(0, 0, 1));
+		barycentrics.push_back(glm::vec3(0, 1, 0));
+		barycentrics.push_back(glm::vec3(0, 0, 1));
+
 	}
 }
 
