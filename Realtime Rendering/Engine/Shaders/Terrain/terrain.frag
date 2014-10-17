@@ -1,15 +1,10 @@
-#version 430 core
+#version 410
 
-out vec4 color;
+out vec4 fragColor;
 
-layout (binding = 1) uniform sampler2D tex_color;
+void main() {
 
-in VS_OUT
-{
-    vec2 tc;
-} fs_in;
-
-void main(void)
-{
-    color = texture(tex_color, fs_in.tc);
+		fragColor = vec4(1.0,1.0,1.0,1.0);
 }
+
+

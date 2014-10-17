@@ -53,7 +53,7 @@ public:
 
 		//Sprint camera
 		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-			moveSpeed = 16;
+			moveSpeed = 160;
 		}
 
 		// Move forward

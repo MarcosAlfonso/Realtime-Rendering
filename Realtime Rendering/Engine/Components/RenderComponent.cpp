@@ -162,13 +162,21 @@ void RenderComponent::Update()
 
 	vertexCount += mesh->vertices.size();
 
+	//Tess Stuff
+	glLineWidth(2.5);
+	glPatchParameteri(GL_PATCH_VERTICES, 3);
+
 	// Draw the triangles !
+	glDrawElements(GL_PATCHES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+	
+	/*
 	glDrawElements(
-		GL_TRIANGLES,      // mode
+		GL_LINE_LOOP,      // mode
 		mesh->indices.size(),    // count
 		GL_UNSIGNED_SHORT, // type
 		(void*)0           // element array buffer offset
 		);
+		*/
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

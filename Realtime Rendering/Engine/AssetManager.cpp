@@ -23,7 +23,8 @@ Mesh * sphere;
 Mesh * cube;
 
 //Grid Mesh
-GridMesh * grid;
+GridMesh * terrainGrid;
+GridMesh * tessGrid;
 
 void InitializeAssets()
 {
@@ -33,7 +34,7 @@ void InitializeAssets()
 	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL, NULL, NULL);
 	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", "Engine/Shaders/gradient.frag", NULL, NULL, NULL);
 	FramebufferShaderID = CreateShaderProgram("Engine/Shaders/framebuffer.vert", "Engine/Shaders/framebuffer.frag", NULL, NULL, NULL);
-	TessTerrainShaderID = CreateShaderProgram("Engine/Shaders/Terrain/terrain.vert", "Engine/Shaders/Terrain/terrain.frag", NULL, NULL, NULL); //"Engine/Shaders/Terrain/terrain.tessCntrl", "Engine/Shaders/Terrain/terrain.tessEval", NULL);
+	TessTerrainShaderID = CreateShaderProgram("Engine/Shaders/terrain/terrain.vert", "Engine/Shaders/terrain/terrain.frag", "Engine/Shaders/terrain/terrain.tessCntrl", "Engine/Shaders/terrain/terrain.tessEval", NULL);
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -53,7 +54,8 @@ void InitializeAssets()
 	cube = new Mesh();
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
-	grid = new GridMesh(250, 250, 2, 2);
+	terrainGrid = new GridMesh(250, 250, 2, 2);
+	tessGrid = new GridMesh(2, 2, 1, 1);
 
 }
 
@@ -72,6 +74,6 @@ void CleanupAssets()
 	delete(cube);
 	delete(sphere);
 	delete(suzanne);
-	delete(grid);
+	delete(terrainGrid);
 
 }

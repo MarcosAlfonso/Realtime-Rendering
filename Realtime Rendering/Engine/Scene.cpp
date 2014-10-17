@@ -22,12 +22,15 @@ BaseEntity * skySphere;
 BaseEntity * groundCube;
 BaseEntity * terrain;
 BaseEntity * mainCamera;
+BaseEntity * tessTest;
 
 // Create and compile our GLSL program from the shaders
 extern GLuint StandardShaderID;
 extern GLuint FullbrightShaderID;
 extern GLuint DebugLineShaderID;
 extern GLuint GradientShaderID;
+extern GLuint TessTerrainShaderID;
+;
 
 
 // Load the texture
@@ -40,7 +43,8 @@ extern GLuint GrassTexture;
 extern Mesh * suzanne;
 extern Mesh * sphere;
 extern Mesh * cube;
-extern GridMesh * grid;
+extern GridMesh * terrainGrid;
+extern GridMesh * tessGrid;
 
 extern Hierarchy* hierarchy;
 
@@ -67,21 +71,26 @@ Scene::Scene()
 
 void Scene::LoadScene()
 {
+	
 	skySphere = new BaseEntity("Sky Sphere");
 	skySphere->addComponent(new RenderComponent(skySphere, sphere, GradientShaderID, skySphereTexture));
 	skySphere->Transform->setScale(1000, 1000, 1000);
 	AddEntity(skySphere);
 
-	
+	/*
 	terrain = new BaseEntity("Terrain");
-	auto terrainRender = new RenderComponent(terrain, grid, StandardShaderID, GrassTexture);
+	auto terrainRender = new RenderComponent(terrain, terrainGrid, StandardShaderID, GrassTexture);
 	terrainRender->flipCullFace = true;
 	terrain->addComponent(terrainRender);
 	terrain->Transform->setScale(-1, 1, 1);
 	terrain->Transform->setRotation(0, glm::half_pi<float>(), 0);
-	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, grid->heightFieldArray));
+	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, terrainGrid->heightFieldArray));
 	AddEntity(terrain);
-	
+	*/
+
+	tessTest = new BaseEntity("tess Test");
+	tessTest->addComponent(new RenderComponent(tessTest, tessGrid, TessTerrainShaderID, GridTexture));
+	AddEntity(tessTest);
 
 	mainCamera = new BaseEntity("Main Camera");
 	mainCamera->addComponent(new CameraComponent(mainCamera));
