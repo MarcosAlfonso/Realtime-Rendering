@@ -2,7 +2,7 @@
 #include "InputManager.h"
 
 #include "GUI/Console.h"
-#include "GUI/Inspector.h"
+#include "GUI/HelpBox.h"
 #include "GUI/Hierarchy.h"
 #include "GUI/Stats.h"
 #include "SceneManager.h"
@@ -50,7 +50,7 @@ extern btDiscreteDynamicsWorld* dynamicsWorld;
 extern char debugBuffer[];
 extern bool doRenderGui;
 
-extern Inspector* inspector;
+extern HelpBox* inspector;
 extern Hierarchy* hierarchy;
 extern Stats* stats;
 extern Console* console;
@@ -75,6 +75,9 @@ extern int ID_Count;
 
 bool pausePhysics;
 
+
+
+
 //Input Manager, handles the Input system
 
 void addInput(InputComponent * input)
@@ -87,7 +90,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 	//If typing inside an editbox, skip to CEGUI Section
 	if (!console->editbox->isActive())
 	{
-
+		//Deletes selected object
 		if (key == GLFW_KEY_DELETE && action == GLFW_PRESS && selectedObjectPhys != nullptr)
 		{
 			for (int i = 0; i < scene->GameEntities.size(); i++)
@@ -104,7 +107,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 				}
 			}
 		}
-			
+		
 		//Q Spanws a Physics Sphere
 		if (key == GLFW_KEY_Q && action == GLFW_PRESS)
 		{
@@ -150,6 +153,14 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 		{
 			InputList[i]->KeyboardInputCallback(window, key, scancode, action, mods);
 		}
+	}
+
+	//Up arrow copies last command to console editbox
+	if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+	{
+		console->editbox->setText(console->lastCommand);
+		console->editbox->activate();
+		console->editbox->setCaretIndex(999);
 	}
 	
 	//CEGUI Keyboard conversion
@@ -252,15 +263,6 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			
 			//Debug print to console
 			console->logString(selectedObjectPhys->parentEntity->Name + " selected.");
-
-			//Add selected object transform to inspector list
-			//inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->Transform->Name));
-
-			//Add rest of components to inspector list
-			//for (int i = 0; i < selectedObjectPhys->parentEntity->components.size(); i++)
-			//{
-			//	inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->components[i]->Name));
-			//}
 
 			//Clear selection
 			hierarchy->Listbox->clearAllSelections();

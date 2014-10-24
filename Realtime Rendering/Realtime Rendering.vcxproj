@@ -107,7 +107,7 @@
     <ClCompile Include="Engine\Graphics\mesh.cpp" />
     <ClCompile Include="Engine\Util\textureLoad.cpp" />
     <ClCompile Include="Engine\GUI\Hierarchy.cpp" />
-    <ClCompile Include="Engine\GUI\Inspector.cpp" />
+    <ClCompile Include="Engine\GUI\HelpBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\GUI\Stats.cpp" />
@@ -137,7 +137,7 @@
     <ClInclude Include="Engine\Components\PhysicsComponent.h" />
     <ClInclude Include="Engine\Components\InputComponent.h" />
     <ClInclude Include="Engine\GUI\Hierarchy.h" />
-    <ClInclude Include="Engine\GUI\Inspector.h" />
+    <ClInclude Include="Engine\GUI\HelpBox.h" />
     <ClInclude Include="Engine\GUI\Stats.h" />
     <ClInclude Include="Engine\GUI\GUIBase.h" />
     <ClInclude Include="Libraries\include\pcre.h" />

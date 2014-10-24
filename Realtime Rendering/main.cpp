@@ -37,6 +37,7 @@ GLFWwindow* window;
 
 #include <CEGUI/CEGUI.h>
 #include "Engine/Graphics/bulletDebugDraw.h"
+#include "Engine/GUI/HelpBox.h"
 
 //#include <vld.h>
 
@@ -74,10 +75,9 @@ extern GLuint screenUvMapTexture;
 Scene * scene;
 
 extern Stats * stats;
+extern HelpBox * helpbox;
 
 Framebuffer * frameBufferTest;
-
-extern GLuint TessTerrainShaderID;
 
 
 
@@ -132,7 +132,7 @@ void SetupConfiguration()
 
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(screenX, screenY, "Realtime Rendering Engine", nullptr, nullptr);
+	window = glfwCreateWindow(screenX, screenY, "Realtime Rendering Engine", glfwGetPrimaryMonitor(), nullptr);
 
 	if (window == NULL){
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
@@ -140,7 +140,7 @@ void SetupConfiguration()
 	}
 	glfwMakeContextCurrent(window);
 
-	// Initialize GLEW
+	// Initialize GLEW7
 	glewExperimental = true; // Needed for core profile
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");

@@ -8,6 +8,9 @@ in vec3 vPosition[];
 
 #define ID gl_InvocationID
 
+uniform int innerTess;
+uniform int outerTess;
+
 out vec3 tcPosition[];
 
 void main()
@@ -15,10 +18,10 @@ void main()
 	tcPosition[ID] = vPosition[ID];
 	if (ID == 0)
 	{
-		gl_TessLevelInner[0] = 1;
-		gl_TessLevelOuter[0] = 2;
-		gl_TessLevelOuter[1] = 2;
-		gl_TessLevelOuter[2] = 2;
+		gl_TessLevelInner[0] = innerTess;
+		gl_TessLevelOuter[0] = outerTess;
+		gl_TessLevelOuter[1] = outerTess;
+		gl_TessLevelOuter[2] = outerTess;
 	}
 
 } 

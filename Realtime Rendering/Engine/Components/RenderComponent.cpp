@@ -20,6 +20,7 @@
 #include <string>
 #include <cstring>
 #include "PhysicsComponent.h"
+#include "../GUI/Stats.h"
 
 extern int vertexCount;
 extern BaseEntity* mainCamera;
@@ -29,8 +30,12 @@ glm::vec3 skyColor = glm::vec3(.34, .6, .75);
 
 extern PhysicsComponent * selectedObjectPhys;
 
-int innerTessLevel = 0;
-int outerTessLevel = 0;
+int innerTessLevel = 1;
+int outerTessLevel = 2;
+
+extern char debugBuffer[];
+extern Stats * stats;
+
 
 
 //Render Component, attached to a Entity needing Mesh rendering
@@ -105,6 +110,20 @@ void RenderComponent::Update()
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	//Send tessellation levels
+	glUniform1i(glGetUniformLocation(shader_ID, "innerTess"), innerTessLevel);
+	glUniform1i(glGetUniformLocation(shader_ID, "outerTess"), outerTessLevel);
+
+	//Print tessellation levels
+	if (isTessellated)
+	{
+		sprintf(debugBuffer, "Inner Tessellation: %d\n", innerTessLevel);
+		stats->Label->appendText(debugBuffer);
+
+		sprintf(debugBuffer, "Outer Tessellation: %d\n", outerTessLevel);
+		stats->Label->appendText(debugBuffer);
+	}
 
 	// Send our transformation to the currently bound shader, 
 	// in the "MVP" uniform

@@ -1,6 +1,6 @@
 #include "GUI/Console.h"
 #include "GUI/Hierarchy.h"
-#include "GUI/Inspector.h"
+#include "GUI/HelpBox.h"
 #include "GUI/Stats.h"
 
 #include <CEGUI/CEGUI.h>
@@ -10,7 +10,7 @@ extern float DeltaTime;
 
 Console* console;
 Hierarchy* hierarchy;
-Inspector* inspector;
+HelpBox* helpbox;
 Stats* stats;
 bool doRenderGui;
 
@@ -55,7 +55,7 @@ void InitializeGUI()
 	//Creates core GUI windows
 	hierarchy = new Hierarchy(rootWindow, "RRHierarchy.layout");
 	console = new Console(rootWindow, "RRConsole.layout");
-	//inspector = new Inspector(rootWindow, "RRInspector.layout");
+	helpbox = new HelpBox(rootWindow, "RRHelpBox.layout");
 	stats = new Stats(rootWindow, "RRStats.layout");
 
 	//Registers events for console
@@ -76,7 +76,7 @@ void CleanupGUI()
 {
 	delete(hierarchy);
 	delete(console);
-	delete(inspector);
+	delete(helpbox);
 	delete(stats);
 
 }
