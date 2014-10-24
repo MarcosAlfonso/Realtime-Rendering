@@ -29,18 +29,23 @@ glm::vec3 skyColor = glm::vec3(.34, .6, .75);
 
 extern PhysicsComponent * selectedObjectPhys;
 
+int innerTessLevel = 0;
+int outerTessLevel = 0;
+
 
 //Render Component, attached to a Entity needing Mesh rendering
-RenderComponent::RenderComponent(BaseEntity * parent, Mesh * _mesh, GLuint _shader, GLuint _texture)
+RenderComponent::RenderComponent(BaseEntity * _parent, Mesh * _mesh, GLuint _shader, GLuint _texture, bool _isTessellated)
 {
 	Name = "Render Component";
-	parentEntity = parent;
+	parentEntity = _parent;
 	componentType = RENDER;
-
 
 	mesh = _mesh;
 	shader_ID = _shader;
 	texture_ID = _texture;
+
+	isTessellated = _isTessellated;
+
 }
 
 RenderComponent::~RenderComponent()
@@ -56,7 +61,7 @@ void RenderComponent::Update()
 {
 	//Binds this Mesh's VAO
 	glBindVertexArray(mesh->vaoID);
-	
+
 	//Set the shader
 	glUseProgram(shader_ID);
 
@@ -69,7 +74,7 @@ void RenderComponent::Update()
 	GLuint MatrixID = glGetUniformLocation(shader_ID, "MVP");
 	GLuint ViewMatrixID = glGetUniformLocation(shader_ID, "V");
 	GLuint ModelMatrixID = glGetUniformLocation(shader_ID, "M");
-		
+
 	CameraComponent * cam = mainCamera->getElementOfType<CameraComponent>();
 
 	// Compute the MVP matrix
@@ -88,7 +93,7 @@ void RenderComponent::Update()
 	glUniform3f(groundColorID, groundColor.x, groundColor.y, groundColor.z);
 	glUniform3f(skyColorID, skyColor.x, skyColor.y, skyColor.z);
 
-	PhysicsComponent * phys = parentEntity->getElementOfType<PhysicsComponent>();	
+	PhysicsComponent * phys = parentEntity->getElementOfType<PhysicsComponent>();
 
 	glUniform1i(glGetUniformLocation(shader_ID, "isSelected"), (phys != nullptr && phys == selectedObjectPhys));
 
@@ -162,21 +167,24 @@ void RenderComponent::Update()
 
 	vertexCount += mesh->vertices.size();
 
-	//Tess Stuff
-	glLineWidth(2.5);
-	glPatchParameteri(GL_PATCH_VERTICES, 3);
 
-	// Draw the triangles !
-	glDrawElements(GL_PATCHES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+	if (isTessellated)
+	{
+		//Tess Stuff
+		glPatchParameteri(GL_PATCH_VERTICES, 3);
+		// Draw the Patches  !
+		glDrawElements(GL_PATCHES, mesh->indices.size(), GL_UNSIGNED_SHORT, 0);
+	}
+	else
+	{
+		glDrawElements(
+			GL_TRIANGLES,      // mode
+			mesh->indices.size(),    // count
+			GL_UNSIGNED_SHORT, // type
+			(void*)0           // element array buffer offset
+			);
+	}
 	
-	/*
-	glDrawElements(
-		GL_LINE_LOOP,      // mode
-		mesh->indices.size(),    // count
-		GL_UNSIGNED_SHORT, // type
-		(void*)0           // element array buffer offset
-		);
-		*/
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

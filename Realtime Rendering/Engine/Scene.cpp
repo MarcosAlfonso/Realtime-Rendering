@@ -73,7 +73,7 @@ void Scene::LoadScene()
 {
 	
 	skySphere = new BaseEntity("Sky Sphere");
-	skySphere->addComponent(new RenderComponent(skySphere, sphere, GradientShaderID, skySphereTexture));
+	skySphere->addComponent(new RenderComponent(skySphere, sphere, GradientShaderID, skySphereTexture, false));
 	skySphere->Transform->setScale(1000, 1000, 1000);
 	AddEntity(skySphere);
 
@@ -87,11 +87,11 @@ void Scene::LoadScene()
 	terrain->addComponent(new PhysicsComponent(terrain, TERRAIN, 0, terrainGrid->heightFieldArray));
 	AddEntity(terrain);
 	*/
-
+	
 	tessTest = new BaseEntity("tess Test");
-	tessTest->addComponent(new RenderComponent(tessTest, tessGrid, TessTerrainShaderID, GridTexture));
+	tessTest->addComponent(new RenderComponent(tessTest, tessGrid, TessTerrainShaderID, GridTexture, true));
 	AddEntity(tessTest);
-
+	
 	mainCamera = new BaseEntity("Main Camera");
 	mainCamera->addComponent(new CameraComponent(mainCamera));
 	mainCamera->Transform->setPosition(2, 1, 8);
@@ -99,6 +99,7 @@ void Scene::LoadScene()
 	cam->horizontalAngle = 3.14;
 	addInput(new FreeCameraInput(mainCamera));
 	AddEntity(mainCamera);
+	
 }
 
 

@@ -1,4 +1,5 @@
-#version 410 core
+#version 400
+
 
 // Input vertex data, different for all executions of this shader.
 layout(location = 0) in vec3 vertexPosition_modelspace;
@@ -13,23 +14,23 @@ uniform mat4 M;
 uniform vec3 LightDirection_worldspace;
 
 // Output data ; will be interpolated for each fragment.
-out vec3 WorldPos_CS_in;
-out vec2 TexCoord_CS_in;
-out vec3 Normal_CS_in;
-out vec3 barycentricCoords;
+out vec3 vPosition;
+//out vec2 TexCoord_CS_in;
+//out vec3 Normal_CS_in;
+//out vec3 barycentricCoords;
 
 void main(){
 	
 	// barycentricsCoords for selection
-	barycentricCoords = barycentric;
+	//barycentricCoords = barycentric;
 
 	// Position of the vertex, in worldspace : M * position
-	WorldPos_CS_in = (M * vec4(vertexPosition_modelspace,1)).xyz;
+	vPosition = vertexPosition_modelspace.xyz;
 			
 	// Normal of the the vertex, in camera space
-	Normal_CS_in = ( V * M * vec4(vertexNormal_modelspace,0)).xyz;// Only correct if ModelMatrix does not scale the model ! Use its inverse transpose if not.
+	//Normal_CS_in = ( V * M * vec4(vertexNormal_modelspace,0)).xyz;// Only correct if ModelMatrix does not scale the model ! Use its inverse transpose if not.
 	
 	// UV of the vertex. No special space for this one.
-	TexCoord_CS_in = vertexUV;
+	//TexCoord_CS_in = vertexUV;
 }
 

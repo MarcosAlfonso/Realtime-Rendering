@@ -29,12 +29,12 @@ GridMesh * tessGrid;
 void InitializeAssets()
 {
 	// Create and compile our GLSL program from the shaders
-	StandardShaderID = CreateShaderProgram("Engine/Shaders/standard.vert", "Engine/Shaders/standard.frag", NULL, NULL, NULL);
-	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", "Engine/Shaders/fullbright.frag", NULL, NULL, NULL);
-	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", "Engine/Shaders/debugLine.frag", NULL, NULL, NULL);
-	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", "Engine/Shaders/gradient.frag", NULL, NULL, NULL);
-	FramebufferShaderID = CreateShaderProgram("Engine/Shaders/framebuffer.vert", "Engine/Shaders/framebuffer.frag", NULL, NULL, NULL);
-	TessTerrainShaderID = CreateShaderProgram("Engine/Shaders/terrain/terrain.vert", "Engine/Shaders/terrain/terrain.frag", "Engine/Shaders/terrain/terrain.tessCntrl", "Engine/Shaders/terrain/terrain.tessEval", NULL);
+	StandardShaderID = CreateShaderProgram("Engine/Shaders/standard.vert", NULL, NULL, NULL, "Engine/Shaders/standard.frag");
+	FullbrightShaderID = CreateShaderProgram("Engine/Shaders/fullbright.vert", NULL, NULL, NULL, "Engine/Shaders/fullbright.frag");
+	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", NULL, NULL, NULL, "Engine/Shaders/debugLine.frag");
+	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", NULL, NULL, NULL, "Engine/Shaders/gradient.frag");
+	FramebufferShaderID = CreateShaderProgram("Engine/Shaders/framebuffer.vert", NULL, NULL, NULL, "Engine/Shaders/framebuffer.frag");
+	TessTerrainShaderID = CreateShaderProgram("Engine/Shaders/terrain/terrain.vert",  "Engine/Shaders/terrain/terrain.tessCntrl", "Engine/Shaders/terrain/terrain.tessEval", "Engine/Shaders/terrain/terrain.geom",  "Engine/Shaders/terrain/terrain.frag");
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");
@@ -54,9 +54,8 @@ void InitializeAssets()
 	cube = new Mesh();
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
-	terrainGrid = new GridMesh(250, 250, 2, 2);
-	tessGrid = new GridMesh(2, 2, 1, 1);
-
+	terrainGrid = new GridMesh(250, 250, 2, 2, true);
+	tessGrid = new GridMesh(2, 2, 5, 5, false);
 }
 
 void CleanupAssets()

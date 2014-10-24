@@ -87,21 +87,6 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 	//If typing inside an editbox, skip to CEGUI Section
 	if (!console->editbox->isActive())
 	{
-		//Global Keyboard Input
-		if (key == GLFW_KEY_1 && action == GLFW_PRESS)
-		{
-			groundColor = glm::vec3(.1, .1, .1);
-			skyColor = glm::vec3(.9, 0, 0);
-			console->logString("WELCOME TO HELL!");
-		}
-
-		if (key == GLFW_KEY_2 && action == GLFW_PRESS)
-		{
-			groundColor = glm::vec3(.22, .6, .23);
-			skyColor = glm::vec3(1, 1, 0);
-			console->logString("Welcome to Gzar'Bxu!");
-
-		}
 
 		if (key == GLFW_KEY_DELETE && action == GLFW_PRESS && selectedObjectPhys != nullptr)
 		{
@@ -126,7 +111,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 			BaseEntity * physicsSphere = new BaseEntity("Physics Sphere");
 			physicsSphere->Transform->setPosition(0, 5, 0);
 
-			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture));
+			physicsSphere->addComponent(new RenderComponent(physicsSphere, sphere, StandardShaderID, GridTexture, false));
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, SPHERE, 1, std::vector<float>()));
 			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
@@ -144,11 +129,13 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 			BaseEntity * physicsSphere = new BaseEntity("Physics Cube");
 			physicsSphere->Transform->setPosition(0, 5, 0);
 
-			physicsSphere->addComponent(new RenderComponent(physicsSphere, cube, StandardShaderID, GridTexture));
+			physicsSphere->addComponent(new RenderComponent(physicsSphere, cube, StandardShaderID, GridTexture, false));
 			physicsSphere->addComponent(new PhysicsComponent(physicsSphere, BOX, 1, std::vector<float>()));
 			scene->AddEntity(physicsSphere);
 			console->listbox->addItem(new CEGUI::ListboxTextItem("physicsSphere Created"));
 		}
+
+		
 
 		//G hides or show GUI
 		if (key == GLFW_KEY_G && (action == GLFW_PRESS))
@@ -203,7 +190,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
 void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 {
 	//Checks if mouse is over any core GUI windows
-	bool overCEGUIWindow = console->myWindow->isMouseContainedInArea() || hierarchy->myWindow->isMouseContainedInArea() || inspector->myWindow->isMouseContainedInArea() || stats->myWindow->isMouseContainedInArea();
+	bool overCEGUIWindow = console->myWindow->isMouseContainedInArea() || hierarchy->myWindow->isMouseContainedInArea() || stats->myWindow->isMouseContainedInArea();
 
 	//Global Mouse Button Input
 
@@ -245,6 +232,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			RayCallback
 			);
 
+		/*
 		int numItems = inspector->Listbox->getItemCount();
 
 		//Clear inspector
@@ -252,6 +240,7 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 		{
 			inspector->Listbox->removeItem(inspector->Listbox->getListboxItemFromIndex(i));
 		}
+		*/
 
 		//If there is a hit
 		if (RayCallback.hasHit()) {
@@ -265,13 +254,13 @@ void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 			console->logString(selectedObjectPhys->parentEntity->Name + " selected.");
 
 			//Add selected object transform to inspector list
-			inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->Transform->Name));
+			//inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->Transform->Name));
 
 			//Add rest of components to inspector list
-			for (int i = 0; i < selectedObjectPhys->parentEntity->components.size(); i++)
-			{
-				inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->components[i]->Name));
-			}
+			//for (int i = 0; i < selectedObjectPhys->parentEntity->components.size(); i++)
+			//{
+			//	inspector->Listbox->addItem(new CEGUI::ListboxTextItem(selectedObjectPhys->parentEntity->components[i]->Name));
+			//}
 
 			//Clear selection
 			hierarchy->Listbox->clearAllSelections();

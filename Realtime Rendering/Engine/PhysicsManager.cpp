@@ -32,7 +32,7 @@ void InitializePhysics()
 
 	//Creates Bullet world with the stuff referenced 
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0, -10, 0));
+	dynamicsWorld->setGravity(btVector3(0, 0, 0));
 
 	//Debug drawing options here
 	drawer = new bulletDebugDraw();

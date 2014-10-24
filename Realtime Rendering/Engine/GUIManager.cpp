@@ -55,7 +55,7 @@ void InitializeGUI()
 	//Creates core GUI windows
 	hierarchy = new Hierarchy(rootWindow, "RRHierarchy.layout");
 	console = new Console(rootWindow, "RRConsole.layout");
-	inspector = new Inspector(rootWindow, "RRInspector.layout");
+	//inspector = new Inspector(rootWindow, "RRInspector.layout");
 	stats = new Stats(rootWindow, "RRStats.layout");
 
 	//Registers events for console

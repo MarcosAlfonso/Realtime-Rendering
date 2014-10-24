@@ -108,7 +108,6 @@
     <ClCompile Include="Engine\Util\textureLoad.cpp" />
     <ClCompile Include="Engine\GUI\Hierarchy.cpp" />
     <ClCompile Include="Engine\GUI\Inspector.cpp" />
-    <ClCompile Include="Engine\Components\LightComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\GUI\Stats.cpp" />
@@ -141,7 +140,6 @@
     <ClInclude Include="Engine\GUI\Inspector.h" />
     <ClInclude Include="Engine\GUI\Stats.h" />
     <ClInclude Include="Engine\GUI\GUIBase.h" />
-    <ClInclude Include="Engine\Components\LightComponent.h" />
     <ClInclude Include="Libraries\include\pcre.h" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +160,7 @@
     <None Include="Engine\Shaders\standard.frag" />
     <None Include="Engine\Shaders\standard.vert" />
     <None Include="Engine\Shaders\Terrain\terrain.frag" />
+    <None Include="Engine\Shaders\Terrain\terrain.geom" />
     <None Include="Engine\Shaders\Terrain\terrain.tessCntrl" />
     <None Include="Engine\Shaders\Terrain\terrain.tessEval" />
     <None Include="Engine\Shaders\Terrain\terrain.vert" />

@@ -12,7 +12,7 @@
 #include <GL/glew.h>
 
 //Generates a gridded plane mesh of uniformly spaced points
-GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing)
+GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing, bool _perlin)
 {
 
 	xPoints = _xPoints;
@@ -20,6 +20,7 @@ GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing)
 	xSpacing = _xSpacing;
 	zSpacing = _zSpacing;
 	numPoints = xPoints*zPoints;
+	isPerlin = _perlin;
 
 	//Set aside space in vectors
 	vertices.reserve(numPoints);
@@ -48,12 +49,19 @@ void GridMesh::PopulateVertices()
 		for (int j = 0; j < zPoints; j++)
 		{
 			float x = minX + i*xSpacing;
+			float y;
 			float z = minY + j*zSpacing;
 			
-			float height = glm::perlin(glm::vec2(i/20.0, j/20.0));
-						
-			float y = height * 12;
-
+			
+			if (isPerlin)
+			{
+				float height = glm::perlin(glm::vec2(i / 20.0, j / 20.0));
+				y = height * 12;
+			}
+			else
+			{
+				y = 0;
+			}
 			heightFieldArray.push_back(y);
 
 			vertices.push_back(glm::vec3(x, y, z));

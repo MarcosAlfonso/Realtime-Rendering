@@ -14,7 +14,7 @@ class RenderComponent: public BaseComponent
 {
 
 public:
-	RenderComponent(BaseEntity * parent, Mesh * _mesh, GLuint _shader, GLuint _texture);
+	RenderComponent(BaseEntity * _parent, Mesh * _mesh, GLuint _shader, GLuint _texture, bool _isTessellated);
 	~RenderComponent();
 
 	void Update();
@@ -30,5 +30,7 @@ private:
 	GLuint texture_ID;
 	float lightRotation = 0;
 	glm::vec3 lightDirection;
+	bool isTessellated;
+
 };
 

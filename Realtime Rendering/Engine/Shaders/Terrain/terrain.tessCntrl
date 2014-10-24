@@ -1,29 +1,24 @@
-#version 410 core
-
+#version 400
 
 // define the number of CPs in the output patch
 layout (vertices = 3) out;
 
 // attributes of the input CPs
-in vec3 WorldPos_CS_in[];
-in vec2 TexCoord_CS_in[];
-in vec3 Normal_CS_in[];
+in vec3 vPosition[];
 
-// attributes of the output CPs
-out vec3 WorldPos_ES_in[];
-out vec2 TexCoord_ES_in[];
-out vec3 Normal_ES_in[];
+#define ID gl_InvocationID
+
+out vec3 tcPosition[];
 
 void main()
 {
-	// Set the control points of the output patch
-	TexCoord_ES_in[gl_InvocationID] = TexCoord_CS_in[gl_InvocationID];
-	Normal_ES_in[gl_InvocationID] = Normal_CS_in[gl_InvocationID];
-	WorldPos_ES_in[gl_InvocationID] = WorldPos_CS_in[gl_InvocationID];
+	tcPosition[ID] = vPosition[ID];
+	if (ID == 0)
+	{
+		gl_TessLevelInner[0] = 1;
+		gl_TessLevelOuter[0] = 2;
+		gl_TessLevelOuter[1] = 2;
+		gl_TessLevelOuter[2] = 2;
+	}
 
-	// Calculate the tessellation levels
-	gl_TessLevelOuter[0] = 10;
-	gl_TessLevelOuter[1] = 10;
-	gl_TessLevelOuter[2] = 10;
-	gl_TessLevelInner[0] = gl_TessLevelOuter[2];
 } 
