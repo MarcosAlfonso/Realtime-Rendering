@@ -5,6 +5,7 @@ layout (vertices = 3) out;
 
 // attributes of the input CPs
 in vec3 vPosition[];
+in float vertexDistance[];
 
 #define ID gl_InvocationID
 
@@ -28,10 +29,14 @@ void main()
 		}
 		else
 		{
-			gl_TessLevelInner[0] = 10;
-			gl_TessLevelOuter[0] = 10;
-			gl_TessLevelOuter[1] = 10;
-			gl_TessLevelOuter[2] = 10;
+			float tessScale = 1 - (vertexDistance[ID]/5.0);
+			float tessLevel = tessScale*32.0;
+			tessLevel = clamp(tessLevel, 1, 64);
+			
+			gl_TessLevelInner[0] = tessLevel;
+			gl_TessLevelOuter[0] = tessLevel;
+			gl_TessLevelOuter[1] = tessLevel;
+			gl_TessLevelOuter[2] = tessLevel;
 		}
 	}
 
