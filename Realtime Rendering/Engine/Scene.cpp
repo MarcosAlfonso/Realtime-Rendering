@@ -74,7 +74,7 @@ void Scene::LoadScene()
 	
 	skySphere = new BaseEntity("Sky Sphere");
 	skySphere->addComponent(new RenderComponent(skySphere, sphere, GradientShaderID, skySphereTexture, false));
-	skySphere->Transform->setScale(1000, 1000, 1000);
+	skySphere->Transform->setScale(2000, 2000, 2000);
 	AddEntity(skySphere);
 
 	/*
@@ -89,7 +89,7 @@ void Scene::LoadScene()
 	*/
 	
 	tessTest = new BaseEntity("tess Test");
-	tessTest->addComponent(new RenderComponent(tessTest, suzanne, TessTerrainShaderID, GridTexture, true));
+	tessTest->addComponent(new RenderComponent(tessTest, tessGrid, TessTerrainShaderID, GridTexture, true));
 	AddEntity(tessTest);
 	
 	mainCamera = new BaseEntity("Main Camera");

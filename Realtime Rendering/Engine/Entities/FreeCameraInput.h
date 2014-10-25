@@ -49,11 +49,11 @@ public:
 	void Update()
 	{
 		//Camera movement speed
-		moveSpeed = 6;
+		moveSpeed = 10;
 
 		//Sprint camera
 		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-			moveSpeed = 16;
+			moveSpeed = 40;
 		}
 
 		// Move forward

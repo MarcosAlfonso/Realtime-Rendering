@@ -31,7 +31,8 @@ glm::vec3 skyColor = glm::vec3(.34, .6, .75);
 extern PhysicsComponent * selectedObjectPhys;
 
 int innerTessLevel = 1;
-int outerTessLevel = 2;
+int outerTessLevel = 1;
+int tessOverride = 0;
 
 extern char debugBuffer[];
 extern Stats * stats;
@@ -114,14 +115,18 @@ void RenderComponent::Update()
 	//Send tessellation levels
 	glUniform1i(glGetUniformLocation(shader_ID, "innerTess"), innerTessLevel);
 	glUniform1i(glGetUniformLocation(shader_ID, "outerTess"), outerTessLevel);
+	glUniform1i(glGetUniformLocation(shader_ID, "tessOverride"), tessOverride);
 
 	//Print tessellation levels
 	if (isTessellated)
 	{
-		sprintf(debugBuffer, "Inner Tessellation: %d\n", innerTessLevel);
+		sprintf(debugBuffer, "Tess Overriden?: %d\n", tessOverride);
 		stats->Label->appendText(debugBuffer);
 
-		sprintf(debugBuffer, "Outer Tessellation: %d\n", outerTessLevel);
+		sprintf(debugBuffer, "Inner Tess Override: %d\n", innerTessLevel);
+		stats->Label->appendText(debugBuffer);
+
+		sprintf(debugBuffer, "Outer Tess Override: %d\n", outerTessLevel);
 		stats->Label->appendText(debugBuffer);
 	}
 

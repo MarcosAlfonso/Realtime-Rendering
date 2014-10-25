@@ -10,6 +10,7 @@ in vec3 vPosition[];
 
 uniform int innerTess;
 uniform int outerTess;
+uniform int tessOverride;
 
 out vec3 tcPosition[];
 
@@ -18,10 +19,20 @@ void main()
 	tcPosition[ID] = vPosition[ID];
 	if (ID == 0)
 	{
-		gl_TessLevelInner[0] = innerTess;
-		gl_TessLevelOuter[0] = outerTess;
-		gl_TessLevelOuter[1] = outerTess;
-		gl_TessLevelOuter[2] = outerTess;
+		if (tessOverride == 1)
+		{
+			gl_TessLevelInner[0] = innerTess;
+			gl_TessLevelOuter[0] = outerTess;
+			gl_TessLevelOuter[1] = outerTess;
+			gl_TessLevelOuter[2] = outerTess;
+		}
+		else
+		{
+			gl_TessLevelInner[0] = 10;
+			gl_TessLevelOuter[0] = 10;
+			gl_TessLevelOuter[1] = 10;
+			gl_TessLevelOuter[2] = 10;
+		}
 	}
 
 } 

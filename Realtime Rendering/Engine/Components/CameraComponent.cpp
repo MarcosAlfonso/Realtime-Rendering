@@ -39,7 +39,7 @@ void CameraComponent::Update()
 	up = glm::cross(right, direction);
 
 	// Projection matrix : 45° Field of View, 16:9 Ration, 0.1-2000.0 view range
-	ProjectionMatrix = glm::perspective(fov, 16.0f / 9.0f, 0.1f, 2000.0f);
+	ProjectionMatrix = glm::perspective(fov, 16.0f / 9.0f, 0.1f, 3000.0f);
 	
 	// View Matrix
 	ViewMatrix = glm::lookAt(
