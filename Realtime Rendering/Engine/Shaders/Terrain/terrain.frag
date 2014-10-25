@@ -32,7 +32,7 @@ void main()
 
     float d1 = min(min(gTriDistance.x, gTriDistance.y), gTriDistance.z);
     float d2 = min(min(gPatchDistance.x, gPatchDistance.y), gPatchDistance.z);
-    color = amplify(d1, 40.0, -0.5) * amplify(d2, 60.0, -0.5) * color;
+    color = amplify(d1, 200.0, -0.5) * amplify(d2, 200.0, -0.5) * color;
 
     FragColor = vec4(color, 1.0);
 }

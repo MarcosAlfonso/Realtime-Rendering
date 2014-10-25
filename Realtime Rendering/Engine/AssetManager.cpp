@@ -15,6 +15,7 @@ GLuint CloudTexture;
 GLuint skySphereTexture;
 GLuint GrassTexture;
 GLuint screenUvMapTexture;
+GLuint heightMapTexture;
 
 //Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 //Suzanne
@@ -42,6 +43,7 @@ void InitializeAssets()
 	skySphereTexture = loadDDS("Assets/skySphere.dds");
 	GrassTexture = loadDDS("Assets/grass.dds");
 	screenUvMapTexture = loadDDS("Assets/uvmap.dds");
+	heightMapTexture = loadDDS("Assets/terrainHeightMap.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Suzanne
@@ -55,7 +57,7 @@ void InitializeAssets()
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
 	terrainGrid = new GridMesh(250, 250, 2, 2, true);
-	tessGrid = new GridMesh(2, 2, 5, 5, false);
+	tessGrid = new GridMesh(2, 2, 200, 200, false);
 }
 
 void CleanupAssets()
