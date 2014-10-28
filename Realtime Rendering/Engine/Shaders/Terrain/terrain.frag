@@ -1,38 +1,26 @@
 #version 400
 
 out vec4 FragColor;
-in vec3 gFacetNormal;
-in vec3 gTriDistance;
+
 in vec3 gPatchDistance;
-in float gPrimitive;
+in vec2 gTriDistance;
+
+
 uniform vec3 LightPosition;
 uniform vec3 DiffuseMaterial;
 uniform vec3 AmbientMaterial;
 
-
-float amplify(float d, float scale, float offset)
-{
-    d = scale * d + offset;
-    d = clamp(d, 0.0, 1.0);
-    d = 1.0 - exp2(-2.0*d*d);
-    return d;
-}
-
 void main()
 {
-    vec3 N = normalize(gFacetNormal);
-    vec3 L = vec3(.25,.25,1.0);
 
-    vec3 DiffuseMaterial = vec3(1.0, 1.0, 1.0);
-    vec3 AmbientMaterial = vec3(0.1, 0.1, 0.1);
+
+    vec3 baseColor = vec3(1.0, 1.0, 1.0);
+    vec3 wireColor = vec3(0.4, 0.1, 0.1);
 	
 
-    float df = abs(dot(N, L));
-    vec3 color = AmbientMaterial + df * DiffuseMaterial;
+	if (gPatchDistance.x < .01 || gPatchDistance.y < .01)
+		 FragColor = vec4(wireColor, 1.0);
+	else
+		 FragColor = vec4(baseColor, 1.0);
 
-    float d1 = min(min(gTriDistance.x, gTriDistance.y), gTriDistance.z);
-    float d2 = min(min(gPatchDistance.x, gPatchDistance.y), gPatchDistance.z);
-    color = amplify(d1, 200.0, -0.5) * amplify(d2, 200.0, -0.5) * color;
-
-    FragColor = vec4(color, 1.0);
 }

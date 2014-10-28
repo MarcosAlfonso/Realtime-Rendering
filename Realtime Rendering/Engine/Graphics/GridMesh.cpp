@@ -12,7 +12,7 @@
 #include <GL/glew.h>
 
 //Generates a gridded plane mesh of uniformly spaced points
-GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing, bool _perlin)
+GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing, bool _perlin, bool _quad)
 {
 
 	xPoints = _xPoints;
@@ -21,6 +21,7 @@ GridMesh::GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing,
 	zSpacing = _zSpacing;
 	numPoints = xPoints*zPoints;
 	isPerlin = _perlin;
+	isQuad = _quad;
 
 	//Set aside space in vectors
 	vertices.reserve(numPoints);
@@ -83,15 +84,26 @@ void GridMesh::PopulateIndices()
 		int c = k + 1 + xPoints;
 		int d = k + xPoints;
 
-		//Triangle 1
-		indices.push_back(a);
-		indices.push_back(c);
-		indices.push_back(d);
+		if (isQuad)
+		{
+			//Triangle 1
+			indices.push_back(a);
+			indices.push_back(b);
+			indices.push_back(c);
+			indices.push_back(d);
+		}
+		else
+		{
+			//Triangle 1
+			indices.push_back(a);
+			indices.push_back(c);
+			indices.push_back(d);
 
-		//Triangle 2
-		indices.push_back(a);
-		indices.push_back(b);
-		indices.push_back(c);
+			//Triangle 2
+			indices.push_back(a);
+			indices.push_back(b);
+			indices.push_back(c);
+		}
 	}
 }
 

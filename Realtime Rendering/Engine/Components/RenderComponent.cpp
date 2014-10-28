@@ -192,11 +192,13 @@ void RenderComponent::Update()
 	vertexCount += mesh->vertices.size();
 
 
+
 	if (isTessellated)
 	{
 		//Tess Stuff
-		glPatchParameteri(GL_PATCH_VERTICES, 3);
+		glPatchParameteri(GL_PATCH_VERTICES, 4);
 		// Draw the Patches  !
+
 		glDrawElements(GL_PATCHES, mesh->indices.size(), GL_UNSIGNED_SHORT, 0);
 	}
 	else

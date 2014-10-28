@@ -13,6 +13,8 @@ uniform mat4 V;
 uniform mat4 M;
 uniform vec3 LightDirection_worldspace;
 
+uniform sampler2D myTextureSampler;
+
 // Output data ; will be interpolated for each fragment.
 out vec3 vPosition;
 out float vertexDistance;
@@ -21,21 +23,14 @@ out float vertexDistance;
 //out vec3 barycentricCoords;
 
 void main(){
-	
-	// barycentricsCoords for selection
-	//barycentricCoords = barycentric;
+
+	//float y = texture(myTextureSampler, vertexUV).r + texture(myTextureSampler, vertexUV).g + texture(myTextureSampler, vertexUV).b;
+	float y = 0;
 
 	// Position of the vertex, in worldspace : M * position
-	vPosition = vertexPosition_modelspace.xyz;
+	vPosition = vec3(vertexPosition_modelspace.x, y*10, vertexPosition_modelspace.z);
 
 	vertexDistance = length(( V * M * vec4(vertexPosition_modelspace,1)).xyz);
-
-	int i = 3;
 			
-	// Normal of the the vertex, in camera space
-	//Normal_CS_in = ( V * M * vec4(vertexNormal_modelspace,0)).xyz;// Only correct if ModelMatrix does not scale the model ! Use its inverse transpose if not.
-	
-	// UV of the vertex. No special space for this one.
-	//TexCoord_CS_in = vertexUV;
 }
 

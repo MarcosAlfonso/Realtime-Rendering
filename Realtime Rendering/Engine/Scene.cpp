@@ -38,6 +38,7 @@ extern GLuint GridTexture;
 extern GLuint CloudTexture;
 extern GLuint skySphereTexture;
 extern GLuint GrassTexture;
+extern GLuint heightMapTexture;
 
 //Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 extern Mesh * suzanne;
@@ -89,7 +90,7 @@ void Scene::LoadScene()
 	*/
 	
 	tessTest = new BaseEntity("tess Test");
-	tessTest->addComponent(new RenderComponent(tessTest, suzanne, TessTerrainShaderID, GridTexture, true));
+	tessTest->addComponent(new RenderComponent(tessTest, tessGrid, TessTerrainShaderID, heightMapTexture, true));
 	AddEntity(tessTest);
 	
 	mainCamera = new BaseEntity("Main Camera");

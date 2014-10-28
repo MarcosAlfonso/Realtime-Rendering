@@ -9,10 +9,11 @@
 class GridMesh : public Mesh
 {
 public:
-	GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing, bool _perlin);
+	GridMesh(int _xPoints, int _zPoints, float _xSpacing, float _zSpacing, bool _perlin, bool _quad);
 	std::vector<float> heightFieldArray;
 
 	bool isPerlin;
+	bool isQuad;
 
 private:
 	int xPoints, zPoints, numPoints;

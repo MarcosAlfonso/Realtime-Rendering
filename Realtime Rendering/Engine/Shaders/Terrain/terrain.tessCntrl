@@ -1,7 +1,7 @@
 #version 400
 
 // define the number of CPs in the output patch
-layout (vertices = 3) out;
+layout (vertices = 4) out;
 
 // attributes of the input CPs
 in vec3 vPosition[];
@@ -22,21 +22,27 @@ void main()
 	{
 		if (tessOverride == 1)
 		{
-			gl_TessLevelInner[0] = innerTess;
-			gl_TessLevelOuter[0] = outerTess;
-			gl_TessLevelOuter[1] = outerTess;
-			gl_TessLevelOuter[2] = outerTess;
+			gl_TessLevelInner[0] = 1;
+			gl_TessLevelInner[1] = 1;
+
+			gl_TessLevelOuter[0] = 1;
+			gl_TessLevelOuter[1] = 1;
+			gl_TessLevelOuter[2] = 1;
+			gl_TessLevelOuter[3] = 1;
 		}
 		else
 		{
-			float tessScale = 1 - (vertexDistance[ID]/5.0);
-			float tessLevel = tessScale*32.0;
-			tessLevel = clamp(tessLevel, 1, 64);
+			float tessScale = 1 - (vertexDistance[ID]/500.0);
+			float tessLevel = tessScale*8.0;
+			tessLevel = clamp(tessLevel, 1.0, 64.0);
 			
 			gl_TessLevelInner[0] = tessLevel;
+			gl_TessLevelInner[1] = tessLevel;
+
 			gl_TessLevelOuter[0] = tessLevel;
 			gl_TessLevelOuter[1] = tessLevel;
 			gl_TessLevelOuter[2] = tessLevel;
+			gl_TessLevelOuter[3] = tessLevel;
 		}
 	}
 
