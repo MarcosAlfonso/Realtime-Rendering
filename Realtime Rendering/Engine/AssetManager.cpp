@@ -35,7 +35,7 @@ void InitializeAssets()
 	DebugLineShaderID = CreateShaderProgram("Engine/Shaders/debugLine.vert", NULL, NULL, NULL, "Engine/Shaders/debugLine.frag");
 	GradientShaderID = CreateShaderProgram("Engine/Shaders/gradient.vert", NULL, NULL, NULL, "Engine/Shaders/gradient.frag");
 	FramebufferShaderID = CreateShaderProgram("Engine/Shaders/framebuffer.vert", NULL, NULL, NULL, "Engine/Shaders/framebuffer.frag");
-	TessTerrainShaderID = CreateShaderProgram("Engine/Shaders/terrain/terrain.vert",  "Engine/Shaders/terrain/terrain.tessCntrl", "Engine/Shaders/terrain/terrain.tessEval", NULL,  "Engine/Shaders/terrain/terrain.frag");
+	TessTerrainShaderID = CreateShaderProgram("Engine/Shaders/terrain/terrain.vert", "Engine/Shaders/terrain/terrain.tessCntrl", "Engine/Shaders/terrain/terrain.tessEval", "Engine/Shaders/terrain/terrain.geom", "Engine/Shaders/terrain/terrain.frag");
 
 	// Load the texture
 	GridTexture = loadDDS("Assets/GridTexture.dds");

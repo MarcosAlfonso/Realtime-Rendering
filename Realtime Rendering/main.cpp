@@ -13,8 +13,6 @@
 #include "Engine/Components/PhysicsComponent.h"
 #include "Engine/Components/CameraComponent.h"
 
-#include "Libraries/include/pcre.h"
-
 // Include GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>

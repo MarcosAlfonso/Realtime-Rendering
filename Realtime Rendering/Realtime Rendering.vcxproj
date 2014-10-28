@@ -63,7 +63,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;pcre.lib;libnoise.lib;assimp.lib;opengl32.lib;glfw3.lib;glu32.lib;glew32s.lib;SOIL.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;libnoise.lib;assimp.lib;opengl32.lib;glfw3.lib;glu32.lib;glew32s.lib;SOIL.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>C:\OpenGL\assimp\lib\assimpd.dll</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -140,7 +140,6 @@
     <ClInclude Include="Engine\GUI\HelpBox.h" />
     <ClInclude Include="Engine\GUI\Stats.h" />
     <ClInclude Include="Engine\GUI\GUIBase.h" />
-    <ClInclude Include="Libraries\include\pcre.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cube.model" />
