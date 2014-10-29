@@ -1,13 +1,10 @@
-﻿Build started 10/28/2014 10:03:05 PM.
+﻿Build started 10/29/2014 12:01:40 AM.
      1>Project "C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Realtime Rendering\Realtime Rendering.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Engine\GUI\Console.cpp
-         Console.cpp
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\libraries\include\linearmath\btdefaultmotionstate.h(7): warning C4099: 'btDefaultMotionState' : type name first seen using 'class' now seen using 'struct'
-                 c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\components\physicscomponent.h(10) : see declaration of 'btDefaultMotionState'
-     1>c:\users\marcos\documents\github\realtime-rendering\realtime rendering\engine\gui\console.cpp(205): warning C4305: 'argument' : truncation from 'double' to 'float'
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Engine\AssetManager.cpp
+         AssetManager.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" "CEGUIOpenGLRenderer-0_d.lib" "CEGUIBase-0_d.lib" libnoise.lib assimp.lib opengl32.lib glfw3.lib glu32.lib glew32s.lib SOIL.lib BulletDynamics.lib BulletCollision.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\assimp\lib\assimpd.dll" /MACHINE:X86 Debug\AssetManager.obj
          Debug\framebuffer.obj
@@ -34,6 +31,31 @@
          Debug\PhysicsComponent.obj
          Debug\Stats.obj
          Debug\GUIBase.obj
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewDisableVertexAttribArray imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewDrawBuffers imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewFramebufferTexture imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewBindFramebuffer imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewBindRenderbuffer imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewFramebufferRenderbuffer imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewGenFramebuffers imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewGenRenderbuffers imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewRenderbufferStorage imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
+     1>framebuffer.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
+     1>main.obj : warning LNK4217: locally defined symbol _glewInit@0 imported in function "void __cdecl SetupConfiguration(void)" (?SetupConfiguration@@YAXXZ)
+     1>main.obj : warning LNK4049: locally defined symbol _glewExperimental imported
+     1>glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\vc100.pdb'; linking object as if no debug info
          Realtime Rendering.vcxproj -> C:\Users\Marcos\Documents\GitHub\Realtime-Rendering\Debug\Realtime Rendering.exe
        FinalizeBuildStatus:
          Deleting file "Debug\Realtime.C1CA4FA4.tlog\unsuccessfulbuild".
@@ -42,4 +64,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.45
+Time Elapsed 00:00:01.91

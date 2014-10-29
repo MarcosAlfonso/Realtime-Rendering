@@ -4,12 +4,17 @@ layout(quads, equal_spacing, cw) in;
 
 in vec3 tcPosition[];
 in float tcLevel[];
+in int patchID[];
+
 
 out vec3 tePosition;
 out vec4 tePatchDistance;
 out float teLevel;
+out int tePatchID;
 
 uniform mat4 MVP;
+uniform sampler2D myTextureSampler;
+
 
 vec2 interpolate2D(vec2 v0, vec2 v1, vec2 v2)
 {
@@ -33,12 +38,25 @@ void main()
 	teLevel = tcLevel[0];
 	
 	float u = gl_TessCoord.x, v = gl_TessCoord.y;
+
 	tePatchDistance = vec4(u, v, 1-u, 1-v);
 
 	tePosition = interpolateQuad(tcPosition[0], tcPosition[1], tcPosition[2], tcPosition[3]);
+	
+	tePatchID = patchID[0];
+
+	int PatchPosX = patchID[0]%32;
+	int PatchPosY = patchID[0]/32;
+
+	float textureX = PatchPosX/32.0;
+	float textureY = PatchPosY/32.0;
+
+	vec2 texturePos = vec2(textureX, textureY);
 
 	//SAMPLE HEIGHT HERE
-	int height = 0;
+	float height =  texture(myTextureSampler, texturePos).r + texture(myTextureSampler, texturePos).g + texture(myTextureSampler, texturePos).b;
 
-	gl_Position = MVP * vec4(tePosition.x, height, tePosition.z, 1.0);
+	tePosition = vec3(tePosition.x, height, tePosition.z);
+
+	gl_Position = MVP * vec4(tePosition.x, tePosition.y, tePosition.z, 1.0);
 } 

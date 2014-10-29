@@ -5,6 +5,7 @@ out vec4 FragColor;
 in vec4 gPatchDistance;
 in vec3 gTriDistance;
 in float gLevel;
+flat in int gPatchID;
 
 uniform int wireframe; //bool
 uniform int colorcode; //bool
@@ -27,6 +28,7 @@ void main()
 	if (colorcode == 1)
 	{
 		color = mix(vec3(1,0,0),vec3(.23,.47,.14),(gLevel/32));
+		//color = mix(vec3(1,0,0),vec3(.23,.47,.14),(gPatchID/(32*32.0)));	
 	}
 
 	if (wireframe == 1)

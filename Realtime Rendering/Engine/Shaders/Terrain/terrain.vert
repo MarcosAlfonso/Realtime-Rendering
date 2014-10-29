@@ -24,8 +24,7 @@ out float vertexDistance;
 
 void main(){
 
-	//float y = texture(myTextureSampler, vertexUV).r + texture(myTextureSampler, vertexUV).g + texture(myTextureSampler, vertexUV).b;
-	float y = 0;
+	float y = texture(myTextureSampler, vertexUV).r + texture(myTextureSampler, vertexUV).g + texture(myTextureSampler, vertexUV).b;
 
 	// Position of the vertex, in worldspace : M * position
 	vPosition = vec3(vertexPosition_modelspace.x, y*10, vertexPosition_modelspace.z);
