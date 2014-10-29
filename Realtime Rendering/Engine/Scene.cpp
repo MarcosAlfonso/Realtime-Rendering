@@ -95,9 +95,7 @@ void Scene::LoadScene()
 	
 	mainCamera = new BaseEntity("Main Camera");
 	mainCamera->addComponent(new CameraComponent(mainCamera));
-	mainCamera->Transform->setPosition(2, 1, 8);
 	auto cam = mainCamera->getElementOfType<CameraComponent>();
-	cam->horizontalAngle = 3.14;
 	addInput(new FreeCameraInput(mainCamera));
 	AddEntity(mainCamera);
 	

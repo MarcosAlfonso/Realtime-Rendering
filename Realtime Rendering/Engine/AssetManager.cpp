@@ -57,7 +57,7 @@ void InitializeAssets()
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
 	terrainGrid = new GridMesh(250, 250, 2, 2, true, false);
-	tessGrid = new GridMesh(3, 3, 32, 32, false, true);
+	tessGrid = new GridMesh(128, 128, 32, 32, false, true);
 }
 
 void CleanupAssets()

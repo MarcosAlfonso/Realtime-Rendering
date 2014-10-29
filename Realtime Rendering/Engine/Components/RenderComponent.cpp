@@ -32,7 +32,10 @@ extern PhysicsComponent * selectedObjectPhys;
 
 int innerTessLevel = 1;
 int outerTessLevel = 1;
+
 int tessOverride = 0;
+int tessWireframe = 1;
+int tessColorcode = 1;
 
 extern char debugBuffer[];
 extern Stats * stats;
@@ -116,6 +119,9 @@ void RenderComponent::Update()
 	glUniform1i(glGetUniformLocation(shader_ID, "innerTess"), innerTessLevel);
 	glUniform1i(glGetUniformLocation(shader_ID, "outerTess"), outerTessLevel);
 	glUniform1i(glGetUniformLocation(shader_ID, "tessOverride"), tessOverride);
+	glUniform1i(glGetUniformLocation(shader_ID, "colorcode"), tessColorcode);
+	glUniform1i(glGetUniformLocation(shader_ID, "wireframe"), tessWireframe);
+
 
 	//Print tessellation levels
 	if (isTessellated)

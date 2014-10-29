@@ -11,9 +11,10 @@ in float vertexDistance[];
 
 uniform int innerTess;
 uniform int outerTess;
-uniform int tessOverride;
+uniform int tessOverride; //bool
 
 out vec3 tcPosition[];
+out float tcLevel[];
 
 void main()
 {
@@ -33,8 +34,11 @@ void main()
 		else
 		{
 			float tessScale = 1 - (vertexDistance[ID]/500.0);
-			float tessLevel = tessScale*8.0;
+			
+			float tessLevel = tessScale*32.0;
 			tessLevel = clamp(tessLevel, 1.0, 64.0);
+
+			tcLevel[ID] = tessLevel;
 			
 			gl_TessLevelInner[0] = tessLevel;
 			gl_TessLevelInner[1] = tessLevel;

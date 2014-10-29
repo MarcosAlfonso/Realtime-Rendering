@@ -6,9 +6,11 @@ layout(triangle_strip, max_vertices = 3) out;
 
 in vec3 tePosition[3];
 in vec4 tePatchDistance[3];
+in float teLevel[3];
 
 out vec3 gTriDistance;
 out vec4 gPatchDistance;
+out float gLevel;
 
 uniform mat4 MVP;
 uniform mat4 V;
@@ -16,7 +18,8 @@ uniform mat4 M;
 
 void main()
 {
-    
+    gLevel = teLevel[0];
+
     gPatchDistance = tePatchDistance[0];
     gTriDistance = vec3(1, 0, 0);
     gl_Position = gl_in[0].gl_Position; EmitVertex();

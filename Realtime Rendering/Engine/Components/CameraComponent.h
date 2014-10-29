@@ -16,7 +16,7 @@ public:
 	glm::mat4 ProjectionMatrix;
 
 	//Offset from transform
-	glm::vec3 positionOffset = glm::vec3(0, 0, 0);
+	glm::vec3 positionOffset = glm::vec3(0, 10, 0);
 
 	float fov = 45.0f;
 	

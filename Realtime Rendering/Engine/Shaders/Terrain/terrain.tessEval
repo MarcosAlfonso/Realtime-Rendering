@@ -3,8 +3,11 @@
 layout(quads, equal_spacing, cw) in;
 
 in vec3 tcPosition[];
+in float tcLevel[];
+
 out vec3 tePosition;
 out vec4 tePatchDistance;
+out float teLevel;
 
 uniform mat4 MVP;
 
@@ -27,6 +30,7 @@ vec3 interpolateQuad(vec3 v0, vec3 v1, vec3 v2, vec3 v3)
 
 void main()
 {	
+	teLevel = tcLevel[0];
 	
 	float u = gl_TessCoord.x, v = gl_TessCoord.y;
 	tePatchDistance = vec4(u, v, 1-u, 1-v);

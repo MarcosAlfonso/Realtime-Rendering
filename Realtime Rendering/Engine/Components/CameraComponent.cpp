@@ -1,9 +1,14 @@
 #pragma once
 #include "CameraComponent.h"
+#include "../GUI/Stats.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
+
+extern Stats * stats;
+extern char debugBuffer[];
+
 
 //Camera Component, consisting of View and Projection Matrix
 CameraComponent::CameraComponent(BaseEntity * parent)
@@ -21,6 +26,10 @@ CameraComponent::~CameraComponent()
 //Calculates essential vectors and creates camera 
 void CameraComponent::Update()
 {
+
+	sprintf(debugBuffer, "Camera Pos: %f, %f, %f\n", positionOffset.x, positionOffset.y, positionOffset.z);
+	stats->Label->appendText(debugBuffer);
+
 	//Direction vector
 	direction = glm::vec3(
 		cos(verticalAngle) * sin(horizontalAngle),
