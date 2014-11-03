@@ -18,18 +18,19 @@ uniform sampler2D myTextureSampler;
 // Output data ; will be interpolated for each fragment.
 out vec3 vPosition;
 out float vertexDistance;
-//out vec2 TexCoord_CS_in;
+out vec2 vUV;
+
 //out vec3 Normal_CS_in;
 //out vec3 barycentricCoords;
 
 void main(){
 
-	float y = texture(myTextureSampler, vertexUV).r + texture(myTextureSampler, vertexUV).g + texture(myTextureSampler, vertexUV).b;
-
 	// Position of the vertex, in worldspace : M * position
-	vPosition = vec3(vertexPosition_modelspace.x, y*10, vertexPosition_modelspace.z);
+	vPosition = vec3(vertexPosition_modelspace.x, 0, vertexPosition_modelspace.z);
 
 	vertexDistance = length(( V * M * vec4(vertexPosition_modelspace,1)).xyz);
+	
+	vUV = vertexUV;
 			
 }
 

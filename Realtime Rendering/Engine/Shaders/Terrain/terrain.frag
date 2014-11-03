@@ -4,14 +4,20 @@ out vec4 FragColor;
 
 in vec4 gPatchDistance;
 in vec3 gTriDistance;
+in vec3 gFacetNormal;
 in float gLevel;
 flat in int gPatchID;
+in vec2 gUV;
+in float height;
 
 uniform int wireframe; //bool
 uniform int colorcode; //bool
 uniform vec3 LightPosition;
 uniform vec3 DiffuseMaterial;
 uniform vec3 AmbientMaterial;
+
+uniform sampler2D myTextureSampler;
+
 
 float amplify(float d, float scale, float offset)
 {
@@ -23,7 +29,7 @@ float amplify(float d, float scale, float offset)
 
 void main()
 {
-	vec3 color = vec3(1,1,1);
+	vec3 color = vec3(1,1,1);//mix(vec3(1,1,1), vec3(0,0,0), height/100.0);
 	
 	if (colorcode == 1)
 	{
@@ -41,4 +47,5 @@ void main()
 	}
 
 	FragColor = vec4(color, 1.0);
+
 }

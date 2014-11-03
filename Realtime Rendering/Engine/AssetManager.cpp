@@ -43,7 +43,7 @@ void InitializeAssets()
 	skySphereTexture = loadDDS("Assets/skySphere.dds");
 	GrassTexture = loadDDS("Assets/grass.dds");
 	screenUvMapTexture = loadDDS("Assets/uvmap.dds");
-	heightMapTexture = loadDDS("Assets/terrainHeightMap.dds");
+	heightMapTexture = loadDDS("Assets/terrain_height.dds");
 
 	//Models are loaded from .obj's, changed extension to .model to avoid linker issues with VS
 	//Suzanne
@@ -57,7 +57,7 @@ void InitializeAssets()
 	cube->loadFromFile("Assets/cube.model");
 	//Terrain
 	terrainGrid = new GridMesh(250, 250, 2, 2, true, false);
-	tessGrid = new GridMesh(128, 128, 32, 32, false, true);
+	tessGrid = new GridMesh(128, 128, 1 / 129.0, 1 / 129.0, false, true);
 }
 
 void CleanupAssets()

@@ -6,6 +6,7 @@ layout (vertices = 4) out;
 // attributes of the input CPs
 in vec3 vPosition[];
 in float vertexDistance[];
+in vec2 vUV[];
 
 
 #define ID gl_InvocationID
@@ -14,31 +15,36 @@ uniform int innerTess;
 uniform int outerTess;
 uniform int tessOverride; //bool
 
+
 out vec3 tcPosition[];
 out float tcLevel[];
 out int patchID[];
+out vec2 tcUV[];
 
 void main()
 {
 	patchID[ID] = gl_PrimitiveID;
+	
 	tcPosition[ID] = vPosition[ID];
+	tcUV[ID] = vUV[ID];
+
 	if (ID == 0)
 	{
 		if (tessOverride == 1)
 		{
-			gl_TessLevelInner[0] = 1;
-			gl_TessLevelInner[1] = 1;
+			gl_TessLevelInner[0] = innerTess;
+			gl_TessLevelInner[1] = innerTess;
 
-			gl_TessLevelOuter[0] = 1;
-			gl_TessLevelOuter[1] = 1;
-			gl_TessLevelOuter[2] = 1;
-			gl_TessLevelOuter[3] = 1;
+			gl_TessLevelOuter[0] = innerTess;
+			gl_TessLevelOuter[1] = innerTess;
+			gl_TessLevelOuter[2] = innerTess;
+			gl_TessLevelOuter[3] = innerTess;
 		}
 		else
 		{
-			float tessScale = 1 - (vertexDistance[ID]/500.0);
+			float tessScale = 1 - (vertexDistance[ID]/400.0);
 			
-			float tessLevel = tessScale*32.0;
+			float tessLevel = tessScale*64.0;
 			tessLevel = clamp(tessLevel, 1.0, 64.0);
 
 			tcLevel[ID] = tessLevel;

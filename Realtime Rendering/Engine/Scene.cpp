@@ -91,6 +91,7 @@ void Scene::LoadScene()
 	
 	tessTest = new BaseEntity("tess Test");
 	tessTest->addComponent(new RenderComponent(tessTest, tessGrid, TessTerrainShaderID, heightMapTexture, true));
+	tessTest->Transform->setScale(2000, 50, 2000);
 	AddEntity(tessTest);
 	
 	mainCamera = new BaseEntity("Main Camera");

@@ -144,7 +144,7 @@ void GridMesh::PopulatesUVs()
 		int xLoc = i % xPoints;
 		int zLoc = i / zPoints;
 
-		float textureRepeat = 32;
+		float textureRepeat = 1;
 
 		uvs.push_back(glm::vec2(xLoc * (textureRepeat / xPoints), zLoc * (textureRepeat / zPoints)));
 	}
