@@ -33,7 +33,7 @@ extern PhysicsComponent * selectedObjectPhys;
 int innerTessLevel = 1;
 int outerTessLevel = 1;
 
-int tessOverride = 1;
+int tessOverride = 0;
 int tessWireframe = 1;
 int tessColorcode = 1;
 

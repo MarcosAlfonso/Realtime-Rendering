@@ -42,20 +42,34 @@ void main()
 		}
 		else
 		{
-			float tessScale = 1 - (vertexDistance[ID]/400.0);
+			int tessScale = 32;
+			float tessDistCutoff = 1000.0;
 			
-			float tessLevel = tessScale*64.0;
-			tessLevel = clamp(tessLevel, 1.0, 64.0);
+			//Figure out tessellation ratio for each point in patch
+			float p0 = 1 - (vertexDistance[ID]/tessDistCutoff);
+			float p1 = 1 - (vertexDistance[ID+1]/tessDistCutoff);
+			float p2 = 1 - (vertexDistance[ID+2]/tessDistCutoff);
+			float p3 = 1 - (vertexDistance[ID+3]/tessDistCutoff);			
 
-			tcLevel[ID] = tessLevel;
+			//Figure out edge tessellation by averaging from above
+			float e0 = mix(p3,p0, 0.5)*tessScale;
+			float e1 = mix(p0,p1, 0.5)*tessScale;
+			float e2 = mix(p1,p2, 0.5)*tessScale;
+			float e3 = mix(p2,p3, 0.5)*tessScale;
+
+			//Assign values from above, clamp to reasonal range
+			gl_TessLevelOuter[0] = clamp(e0, 1.0, 64.0);
+			gl_TessLevelOuter[1] = clamp(e1, 1.0, 64.0);
+			gl_TessLevelOuter[2] = clamp(e2, 1.0, 64.0);
+			gl_TessLevelOuter[3] = clamp(e3, 1.0, 64.0);
 			
-			gl_TessLevelInner[0] = tessLevel;
-			gl_TessLevelInner[1] = tessLevel;
+			//Assign inner values
+			gl_TessLevelInner[0] = mix(gl_TessLevelOuter[0],gl_TessLevelOuter[1],.5);
+			gl_TessLevelInner[1] = gl_TessLevelInner[0];
 
-			gl_TessLevelOuter[0] = tessLevel;
-			gl_TessLevelOuter[1] = tessLevel;
-			gl_TessLevelOuter[2] = tessLevel;
-			gl_TessLevelOuter[3] = tessLevel;
+			//For color code debug, needs to be reworked for new pervertex tessellation control to be accurate
+			tcLevel[ID] = p0*tessScale;
+
 		}
 	}
 
