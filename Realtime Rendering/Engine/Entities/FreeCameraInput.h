@@ -30,7 +30,7 @@ public:
 
 	CameraComponent * Camera;
 	bool mouseControlRefresh = false;
-	float moveSpeed = 3; // 3 units / second
+	float moveSpeed;
 	float mouseSpeed = 0.005f;
 
 	double oldMouseX, oldMouseY;
@@ -49,11 +49,11 @@ public:
 	void Update()
 	{
 		//Camera movement speed
-		moveSpeed = 1;
+		moveSpeed = 40;
 
 		//Sprint camera
 		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-			moveSpeed = 40;
+			moveSpeed = 90;
 		}
 
 		// Move forward

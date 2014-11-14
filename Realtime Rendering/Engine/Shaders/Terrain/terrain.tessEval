@@ -6,7 +6,7 @@ in vec3 tcPosition[];
 in float tcLevel[];
 in int patchID[];
 in vec2 tvUV[];
-
+in float tcDistance[];
 
 out vec3 tePosition;
 out vec4 tePatchDistance;
@@ -44,9 +44,9 @@ void main()
 	teUV = tePosition.xz + vec2(.5,.5);
 
 	//SAMPLE HEIGHT HERE
-	float height =  texture(myTextureSampler, teUV).r + texture(myTextureSampler, teUV).g + texture(myTextureSampler, teUV).b;
+	float height =  textureLod(myTextureSampler, teUV, ((tcDistance[0]-250.0)/600.0)*3.0);
 
-	tePosition = vec3(tePosition.x, height, tePosition.z);
+	tePosition = vec3(tePosition.x, height*6, tePosition.z);
 
 	gl_Position = MVP * vec4(tePosition.x, tePosition.y, tePosition.z, 1.0);
 } 

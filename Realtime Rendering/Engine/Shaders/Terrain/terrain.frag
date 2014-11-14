@@ -33,8 +33,7 @@ void main()
 	
 	if (colorcode == 1)
 	{
-		color = mix(vec3(1,0,0),vec3(.23,.47,.14),(gLevel/32));
-		//color = mix(vec3(1,0,0),vec3(.23,.47,.14),(gPatchID/(32*32.0)));	
+		color = mix(vec3(1,0,0),vec3(.23,.47,.14),(gLevel/24));
 	}
 
 	if (wireframe == 1)

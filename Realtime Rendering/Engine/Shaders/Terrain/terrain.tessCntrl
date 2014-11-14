@@ -20,6 +20,8 @@ out vec3 tcPosition[];
 out float tcLevel[];
 out int patchID[];
 out vec2 tcUV[];
+out float tcDistance[];
+
 
 void main()
 {
@@ -27,6 +29,7 @@ void main()
 	
 	tcPosition[ID] = vPosition[ID];
 	tcUV[ID] = vUV[ID];
+	tcDistance[ID] = vertexDistance[ID];
 
 	if (ID == 0)
 	{
@@ -42,14 +45,29 @@ void main()
 		}
 		else
 		{
-			int tessScale = 32;
-			float tessDistCutoff = 1000.0;
+			int tessScale = 24;
+			float tessMinDistFullRes = 250.0;
+			float tessDistCutoff = 600.0;
+
+
 			
 			//Figure out tessellation ratio for each point in patch
-			float p0 = 1 - (vertexDistance[ID]/tessDistCutoff);
-			float p1 = 1 - (vertexDistance[ID+1]/tessDistCutoff);
-			float p2 = 1 - (vertexDistance[ID+2]/tessDistCutoff);
-			float p3 = 1 - (vertexDistance[ID+3]/tessDistCutoff);			
+			float p0 = 1 - ((vertexDistance[ID]-tessMinDistFullRes)/tessDistCutoff);
+			float p1 = 1 - ((vertexDistance[ID+1]-tessMinDistFullRes)/tessDistCutoff);
+			float p2 = 1 - ((vertexDistance[ID+2]-tessMinDistFullRes)/tessDistCutoff);
+			float p3 = 1 - ((vertexDistance[ID+3]-tessMinDistFullRes)/tessDistCutoff);			
+
+			if (vertexDistance[ID] < tessMinDistFullRes)
+				p0 = 1;	
+
+			if (vertexDistance[ID+1] < tessMinDistFullRes)
+				p1 = 1;	
+
+			if (vertexDistance[ID+2] < tessMinDistFullRes)
+				p2 = 1;	
+
+			if (vertexDistance[ID+3] < tessMinDistFullRes)
+				p3 = 1;	
 
 			//Figure out edge tessellation by averaging from above
 			float e0 = mix(p3,p0, 0.5)*tessScale;
